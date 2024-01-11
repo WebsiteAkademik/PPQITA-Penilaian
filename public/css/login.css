@@ -1,0 +1,16 @@
+@import "./style.css";
+
+body {
+    color: #860303;
+    background-color: #B90000 !important;
+}
+.parent-form {
+    padding-top: 2rem;
+    padding-bottom: 2.5rem;
+}
+.parent-form .form-signin {
+    max-width: 25rem;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+}
