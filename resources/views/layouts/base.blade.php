@@ -73,7 +73,7 @@
     @yield('content')
 
     {{-- Footer --}}
-    <footer class="py-5 bg-dark text-white">
+    <footer class="py-5 bg-dark text-white" style="margin-top: 50px">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-12">
