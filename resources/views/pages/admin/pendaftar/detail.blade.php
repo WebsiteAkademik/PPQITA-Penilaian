@@ -176,6 +176,11 @@
                         </tr>
                         <tr>
                     </table>
+                    <br>
+                    <table>
+                        <!-- Tombol Cetak Formulir Pendaftaran -->
+                        <a href="{{ route('cetak_pdf', $pendaftar->no_nisn) }}" class="btn btn-primary">Unduh Formulir Daftar Ulang</a>
+                    </table>
                 </div>
             </div>
         </div>
