@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-5 col-md-6">
             <div class="card">
                 <div class="card-body">
                     <div class="row align-items-center justify-content-between">
@@ -15,7 +15,70 @@
                         </div>
                         <div class="col-7 text-end">
                             <h4 style="font-weight: 600">{{ $pendaftarCount }}</h4>
-                            <p>Pendaftar</p>
+                            <p>Pendaftar Baru</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ route('pendaftar.index') }}" class="text-dark d-flex justify-content-between">
+                        <p style="font-weight: 500">Detail</p>
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-5">
+                            <i class="fa-solid fa-user" style="font-size: 4rem;"></i>
+                        </div>
+                        <div class="col-7 text-end">
+                            <h4 style="font-weight: 600">{{ $pendaftarCount }}</h4>
+                            <p>Pendaftar Test</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ route('pendaftar.index') }}" class="text-dark d-flex justify-content-between">
+                        <p style="font-weight: 500">Detail</p>
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-5">
+                            <i class="fa-solid fa-user" style="font-size: 4rem;"></i>
+                        </div>
+                        <div class="col-7 text-end">
+                            <h4 style="font-weight: 600">{{ $pendaftarCount }}</h4>
+                            <p>Pendaftar yang sudah Transfer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ route('pendaftar.index') }}" class="text-dark d-flex justify-content-between">
+                        <p style="font-weight: 500">Detail</p>
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-5">
+                            <i class="fa-solid fa-user" style="font-size: 4rem;"></i>
+                        </div>
+                        <div class="col-7 text-end">
+                            <h4 style="font-weight: 600">{{ $pendaftarCount }}</h4>
+                            <p>Pendaftar Tidak Diterima</p>
                         </div>
                     </div>
                 </div>

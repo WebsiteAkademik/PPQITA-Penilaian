@@ -47,9 +47,63 @@
                             <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
                                 href="{{ route('pendaftar.index') }}" aria-expanded="false">
                                 <span>
-                                    <i class="fa-solid fa-user"></i>
+                                    <i class="fa-solid fa-user-plus"></i>
                                 </span>
-                                <span class="hide-menu">Pendaftar</span>
+                                <span class="hide-menu">Data Pendaftar Baru</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
+                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-solid fa-clock"></i>
+                                </span>
+                                <span class="hide-menu">Data Pendaftar Dijadwalkan Test</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
+                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </span>
+                                <span class="hide-menu">Data Pendaftar Tidak Diterima</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
+                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+                                <span class="hide-menu">Data Pendaftar Diterima</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
+                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </span>
+                                <span class="hide-menu">Input Jadwal Test Peserta</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
+                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-solid fa-book"></i>
+                                </span>
+                                <span class="hide-menu">Laporan Profile Pendaftar</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
+                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-solid fa-print"></i>
+                                </span>
+                                <span class="hide-menu">Laporan Rekap Pendaftar</span>
                             </a>
                         </li>
                         <li class="sidebar-item d-grid" style="position: absolute;bottom: 20px;right: 0;left: 0;">
