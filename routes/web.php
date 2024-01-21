@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\PendaftaranController;
+use App\Http\Controllers\JadwalTestController;
 use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,12 @@ Route::middleware('auth')->prefix('dashboarduser')->group(function () {
         ];
         return view('pages.menuuser.dashboarduser', $data);
     })->name('dashboarduser');
+
+    // route untuk form
+    Route::get('/jadwaltest/form', [JadwalTestController::class, 'showform'])->name('jadwaltest.form');
+    Route::post('/jadwaltest.store', [JadwalTestController::class, 'store'])->name(
+        'jadwaltest.store');
+    Route::get('/jadwaltest/list', [JadwalTestController::class, 'list'])->name('jadwaltest.list');
 
     // menu user
     Route::get('/pendaftar', [PendaftaranController::class, 'indexuser'])->name('pendaftar.indexuser');

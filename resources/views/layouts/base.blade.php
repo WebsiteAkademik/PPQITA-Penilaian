@@ -52,6 +52,10 @@
                             href="{{ route('home') }}" target="_blank">Beranda</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ Request::is('galeri') ? 'active' : '' }}"
+                            href="{{ route('galeri') }}">Galeri</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ Request::is('daftar-online') ? 'active' : '' }}"
                             href="{{ route('daftar-online') }}">Daftar Online</a>
                     </li>
