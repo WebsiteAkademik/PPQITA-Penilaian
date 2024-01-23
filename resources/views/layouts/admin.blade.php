@@ -100,8 +100,8 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
-                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
+                            <a class="sidebar-link @if (Request::is('/rekap')) active @endif"
+                                href="{{ route('rekap.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-solid fa-print"></i>
                                 </span>
