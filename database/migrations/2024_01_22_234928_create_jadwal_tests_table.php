@@ -15,12 +15,11 @@ return new class extends Migration
     {
         Schema::create('jadwal_tests', function (Blueprint $table) {
             $table->id();
-            $table->string('no_pendaftaran')->index();
-            //$table->foreignId('no_pendaftaran')->references('no_pendaftaran')->on('pendaftars');
+            $table->string('nama_calon_siswa')->index();
             $table->date('tanggal_test');
             $table->time('jam_test');
-            $table->string('metode_test');
-            $table->text('info_test');
+            $table->string('jenis_test');
+            $table->text('pic_test');
             $table->timestamps();
         });
     }

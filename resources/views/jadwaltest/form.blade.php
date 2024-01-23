@@ -18,11 +18,11 @@
         <form method="post" action="{{ route('jadwaltest.store') }}">
             @csrf
             <div class="mb-3">
-                <label for="no_pendaftaran" class="form-label">No Pendaftaran</label>
-                <select name="no_pendaftaran" class="form-select" required>
-                    <option value="" disabled selected>Pilih No Pendaftaran</option>
+                <label for="nama_calon_siswa" class="form-label">Nama Calon Siswa</label>
+                <select name="nama_calon_siswa" class="form-select" required>
+                    <option value="" disabled selected>Nama</option>
                     @foreach ($pendaftars as $pendaftar)
-                        <option value="{{ $pendaftar->no_pendaftaran }}">{{ $pendaftar->no_pendaftaran }}</option>
+                        <option value="{{ $pendaftar->nama_calon_siswa }}">{{ $pendaftar->nama_calon_siswa }}</option>
                     @endforeach
                 </select>
             </div>
@@ -31,20 +31,24 @@
                 <input type="date" name="tanggal_test" class="form-control" required>
             </div>
             <div class="mb-3">
-                <label for="jam_test" class="form-label">Jam Test</label>
                 <input type="time" name="jam_test" class="form-control" required>
+                <label for="jam_test" class="form-label">Jam Test</label>                
             </div>
             <div class="mb-3">
-                <label for="metode_test" class="form-label">Metode Test</label>
-                <select name="metode_test" class="form-select" required>
-                    <option value="Zoom Meeting">Zoom Meeting</option>
-                    <option value="Google Meet">Google Meet</option>
-                    <option value="Google Meet">Offline</option>
+                <label for="jenis_test" class="form-label">Jenis Test</label>
+                <select name="jenis_test" class="form-select" required>
+                    <option value="Umum">Umum</option>
+                    <option value="Dinniyah">Dinniyah</option>
+                    <option value="Hafalan">Hafalan</option>
+                    <option value="Matematika">Matematika</option>
                 </select>
             </div>
             <div class="mb-3">
-                <label for="info_test" class="form-label">Informasi Tambahan</label>
-                <textarea name="info_test" class="form-control" cols="30" rows="10" required></textarea>
+                <label for="pic_test" class="form-label">PIC</label>
+                <select name="pic_test" class="form-select" required>
+                    <option value="Ust. Dutha Bahari">Ust Dutha Bahari</option>
+                    <option value="Dhanny Ardiansyah">Dhanny Ardiansyah</option>
+                </select>
             </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
         </form>

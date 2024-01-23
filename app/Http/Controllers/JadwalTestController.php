@@ -22,11 +22,11 @@ class JadwalTestController extends Controller
 
     public function store(Request $request){
         $validatedData = $request->validate([
-            'no_pendaftaran' => 'required',
+            'nama_calon_siswa' => 'required',
             'tanggal_test' => 'required',
             'jam_test' => 'required',
-            'metode_test' => 'required',
-            'info_test' => 'required',
+            'jenis_test' => 'required',
+            'pic_test' => 'required',
         ]);
 
         JadwalTest::create($validatedData);

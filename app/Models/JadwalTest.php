@@ -9,9 +9,9 @@ class JadwalTest extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['no_pendaftaran', 'tanggal_test', 'jam_test', 'metode_test', 'info_test'];
+    protected $fillable = ['nama_calon_siswa', 'tanggal_test', 'jam_test', 'jenis_test', 'pic_test'];
 
     public function pendaftar(){
-        return $this->belongsTo(Pendaftar::class, 'no_pendaftaran');
+        return $this->belongsTo(Pendaftar::class, 'nama_calon_siswa');
     }
 };

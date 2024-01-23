@@ -15,26 +15,27 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">No Pendaftaran</th>
+                    <th scope="col">Nama Calon Siswa</th>
                     <th scope="col">Tanggal Test</th>
                     <th scope="col">Jam Test</th>
-                    <th scope="col">Metode Test</th>
-                    <th scope="col">Informasi Tambahan</th>
+                    <th scope="col">Jenis Test</th>
+                    <th scope="col">PIC</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($jadwalTests as $jadwalTest)
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
-                        <td>{{ $jadwalTest->no_pendaftaran }}</td>
+                        <td>{{ $jadwalTest->nama_calon_siswa }}</td>
                         <td>{{ $jadwalTest->tanggal_test }}</td>
                         <td>{{ $jadwalTest->jam_test }}</td>
-                        <td>{{ $jadwalTest->metode_test }}</td>
-                        <td>{{ $jadwalTest->info_test }}</td>
+                        <td>{{ $jadwalTest->jenis_test }}</td>
+                        <td>{{ $jadwalTest->pic_test }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        <a href="{{ route('jadwaltest.form') }}" class="btn btn-primary mb-3">Kembali ke Input Jadwal Test</a>
+        {{-- nanti dibikin button utk input yang mengarah ke form input jadwal test --}}
+        <a href="{{ route('jadwaltest.form') }}" class="btn btn-primary mb-3">Input Jadwal Test</a> 
     </div>
 @endsection
