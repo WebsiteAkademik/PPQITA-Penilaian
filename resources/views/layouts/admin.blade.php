@@ -34,17 +34,9 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
                     <ul id="sidebarnav">
-                        <li class="sidebar-item mt-4">
+                        <hr>
+                        <li class="sidebar-item">
                             <a class="sidebar-link {{ Request::is('/') ? 'active' : '' }}"
-                                href="{{ route('home') }}" aria-expanded="false">
-                                <span>
-                                    <i class="fa-solid fa-house-user"></i>
-                                </span>
-                                <span class="hide-menu">Beranda</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item mt-4">
-                            <a class="sidebar-link {{ Request::is('/dashboard') ? 'active' : '' }}"
                                 href="{{ route('dashboard') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-solid fa-house"></i>
@@ -52,7 +44,8 @@
                                 <span class="hide-menu">Dashboard Admin</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
+                        <hr>
+                        <li class="sidebar-item mt-2">
                             <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
                                 href="{{ route('pendaftar.index') }}" aria-expanded="false">
                                 <span>

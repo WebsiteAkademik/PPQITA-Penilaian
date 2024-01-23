@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/cetak_pdf/{no_nisn}', [HomeController::class, 'cetak_pdf'])->name('cetak_pdf');
+Route::get('/cetak_laporan/', [HomeController::class, 'cetak_laporan'])->name('cetak_laporan');
 
 
 Route::get('/daftar-online', [HomeController::class, 'daftarOnline'])->name('daftar-online');
@@ -60,6 +61,9 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('/pendaftar/{slug}', [PendaftaranController::class, 'detail'])->name('pendaftar.detail');
     Route::put('/pendaftar/{id}', [PendaftaranController::class, 'update'])->name('pendaftar.update');
     Route::delete('/pendaftar/{id}/delete', [PendaftaranController::class, 'destroy'])->name('pendaftar.destroy');
+
+    //Laporan Rekap
+    Route::get('/rekap', [PendaftaranController::class, 'rekap'])->name('rekap.index');
 });
 
 Route::middleware('auth')->prefix('dashboarduser')->group(function () {

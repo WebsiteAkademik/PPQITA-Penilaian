@@ -19,6 +19,15 @@ class PendaftaranController extends Controller
         return view('pages.admin.pendaftar.index', $data);
     }
 
+    public function rekap()
+    {
+        $pendaftars = Pendaftar::all();
+        $data = [
+            'pendaftars' => $pendaftars
+        ];
+
+        return view('pages.admin.rekap.index', $data);
+    }
     public function detail($slug)
     {
         $pendaftar = Pendaftar::where('slug', $slug)->first();

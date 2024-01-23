@@ -44,11 +44,18 @@ class HomeController extends Controller
         $data = [
             'pendaftar' => $pendaftar
         ];
-    	$pegawai = Pendaftar::all();
- 
-    	$pdf = PDF::loadview('pages.pendaftar_pdf',['pendaftar'=>$data]);
-    	return $pdf->download('laporan-pendaftar-pdf');
+        $pegawai = Pendaftar::all();
+
+        $pdf = PDF::loadView('pages.pendaftar_pdf', ['pendaftar' => $data])->setPaper('A4', 'potrait');
+        return $pdf->stream('formulir_daftarulang.pdf');
     }
+
+    public function cetak_laporan(){
+        $rekap = Pendaftar::all();
+        $laporan = PDF::loadView('pages.laporan_pdf', ['rekap' => $rekap])->setPaper('A4', 'portrait');
+        return $laporan->stream('laporan_data_pendaftar.pdf');
+    }
+    
     public function daftar(Request $request)
     {
         $validator = Validator::make($request->all(), [
