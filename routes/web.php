@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\PendaftaranController;
 use App\Http\Controllers\JadwalTestController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
@@ -32,13 +33,20 @@ Route::get('/reload-captcha', [HomeController::class, 'reloadCaptcha'])->name('r
 //insert tabel daftar
 Route::post('/daftar', [HomeController::class, 'daftar'])->name('daftar');
 
-Route::middleware('guest')->group(function () {
-    Route::get('/loginuser', [AuthController::class, 'loginViewUser'])->name('login-user');
-    Route::get('/admin-login', [AuthController::class, 'loginView'])->name('loginView');
-    Route::post('/admin-login', [AuthController::class, 'login'])->name('login');
-    Route::post('/loginuser', [AuthController::class, 'loginUser'])->name('loginuser');
+// Login 
+Route::get('/login', function (){
+    return view('pages.user.login');
+})->name('login-user');
 
-});
+Route::post('/postlogin', [LoginController::class, 'postlogin'])->name('postlogin');
+
+// Route::middleware('guest')->group(function () {
+//     Route::get('/loginuser', [AuthController::class, 'loginViewUser'])->name('login-user');
+//     Route::get('/admin-login', [AuthController::class, 'loginView'])->name('loginView');
+//     Route::post('/admin-login', [AuthController::class, 'login'])->name('login');
+//     Route::post('/loginuser', [AuthController::class, 'loginUser'])->name('loginuser');
+
+// });
 
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');

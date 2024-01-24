@@ -65,9 +65,9 @@
                     </li>
                     
                     <li class="nav-item ps-3">
-                        <a class="btn text-white px-4 py-2 {{ Request::is('login-user') ? 'active' : '' }}"
+                        <a class="btn text-white px-4 py-2 {{ Request::is('login') ? 'active' : '' }}"
                             style="background-color: #B90000; border-radius: 20px;"
-                            href="{{ route('dashboarduser') }}">Login</a>
+                            href="{{ route('login-user') }}">Login</a>
                     </li>
                 </ul>
             </div>
