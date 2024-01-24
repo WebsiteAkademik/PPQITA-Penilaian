@@ -103,7 +103,7 @@
                         </table><br/>
                         <div class="d-flex">
                             <a href="{{ route('cetak_laporan') }}" class="btn btn-primary m-1">Cetak PDF</a>
-                            <a href="" class="btn btn-success m-1">Export Excel</a>
+                            <a href="{{ route('export-pendaftar') }}" class="btn btn-success m-1">Export Excel</a>
                         </div>
                     </div>
                 </div>

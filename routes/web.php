@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/cetak_pdf/{no_nisn}', [HomeController::class, 'cetak_pdf'])->name('cetak_pdf');
 Route::get('/cetak_laporan/', [HomeController::class, 'cetak_laporan'])->name('cetak_laporan');
+Route::get('/export-pendaftar',[HomeController::class, 'exportPendaftar'])->name('export-pendaftar');
 
 
 Route::get('/daftar-online', [HomeController::class, 'daftarOnline'])->name('daftar-online');
