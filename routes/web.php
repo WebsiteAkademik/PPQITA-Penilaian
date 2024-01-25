@@ -51,7 +51,7 @@ Route::post('/postlogin', [LoginController::class, 'postlogin'])->name('postlogi
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
-Route::middleware('auth')->prefix('dashboard')->group(function () {
+Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function () {
     Route::get('/', function () {
         $pendaftarCount = Pendaftar::count();
         $pendaftars = Pendaftar::latest()->limit(5)->get();
@@ -75,7 +75,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('/rekap', [PendaftaranController::class, 'rekap'])->name('rekap.index');
 });
 
-Route::middleware('auth')->prefix('dashboarduser')->group(function () {
+Route::middleware('auth', 'cekrole:user')->prefix('dashboarduser')->group(function () {
     Route::get('/', function () {
         $pendaftarCount = Pendaftar::count();
 

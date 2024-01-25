@@ -14,7 +14,7 @@
             <form action="{{ route('postlogin') }}" method="POST">
                 @csrf
                 <img class="mb-4" src="{{ asset('assets/galeri/logo-transparent.png') }}" alt="" style="width: 25%">
-                <h1>LOGIN ADMIN</h1>
+                <h1>LOGIN</h1>
                 @if (session()->has('loginError'))
                     <div class="alert alert-danger alert-dismissible fade show mb-2" role="alert">
                         {{ session('loginError') }}
@@ -40,6 +40,9 @@
                 </div>
                 <button class="w-100 btn btn-lg mb-3 text-white" style="background-color: var(--primary-color);"
                     type="submit">Login</button>
+                <br><br>
+                <h6>Belum mendaftar sebagai calon santri?</h6>
+                <h6><a href="{{ route('daftar-online') }}">Daftar Sekarang</a></h6>
             </form>
         </main>
     </div>
