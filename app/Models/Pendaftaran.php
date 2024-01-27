@@ -34,5 +34,6 @@ class Pendaftaran extends Model
         'nama_ibu',
         'informasi_pmb',
         'no_telepon_ortu',
+        "status",
     ];
 }

@@ -1,10 +1,12 @@
 <?php
 
 use App\Models\Pendaftar;
+use App\Models\Pendaftaran;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\PendaftaranController;
+use App\Http\Controllers\Admin\PendaftaranOnlineController;
 use App\Http\Controllers\JadwalTestController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\DB;
@@ -25,13 +27,13 @@ Route::get('/cetak_laporan/', [HomeController::class, 'cetak_laporan'])->name('c
 Route::get('/export-pendaftar',[HomeController::class, 'exportPendaftar'])->name('export-pendaftar');
 
 
-Route::get('/daftar-online', [HomeController::class, 'daftarOnline'])->name('daftar-online');
+Route::get('/daftar-online', [PendaftaranOnlineController::class, 'daftarOnlineGET'])->name('daftar-online');
 Route::get('/galeri', [HomeController::class, 'galeri'])->name('galeri');
 Route::get('/kontak', [HomeController::class, 'kontak'])->name('kontak');
 //Route::post('/logins', [AuthController::class, 'loginUser'])->name('login');
 Route::get('/reload-captcha', [HomeController::class, 'reloadCaptcha'])->name('reload-captcha');
 //insert tabel daftar
-Route::post('/daftar', [HomeController::class, 'daftar'])->name('daftar');
+Route::post('/daftar-online', [PendaftaranOnlineController::class, 'daftarOnlinePOST'])->name('daftar');
 
 // Login 
 Route::get('/login', function (){
@@ -50,6 +52,7 @@ Route::post('/postlogin', [LoginController::class, 'postlogin'])->name('postlogi
 
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+// Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function () {
     Route::get('/', function () {

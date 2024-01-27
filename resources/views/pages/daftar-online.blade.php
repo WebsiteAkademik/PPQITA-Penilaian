@@ -84,7 +84,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    <form action="{{ route('daftar') }}" method="post" id="form-pendaftaran" class="mt-2">
+                    <form action="{{ route('daftar-online') }}" method="post" id="form-pendaftaran" class="mt-2">
                         @csrf
                         <div class="row mb-4">
                             <div class="col-12 border-radius">
@@ -160,7 +160,7 @@
                                     <label for="penyakit_kronis" class="form-label">Memiliki Penyakit Kronis<span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
                                     <textarea class="form-control" name="penyakit_kronis" id="penyakit_kronis"
-                                        value="{{ old('penyakit_kronis') }}"></textarea>
+                                        value="">{{ old('penyakit_kronis') }}</textarea>
                                 </div>
                             </div>
 
@@ -171,7 +171,7 @@
                                 <div class="mb-3">
                                     <label for="alamat_rumah" class="form-label">Jalan <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <textarea class="form-control" id="alamat_rumah" name="alamat_rumah" rows="3" value="{{ old('alamat_rumah') }}"></textarea>
+                                    <textarea class="form-control" id="alamat_rumah" name="alamat_rumah" rows="3" value="">{{ old('alamat_rumah') }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
@@ -302,13 +302,13 @@
                                     <label for="penghasilan_per_bulan" class="form-label">Penghasilan Perbulan <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
                                     <select class="form-select" id="penghasilan_per_bulan" name="penghasilan_per_bulan" value="{{ old('penghasilan_per_bulan') }}">
-                                        <option selected disabled>--- Pilih Penghasilan ---</option>
-                                        <option value="Kurang Dari 1 Juta">Kurang Dari 1 Juta</option>
-                                        <option value="1 Juta - 2 Juta">1 Juta - 2 Juta</option>
-                                        <option value="2 Juta - 3 Juta">2 Juta - 3 Juta</option>
-                                        <option value="3 Juta - 5 Juta">3 Juta - 5 Juta</option>
-                                        <option value="5 Juta - 10 Juta">5 Juta - 10 Juta</option>
-                                        <option value="Diatas 10 Juta">Diatas 10 Juta</option>
+                                        <option {{ old('penghasilan_per_bulan') == '' ? 'selected' : '' }} disabled>--- Pilih Penghasilan ---</option>
+                                        <option {{ old('penghasilan_per_bulan') == 'Kurang Dari 1 Juta' ? 'selected' : '' }} value="Kurang Dari 1 Juta">Kurang Dari 1 Juta</option>
+                                        <option {{ old('penghasilan_per_bulan') == '1 Juta - 2 Juta' ? 'selected' : '' }} value="1 Juta - 2 Juta">1 Juta - 2 Juta</option>
+                                        <option {{ old('penghasilan_per_bulan') == '2 Juta - 3 Juta' ? 'selected' : '' }} value="2 Juta - 3 Juta">2 Juta - 3 Juta</option>
+                                        <option {{ old('penghasilan_per_bulan') == '3 Juta - 5 Juta' ? 'selected' : '' }} value="3 Juta - 5 Juta">3 Juta - 5 Juta</option>
+                                        <option {{ old('penghasilan_per_bulan') == '5 Juta - 10 Juta' ? 'selected' : '' }} value="5 Juta - 10 Juta">5 Juta - 10 Juta</option>
+                                        <option {{ old('penghasilan_per_bulan') == 'Diatas 10 Juta' ? 'selected' : '' }} value="Diatas 10 Juta">Diatas 10 Juta</option>
                                     </select>
                                 </div>
                             </div>
@@ -342,7 +342,7 @@
                                     <label for="informasi_pmb" class="form-label">Memperoleh Informasi Dari Mana?
                                         <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <textarea class="form-control" id="informasi_pmb" name="informasi_pmb" rows="3" value="{{ old('informasi_pmb') }}"></textarea>
+                                    <textarea class="form-control" id="informasi_pmb" name="informasi_pmb" rows="3" value="">{{ old('informasi_pmb') }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12 mt-2">
