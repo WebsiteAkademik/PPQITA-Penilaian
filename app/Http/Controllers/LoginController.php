@@ -11,12 +11,15 @@ class LoginController extends Controller
         //dd($request->all());
 
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required',
             'password' => 'required',
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))){
-            return redirect('dashboard');
+            if(Auth::user()->role == "admin")
+                return redirect('dashboard');
+            if(Auth::user()->role == "user")
+                return redirect('dashboarduser');
         }
         return redirect('login');
     }
