@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pendaftaran', function (Blueprint $table) {
+        Schema::dropIfExists('pendaftaran');
+        Schema::dropIfExists('pendaftarans');
+        Schema::create('pendaftarans', function (Blueprint $table) {
             $table->id();
-            // $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('no_nisn', 30);
             $table->string('nama_calon_siswa', 64);
             $table->string('tempat_lahir', 64);
@@ -40,7 +42,7 @@ return new class extends Migration
             $table->string('pekerjaan_ibu', 256);
             $table->string('no_telepon_ortu', 20);
             $table->string('informasi_pmb', 256);
-            // $table->enum('status', ['BARU', 'TEST', 'DITERIMA', 'DITOLAK'])->default('BARU');
+            $table->enum('status', ['BARU', 'TEST', 'DITERIMA', 'DITOLAK'])->default('BARU');
             $table->timestamps();
         });
     }
@@ -52,6 +54,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pendaftaran');
+        Schema::dropIfExists('pendaftarans');
     }
 };

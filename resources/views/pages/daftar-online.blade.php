@@ -347,7 +347,7 @@
                             </div>
                             <div class="col-12 mt-2">
                                 <div class="captcha">
-                                    <span>{!! Captcha::img('flat') !!}</span>
+                                    <span>{!! captcha_img('flat') !!}</span>
                                     <button type="button" class="btn btn-danger reload" id="reload">&#x21bb;</button>
                                 </div>
                             </div>

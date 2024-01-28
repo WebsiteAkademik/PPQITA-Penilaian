@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Pendaftaran extends Model
 {
     use HasFactory;
     protected $fillable = [
-        // 'user_id',
+        'user_id',
         'no_nisn',
         'nama_calon_siswa',
         'tempat_lahir',
@@ -36,4 +37,8 @@ class Pendaftaran extends Model
         'no_telepon_ortu',
         "status",
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

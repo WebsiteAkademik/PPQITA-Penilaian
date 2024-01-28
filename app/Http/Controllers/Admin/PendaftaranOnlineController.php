@@ -109,7 +109,7 @@ class PendaftaranOnlineController extends Controller {
 
         $dataUser = [
             "name" => $data['user_name'],
-            "email" => $data['no_nisn'],
+            "email" => $data['user_name'],
             "role" => "user",
             "password" => Hash::make($data['password']),
         ];
@@ -117,14 +117,16 @@ class PendaftaranOnlineController extends Controller {
         unset($data['user_name']);
         unset($data['password']);
 
-        Pendaftaran::create($data);
         $user = User::create($dataUser);
+
+        $data["user_id"] = $user->id;
+        Pendaftaran::create($data);
 
         auth()->logout();
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
-        if (Auth::attempt(['email' => $request->no_nisn, 'password' => $request->password])) {
+        if (Auth::attempt(['email' => $request->user_name, 'password' => $request->password])) {
             $request->session()->regenerate();
             Alert::success('Berhasil!', 'Pendaftaran Berhasil Dikirim!');
             return redirect()->intended('/dashboarduser');
