@@ -13,7 +13,7 @@
             <div class="card w-100">
                 <div class="card-body p-4">
                     <center><h2 class="card-title fw-semibold mb-4">SELAMAT ANDA TELAH BERHASIL MELAKUKAN PENDAFTARAN
-                        PENERIMAAN PESERTA DIDIK BARU <br>SMK PANCASILA 1 WONOGIRI <br>TAHUN AJARAN 2024 / 2025
+                        PENERIMAAN PESERTA DIDIK BARU <br>PPQIT AL MAHIR SUrakarta<br>TAHUN AJARAN 2024 / 2025
                     </h2></center>
                     <h3 class="card-title fw-semibold mb-4">Ketentuan Yang Dilakukan Setelah Melaksanakan Pendaftaran Adalah Sebagai Berikut :</h3>
                     
@@ -22,14 +22,15 @@
                                <p><strong> Download formulir pendaftaran dan Surat keputusan PPDB </strong>   </p> 
                             </li>
                             <li>
-                                <p><strong>Bergabung group Whatsapp PPDB SKAPANSA 2024/2025 </strong></p>
+                                <p><strong>Bergabung group Whatsapp PPDB PPQITA 2024/2025 </strong></p>
                             </li>        
                             <li>
-                                <p><strong>Melakukan regristrasi / daftar ulang sebesar Rp. 1.000.000, 00 ( Satu Juta rupiah ) untuk pembayaran Seragam. Daftar Ulang bisa dicicil sebesar Rp. 300.000, 00 (Tiga Ratus Ribu Rupiah) kekurangannya dipenuhi setelah pengumuman hasil PPDB dengan cara transfer pembayaran melalui Bank BNI No rekening 0628447093 / Bank BRI No rekening 0158-01-025986-50-9 atasnama SMK Pancasila 1 Wonogiri atau datang langsung ke SMK Pancasila 1 Wonogiri. 
+                                <p><strong>Melakukan regristrasi sebesar Rp. 300.000, 00 ( Satu Juta rupiah ) untuk pembayaran Seragam. Jadwal Daftar Ulang dapat diumumkan setelah pengumuman hasil PPDB
+                                Biaya pendaftaran bisa dilakukan dengan cara transfer pembayaran melalui Bank BSI No rekening xxxxx / Bank BRI No rekening xxx atasnama Yayasan Al Mahir atau datang langsung ke Pondok PPQITA Colomadu. 
                                 </strong></p>
                             </li>
                             <li style="">
-                                <p><strong> berkas ke SMK Pancasila 1 Wonogiri : </strong>
+                                <p><strong> berkas ke PPQITA : </strong>
                                 <ul style="list-style-type:circle; padding-left:30px">
                                     <li>Fotocopy Kartu Keluarga</li>
                                     <li>Fotocopy Akta Kelahiran</li>

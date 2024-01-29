@@ -43,6 +43,24 @@
                                 <span class="hide-menu">Dashboard</span>
                             </a>
                         </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('/daftar-online')) active @endif"
+                                href="{{ route('daftar-online') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-solid fa-user"></i>
+                                </span>
+                                <span class="hide-menu">Jadwal Test</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('/daftar-online')) active @endif"
+                                href="{{ route('daftar-online') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-solid fa-user"></i>
+                                </span>
+                                <span class="hide-menu">Status</span>
+                            </a>
+                        </li>
                         <li class="sidebar-item d-grid" style="position: absolute;bottom: 20px;right: 0;left: 0;">
                             <button type="button" onclick="logout();"
                                 class="btn btn-outline-danger mx-3 mt-2">Logout</button>
