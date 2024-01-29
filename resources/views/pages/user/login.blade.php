@@ -36,8 +36,7 @@
                 <div class="checkbox mb-4 mt-2">
                     <label>
                         <input type="checkbox" name="rememberme" value="rememberme"> Remember me
-                    </label>
-                </div>
+                    </label>               </div>
                 <button class="w-100 btn btn-lg mb-3 text-white" style="background-color: var(--primary-color);"
                     type="submit">Login</button>
                 <br><br>

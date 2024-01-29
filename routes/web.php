@@ -73,10 +73,17 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::get('/pendaftar/{slug}', [PendaftaranController::class, 'detail'])->name('pendaftar.detail');
     Route::put('/pendaftar/{id}', [PendaftaranController::class, 'update'])->name('pendaftar.update');
     Route::delete('/pendaftar/{id}/delete', [PendaftaranController::class, 'destroy'])->name('pendaftar.destroy');
+    
+    // route untuk form jadwal test
+    Route::get('/jadwaltest/form', [JadwalTestController::class, 'showform'])->name('jadwaltest.form');
+    Route::post('/jadwaltest.store', [JadwalTestController::class, 'store'])->name(
+        'jadwaltest.store');
+    Route::get('/jadwaltest/list', [JadwalTestController::class, 'list'])->name('jadwaltest.list');
+
 
     //Laporan Rekap
     Route::get('/rekap', [PendaftaranController::class, 'rekap'])->name('rekap.index');
-});
+    });
 
 Route::middleware('auth', 'cekrole:user')->prefix('dashboarduser')->group(function () {
     Route::get('/', function () {
@@ -93,12 +100,6 @@ Route::middleware('auth', 'cekrole:user')->prefix('dashboarduser')->group(functi
         ];
         return view('pages.menuuser.dashboarduser', $data);
     })->name('dashboarduser');
-
-    // route untuk form
-    Route::get('/jadwaltest/form', [JadwalTestController::class, 'showform'])->name('jadwaltest.form');
-    Route::post('/jadwaltest.store', [JadwalTestController::class, 'store'])->name(
-        'jadwaltest.store');
-    Route::get('/jadwaltest/list', [JadwalTestController::class, 'list'])->name('jadwaltest.list');
 
     // menu user
     Route::get('/pendaftar', [PendaftaranController::class, 'indexuser'])->name('pendaftar.indexuser');

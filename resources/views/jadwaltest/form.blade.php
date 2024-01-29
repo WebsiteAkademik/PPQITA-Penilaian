@@ -48,6 +48,7 @@
                 <select name="pic_test" class="form-select" required>
                     <option value="Ust. Dutha Bahari">Ust Dutha Bahari</option>
                     <option value="Dhanny Ardiansyah">Dhanny Ardiansyah</option>
+                    <option value="Diyan Utami">Diyan Utami</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Simpan</button>

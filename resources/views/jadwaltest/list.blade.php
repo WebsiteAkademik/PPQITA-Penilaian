@@ -35,7 +35,8 @@
                 @endforeach
             </tbody>
         </table>
-        {{-- nanti dibikin button utk input yang mengarah ke form input jadwal test --}}
+        
+        {{-- button yang mengarah ke form input jadwal test --}}
         <a href="{{ route('jadwaltest.form') }}" class="btn btn-primary mb-3">Input Jadwal Test</a> 
     </div>
 @endsection
