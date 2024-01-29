@@ -18,10 +18,13 @@ class LoginController extends Controller
         $remember = $request->has('rememberme'); 
 
         if (Auth::attempt($request->only('email', 'password'))){
-            if(Auth::user()->role == "admin")
+            if(Auth::user()->role == "admin"){
                 return redirect('dashboard');
-            if(Auth::user()->role == "user")
+            } elseif(Auth::user()->role == "pengajar") {
+                return redirect('dashboardpengajar');
+            } elseif(Auth::user()->role == "user"){
                 return redirect('dashboarduser');
+            }
         }
         return redirect('login')->with('loginError', 'Email/NISN atau Password tidak tepat');
     }

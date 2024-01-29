@@ -41,55 +41,10 @@
                                 <span>
                                     <i class="fa-solid fa-house"></i>
                                 </span>
-                                <span class="hide-menu">Dashboard Admin</span>
+                                <span class="hide-menu">Dashboard Pengajar</span>
                             </a>
                         </li>
                         <hr>
-                        <li class="sidebar-item mt-2">
-                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
-                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
-                                <span>
-                                    <i class="fa-solid fa-user-plus"></i>
-                                </span>
-                                <span class="hide-menu">Data Pendaftar Baru</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
-                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
-                                <span>
-                                    <i class="fa-solid fa-clock"></i>
-                                </span>
-                                <span class="hide-menu">Data Pendaftar Dijadwalkan Test</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
-                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
-                                <span>
-                                    <i class="fa-solid fa-circle-xmark"></i>
-                                </span>
-                                <span class="hide-menu">Data Pendaftar Tidak Diterima</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
-                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
-                                <span>
-                                    <i class="fa-solid fa-check"></i>
-                                </span>
-                                <span class="hide-menu">Data Pendaftar Diterima</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('jadwaltest/form')) active @endif"
-                                href="{{ route('jadwaltest.form') }}" aria-expanded="false">
-                                <span>
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </span>
-                                <span class="hide-menu">Input Jadwal Test Peserta</span>
-                            </a>
-                        </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
                                 href="{{ route('pendaftar.index') }}" aria-expanded="false">
