@@ -142,16 +142,13 @@
                                                     case 'BARU':
                                                         echo "<div class='badge text-capitalize' style='background-color: #00569C;'>$pendaftar->status</div>";
                                                         break;
-                                                    case 'testing':
+                                                    case 'TEST':
                                                         echo "<div class='badge text-capitalize bg-info'>$pendaftar->status</div>";
                                                         break;
-                                                    case 'wawancara':
-                                                        echo "<div class='badge text-capitalize bg-warning'>$pendaftar->status</div>";
-                                                        break;
-                                                    case 'diterima':
+                                                    case 'DITERIMA':
                                                         echo "<div class='badge text-capitalize bg-success'>$pendaftar->status</div>";
                                                         break;
-                                                    case 'tidak diterima':
+                                                    case 'DITOLAK':
                                                         echo "<div class='badge text-capitalize bg-danger'>$pendaftar->status</div>";
                                                         break;
                                                 }

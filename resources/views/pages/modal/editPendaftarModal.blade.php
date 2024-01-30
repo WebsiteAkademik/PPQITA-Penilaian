@@ -18,10 +18,9 @@
                                 </span>
                             </option>
                             <option value="BARU">BARU</option>
-                            <option value="testing">Testing</option>
-                            <option value="wawancara">Wawancara</option>
-                            <option value="diterima">Diterima</option>
-                            <option value="tidak diterima">Tidak Diterima</option>
+                            <option value="TEST">TEST</option>
+                            <option value="DITERIMA">DITERIMA</option>
+                            <option value="DITOLAK">DITOLAK</option>
                         </select>
                     </div>
                 </div>
