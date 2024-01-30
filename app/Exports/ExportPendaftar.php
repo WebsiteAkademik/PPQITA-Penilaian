@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Pendaftar;
+use App\Models\Pendaftaran;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
 class ExportPendaftar implements FromCollection
@@ -12,6 +12,6 @@ class ExportPendaftar implements FromCollection
     */
     public function collection()
     {
-        return Pendaftar::all();
+        return Pendaftaran::all();
     }
 }

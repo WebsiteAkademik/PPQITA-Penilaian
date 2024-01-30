@@ -62,7 +62,7 @@
                                 @foreach ($pendaftars as $key => $pendaftar)
                                 <tr>
                                     <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">{{ $pendaftar->no_pendaftaran }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $pendaftar->user_id }}</h6>
                                     </td>
                                     <td class="border-bottom-0">
                                         <h5 class="fw-normal mb-1">{{ $pendaftar->nama_calon_siswa }}</h5>           
@@ -74,12 +74,12 @@
                                         <h5 class="fw-normal mb-1">{{ $pendaftar->asal_sekolah }}</h5>
                                     </td>
                                     <td class="border-bottom-0">
-                                        <p class="mb-0 fw-normal"><a href="https://wa.me/{{ $pendaftar->no_telepon }}">{{ $pendaftar->no_telepon }}</a></p>
+                                        <p class="mb-0 fw-normal"><a href="https://wa.me/{{ $pendaftar->no_telepon }}">{{ $pendaftar->no_wa_anak }}</a></p>
                                     </td>
                                     <td class="border-bottom-0">
                                         @php
                                             switch ($pendaftar->status) {
-                                                case 'open':
+                                                case 'BARU':
                                                     echo "<div class='badge text-capitalize' style='background-color: #00569C;'>$pendaftar->status</div>";
                                                     break;
                                                 case 'testing':

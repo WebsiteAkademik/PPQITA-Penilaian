@@ -37,11 +37,11 @@
             <tbody>
                 @foreach ($rekap as $key => $rekap)
                 <tr>
-                    <td>{{ $rekap->no_pendaftaran }}</td>
+                    <td>{{ $rekap->user_id }}</td>
                     <td>{{ $rekap->nama_calon_siswa }}</td>
                     <td>{{ $rekap->kabupaten }}</td>
                     <td>{{ $rekap->asal_sekolah }}</td>
-                    <td>{{ $rekap->no_telepon }}</td>
+                    <td>{{ $rekap->no_wa_anak }}</td>
                     <td>{{ $rekap->status }}</td>
                 </tr>
                 @endforeach

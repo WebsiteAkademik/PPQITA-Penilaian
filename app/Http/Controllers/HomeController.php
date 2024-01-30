@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pendaftar;
+use App\Models\Pendaftaran;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -42,18 +42,18 @@ class HomeController extends Controller
     }
     public function cetak_pdf($no_nisn)
     {
-        $pendaftar = Pendaftar::where('no_nisn', $no_nisn)->first();
+        $pendaftar = Pendaftaran::where('no_nisn', $no_nisn)->first();
         $data = [
             'pendaftar' => $pendaftar
         ];
-        $pegawai = Pendaftar::all();
+        $pegawai = Pendaftaran::all();
 
         $pdf = PDF::loadView('pages.pendaftar_pdf', ['pendaftar' => $data])->setPaper('A4', 'potrait');
         return $pdf->stream('formulir_daftarulang.pdf');
     }
 
     public function cetak_laporan(){
-        $rekap = Pendaftar::all();
+        $rekap = Pendaftaran::all();
         $laporan = PDF::loadView('pages.laporan_pdf', ['rekap' => $rekap])->setPaper('A4', 'portrait');
         return $laporan->stream('laporan_data_pendaftar.pdf');
     }

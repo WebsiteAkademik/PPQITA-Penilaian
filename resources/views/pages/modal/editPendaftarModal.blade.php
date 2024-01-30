@@ -17,7 +17,7 @@
                                     {{ ucwords($pendaftar->status) }}
                                 </span>
                             </option>
-                            <option value="open">Open</option>
+                            <option value="BARU">BARU</option>
                             <option value="testing">Testing</option>
                             <option value="wawancara">Wawancara</option>
                             <option value="diterima">Diterima</option>

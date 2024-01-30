@@ -129,18 +129,17 @@
                                             <br/><span class="fw-normal mb-1">{{ "Tempat Lahir : " . $pendaftar->tempat_lahir }}</span>
                                             <br/><span class="fw-normal mb-1">{{ "Tanggal Lahir : " . $pendaftar->tanggal_lahir }}</span>
                                             <br/><span class="fw-normal mb-1">{{ "No KK : " . $pendaftar->no_kartu_keluarga }}</span>
-                                            <br/><span class="fw-normal mb-1">{{ "Agama : " . $pendaftar->agama }}</span>
                                             <br/><span class="fw-normal mb-1">{{ "Alamat Rumah : " . $pendaftar->alamat_rumah }}</span>
                                             <br/><span class="fw-normal mb-1">{{ "Nama Ayah : " . $pendaftar->nama_ayah }}</span>
                 
                                         </td>
                                         <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal"><a href="https://wa.me/{{ $pendaftar->no_telepon }}">{{ $pendaftar->no_telepon }}</a></p>
+                                            <p class="mb-0 fw-normal"><a href="https://wa.me/{{ $pendaftar->no_wa_anak }}">{{ $pendaftar->no_wa_anak }}</a></p>
                                         </td>
                                         <td class="border-bottom-0">
                                             @php
                                                 switch ($pendaftar->status) {
-                                                    case 'open':
+                                                    case 'BARU':
                                                         echo "<div class='badge text-capitalize' style='background-color: #00569C;'>$pendaftar->status</div>";
                                                         break;
                                                     case 'testing':
