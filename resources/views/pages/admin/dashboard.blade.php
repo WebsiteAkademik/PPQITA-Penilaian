@@ -159,7 +159,7 @@
                                             @endphp
                                         </td>
                                         <td class="border-bottom-0 d-flex gap-2 align-items-center">
-                                            <a href="{{ route('pendaftar.detail', $pendaftar->slug) }}"
+                                            <a href="{{ route('pendaftar.detail', $pendaftar->no_nisn) }}"
                                                 class="text-white text-center d-flex align-items-center justify-content-center rounded-circle bg-warning"
                                                 style="width: 40px;height: 40px;">
                                                 <i class="fa-solid fa-arrow-right"></i>

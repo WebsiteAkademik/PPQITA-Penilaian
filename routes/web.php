@@ -57,8 +57,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 //role -> pengajar
 Route::middleware('auth', 'cekrole:pengajar')->prefix('dashboardpengajar')->group(function () {
     Route::get('/', function () {
-        $pendaftarCount = Pendaftar::count();
-        $pendaftars = Pendaftar::latest()->limit(5)->get();
+        $pendaftarCount = Pendaftaran::count();
+        $pendaftars = Pendaftaran::latest()->limit(5)->get();
 
         $data = [
             'pendaftars' => $pendaftars,
@@ -71,8 +71,8 @@ Route::middleware('auth', 'cekrole:pengajar')->prefix('dashboardpengajar')->grou
 //role -> admin
 Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function () {
     Route::get('/', function () {
-        $pendaftarCount = Pendaftar::count();
-        $pendaftars = Pendaftar::latest()->limit(5)->get();
+        $pendaftarCount = Pendaftaran::count();
+        $pendaftars = Pendaftaran::latest()->limit(5)->get();
 
         $data = [
             'pendaftars' => $pendaftars,
@@ -84,10 +84,10 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     // menu user
     
     // Pendaftar
-    Route::get('/pendaftar', [PendaftaranController::class, 'index'])->name('pendaftar.index');
-    Route::get('/pendaftar/{slug}', [PendaftaranController::class, 'detail'])->name('pendaftar.detail');
-    Route::put('/pendaftar/{id}', [PendaftaranController::class, 'update'])->name('pendaftar.update');
-    Route::delete('/pendaftar/{id}/delete', [PendaftaranController::class, 'destroy'])->name('pendaftar.destroy');
+    Route::get('/pendaftar', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');
+    Route::get('/pendaftar/{no_nisn}', [PendaftaranOnlineController::class, 'detail'])->name('pendaftar.detail');
+    Route::put('/pendaftar/{id}', [PendaftaranOnlineController::class, 'update'])->name('pendaftar.update');
+    Route::delete('/pendaftar/{id}/delete', [PendaftaranOnlineController::class, 'destroy'])->name('pendaftar.destroy');
     
     // route untuk form jadwal test
     Route::get('/jadwaltest/form', [JadwalTestController::class, 'showform'])->name('jadwaltest.form');
@@ -97,13 +97,13 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
 
 
     //Laporan Rekap
-    Route::get('/rekap', [PendaftaranController::class, 'rekap'])->name('rekap.index');
+    Route::get('/rekap', [PendaftaranOnlineController::class, 'rekap'])->name('rekap.index');
     });
 
 //role -> user
 Route::middleware('auth', 'cekrole:user')->prefix('dashboarduser')->group(function () {
     Route::get('/', function () {
-        $pendaftarCount = Pendaftar::count();
+        $pendaftarCount = Pendaftaran::count();
 
         //$pendaftars = Pendaftar::latest()->limit(5)->get();
         //auth()->user()->name
