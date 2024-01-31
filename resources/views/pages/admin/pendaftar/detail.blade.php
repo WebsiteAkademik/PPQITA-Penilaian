@@ -49,17 +49,17 @@
                         <tr>
                             <td style="width: 40%">No Whatsapp</td>
                             <td style="width: 5%"> : </td>
-                            <td style="width: 55%">{{ $pendaftar->no_telepon }}</td>
+                            <td style="width: 55%">{{ $pendaftar->no_wa_anak }}</td>
                         </tr>
                         <tr>
-                            <td style="width: 40%">No Induk Keluarga</td>
+                            <td style="width: 40%">No Kartu Keluarga</td>
                             <td style="width: 5%"> : </td>
-                            <td style="width: 55%">{{ $pendaftar->no_induk_keluarga }}</td>
+                            <td style="width: 55%">{{ $pendaftar->no_kartu_keluarga }}</td>
                         </tr>
                         <tr>
-                            <td style="width: 40%">Tempat tanggal lahir</td>
+                            <td style="width: 40%">Tempat, tanggal lahir</td>
                             <td style="width: 5%"> : </td>
-                            <td style="width: 55%">{{ $pendaftar->tempat_lahir . " " . $pendaftar->tanggal_lahir }}</td>
+                            <td style="width: 55%">{{ $pendaftar->tempat_lahir . ", " . $pendaftar->tanggal_lahir }}</td>
                         </tr>
                         <tr>
                             <td style="width: 40%">Jenis Kelamin</td>
@@ -68,21 +68,20 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="width: 40%">Agama</td>
-                            <td style="width: 5%"> : </td>
-                            <td style="width: 55%">{{ $pendaftar->agama }}</td>
-                        </tr>
-                        <tr>
                             <td style="width: 40%">Alamat</td>
                             <td style="width: 5%"> : </td>
                             <td style="width: 55%">{{ 
                             $pendaftar->alamat_rumah 
-                            . " " . $pendaftar->dukuh 
-                            . " " . $pendaftar->kalurahan 
-                            . " " . $pendaftar->kecamatan 
-                            . " " . $pendaftar->kabupaten 
-                            . " " . $pendaftar->kodepos  
+                            . ", " . $pendaftar->dukuh 
+                            . ", " . $pendaftar->kelurahan 
+                            . ", " . $pendaftar->kecamatan 
+                            . ", " . $pendaftar->kabupaten
                              }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%">Kode Pos</td>
+                            <td style="width: 5%"> : </td>
+                            <td style="width: 55%">{{ $pendaftar->kodepos }}</td>
                         </tr>
                         <tr>
                             <td style="width: 40%">Status</td>
@@ -123,17 +122,12 @@
                     <h2 class="fs-6 fw-semibold mt-4">Data Sekolah</h2>
                     <table>
                         <tr>
-                            <td style="width: 25%">Nama Sekolah</td>
+                            <td style="width: 25%">Asal Sekolah</td>
                             <td style="width: 5%"> : </td>
                             <td style="width: 65%">{{ $pendaftar->asal_sekolah }}</td>
                         </tr>
                         <tr>
-                            <td style="width: 25%">Jurusan Yang Ingin Diambil</td>
-                            <td style="width: 5%"> : </td>
-                            <td style="width: 65%">{{ $pendaftar->program_keahlian }}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 25%">NONISN</td>
+                            <td style="width: 25%">No. NISN</td>
                             <td style="width: 5%"> : </td>
                             <td style="width: 65%">{{ $pendaftar->no_nisn }}</td>
                         </tr>
@@ -170,7 +164,7 @@
                             <td style="width: 65%">{{ $pendaftar->pekerjaan_ibu }}</td>
                         </tr>
                         <tr>
-                            <td style="width: 25%">Memperoleh Informasi Dari</td>
+                            <td style="width: 65%">Memperoleh Informasi dari</td>
                             <td style="width: 5%"> : </td>
                             <td style="width: 65%">{{ $pendaftar->informasi_pmb }}</td>
                         </tr>
@@ -179,7 +173,7 @@
                     <br>
                     <table>
                         <!-- Tombol Cetak Formulir Pendaftaran -->
-                        <a href="{{ route('cetak_pdf', $pendaftar->no_nisn) }}" class="btn btn-primary">Unduh Formulir Daftar Ulang</a>
+                        <a href="{{ route('cetak_pdf', $pendaftar->no_nisn) }}" target="_blank" class="btn btn-primary">Unduh Formulir Daftar Ulang</a>
                     </table>
                 </div>
             </div>

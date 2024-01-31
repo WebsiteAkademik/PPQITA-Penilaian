@@ -24,18 +24,12 @@
 
 			<tr>
 				<td style="width: 48%">
-					Nomor Pendaftaran<br> 
 					No NISN<br> 
-					Nama Calon Siswa<br> 
-					Program Keahlian<br> 
+					Nama Calon Siswa<br>
 					Tempat dan Tanggal lahir<br>
-					Nomor Kartu Keluarga<br>  
-					Nomor Induk keluarga<br> 
-					Jenis Kelamin<br> 
-					Agama<br> 
+					Nomor Kartu Keluarga<br>
 					Tinggi Badan<br> 
 					Berat Badan<br> 
-					Tato <br> 
 					Penyakit Kronis<br> 
 					Sekolah Asal<br> 
 					Nama Ayah<br> 
@@ -46,13 +40,9 @@
 					Nomor Whatsapp Ortu<br> 
 					Nomor Whatsapp Anak<br> 
 					Alamat<br> 
+					Kode Pos<br> 
 				</td>
 				<td style="width: 4%">
-					:<br>
-					:<br>
-					:<br>
-					:<br>
-					:<br>
 					:<br>
 					:<br>
 					:<br>
@@ -73,18 +63,12 @@
 				
 				</td>
 				<td style="width: 48%">
-					{{$p->no_pendaftaran}}<br>
 					{{$p->no_nisn}}<br>
 					{{$p->nama_calon_siswa}}<br>
-					{{$p->program_keahlian}}<br>
-					{{$p->tempat_lahir}} {{$p->tanggal_lahir}}<br>
+					{{$p->tempat_lahir}}, {{date('d-m-Y', strtotime($p->tanggal_lahir))}}<br>
 					{{$p->no_kartu_keluarga}}<br>
-					{{$p->no_induk_keluarga}}<br>
-					{{$p->jenis_kelamin==0?'Laki-laki':'Perempuan'}}<br>
-					{{$p->agama}}<br>
-					{{$p->tinggi_badan}}<br>
-					{{$p->berat_badan}}<br>
-					{{$p->bertato==0?'Tidak':'Bertato'}}<br>
+					{{$p->tinggi_badan}} cm<br>
+					{{$p->berat_badan}} kg<br>
 					{{$p->penyakit_kronis}}<br>
 					{{$p->asal_sekolah}}<br>
 					{{$p->nama_ayah}}<br>
@@ -93,15 +77,14 @@
 					{{$p->pekerjaan_ibu}}<br>
 					{{$p->penghasilan_per_bulan}}<br>
 					{{$p->no_telepon_ortu}}<br>
-					{{$p->no_telepon}}<br>
+					{{$p->no_wa_anak}}<br>
 					{{$p->alamat_rumah 
-					. ' ' . $p->dukuh 
-					. ' ' . $p->kalurahan 
-					. ' ' . $p->kecamatan
-					. ' ' . $p->kabupaten 
-					. ' ' . $p->kodepos 
+					. ', ' . $p->dukuh 
+					. ', ' . $p->kelurahan 
+					. ', ' . $p->kecamatan
+					. ', ' . $p->kabupaten
 					}}
-
+					{{$p->kodepos}}<br>
 				</td>
 			</tr>
 			
@@ -110,7 +93,8 @@
 	<table style="width:100%;margin-left: auto;
 	margin-right: auto;">
 		<tr>
-			<td style="width: 30%; border:solid 1px;text-align:
+			<td style="width: 5%"></td>
+			<td style="width: 25%; border:solid 1px;text-align:
 			 center;vertical-align:center;padding:30px;">
 			<center>
 				<h6>Pas Photo<br>3 x 4</h6>
