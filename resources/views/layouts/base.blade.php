@@ -56,14 +56,13 @@
                             href="{{ route('galeri') }}">Galeri</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('daftar-online') ? 'active' : '' }}"
-                            href="{{ route('daftar-online') }}">Daftar Online</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link {{ Request::is('kontak') ? 'active' : '' }}"
                             href="{{ route('kontak') }}">Kontak</a>
                     </li>
-                    
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('daftar-online') ? 'active' : '' }}"
+                            href="{{ route('daftar-online') }}">Daftar Online</a>
+                    </li>
                     <li class="nav-item ps-3">
                         <a class="btn text-white px-4 py-2 {{ Request::is('login') ? 'active' : '' }}"
                             style="background-color: #B90000; border-radius: 20px;"

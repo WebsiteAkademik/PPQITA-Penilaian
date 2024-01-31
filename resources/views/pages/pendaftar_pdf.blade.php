@@ -12,6 +12,7 @@
 		}
 	</style>
 			<center><img src="assets/kop-smk.jpg" width="95%"/></center> <br/><br/>
+	@php setlocale(LC_TIME, 'id_ID'); @endphp
 	@php $i=1 @endphp
 	@foreach($pendaftar as $p)
 	<center>
@@ -40,9 +41,11 @@
 					Nomor Whatsapp Ortu<br> 
 					Nomor Whatsapp Anak<br> 
 					Alamat<br> 
-					Kode Pos<br> 
+					Kode Pos<br>
+					Asal Sekolah<br>
 				</td>
 				<td style="width: 4%">
+					:<br>
 					:<br>
 					:<br>
 					:<br>
@@ -85,6 +88,7 @@
 					. ', ' . $p->kabupaten
 					}}
 					{{$p->kodepos}}<br>
+					{{$p->asal_sekolah}}<br>
 				</td>
 			</tr>
 			
@@ -101,10 +105,10 @@
 			</center>
 			</td>
 			<td style="width: 40%"></td>
-			<td style="width: 30%; text-align:
+			<td style="width: 35%; text-align:
 			 center;vertical-align:center;padding:30px;">
 			<center>
-				{{ "Wonogiri,".date('d-M-Y') }} <br>
+				{{ "Surakarta, ".strftime('%e %B %Y') }} <br>
 				Calon Siswa <br><br><br><br>
 				{{$p->nama_calon_siswa}}
 			</center>
