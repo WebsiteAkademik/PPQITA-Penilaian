@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\JadwalTest;
-use App\Models\Pendaftar;
+use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -12,7 +12,7 @@ class JadwalTestController extends Controller
 {
     public function showForm(){
         // Ambil data pendaftar dari database
-        $pendaftar = Pendaftar::all();
+        $pendaftar = Pendaftaran::all();
 
         // Kirim data pendaftar ke view
         return view('jadwaltest.form', ['pendaftars' => $pendaftar]);
