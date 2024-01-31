@@ -35,7 +35,8 @@ class Pendaftaran extends Model
         'nama_ibu',
         'informasi_pmb',
         'no_telepon_ortu',
-        "status",
+        'penghasilan_per_bulan',
+        'status',
     ];
 
     public function user(){

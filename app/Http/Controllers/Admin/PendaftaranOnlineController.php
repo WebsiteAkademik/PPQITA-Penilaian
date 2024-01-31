@@ -48,6 +48,7 @@ class PendaftaranOnlineController extends Controller {
             // "nama_ibu" => "required",
             // "pekerjaan_ibu" => "required",
             "no_telepon_ortu" => "required",
+            "penghasilan_per_bulan" => "required",
             "user_name" => "required|alpha_dash|unique:users,name",
             "password" => "required",
             "informasi_pmb" => "required",
