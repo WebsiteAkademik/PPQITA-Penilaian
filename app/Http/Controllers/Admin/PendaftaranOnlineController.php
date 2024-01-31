@@ -139,12 +139,10 @@ class PendaftaranOnlineController extends Controller {
 
     public function index()
     {
-        $pendaftars = Pendaftaran::latest()->get();
-        $data = [
-            'pendaftars' => $pendaftars
-        ];
-
-        return view('pages.admin.pendaftar.index', $data);
+        $pendaftaran = Pendaftaran::where('status', 'BARU')->get();
+        return view('pages.admin.pendaftaran.list_pendaftaran_baru', [
+            "pendaftaran" => $pendaftaran
+        ]);
     }
 
     public function rekap()
