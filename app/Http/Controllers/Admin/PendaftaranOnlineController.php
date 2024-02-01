@@ -29,6 +29,7 @@ class PendaftaranOnlineController extends Controller {
             "nama_calon_siswa" => "required",
             "tempat_lahir" => "required",
             "tanggal_lahir" => "required",
+            "jenis_kelamin" => "required",
             "no_kartu_keluarga" => "required",
             "tinggi_badan" => "required",
             "berat_badan" => "required",
@@ -121,7 +122,11 @@ class PendaftaranOnlineController extends Controller {
         $user = User::create($dataUser);
 
         $data["user_id"] = $user->id;
-        Pendaftaran::create($data);
+        $data["no_pendaftaran"] = "";
+        $pendaftar = Pendaftaran::create($data);
+        $pendaftar->update([
+            "no_pendaftaran" => date("Y-m-d") . "-" . $pendaftar->id,
+        ]);
 
         auth()->logout();
         request()->session()->invalidate();
