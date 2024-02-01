@@ -11,7 +11,7 @@ class JadwalTest extends Model
 
     protected $fillable = ['nama_calon_siswa', 'tanggal_test', 'jam_test', 'jenis_test', 'pic_test'];
 
-    public function pendaftar(){
+    public function pendaftaran(){
         return $this->belongsTo(Pendaftar::class, 'nama_calon_siswa');
     }
 };

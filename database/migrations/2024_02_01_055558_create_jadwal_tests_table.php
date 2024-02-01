@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('jadwal_tests', function (Blueprint $table) {
-            $table->text('jenis_test')->after('jam_test');
+            //
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('jadwal_tests', function (Blueprint $table) {
-            $table->dropColumn('jenis_test');
+            //
         });
     }
 };
