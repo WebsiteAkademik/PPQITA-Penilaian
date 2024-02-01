@@ -10,11 +10,13 @@ class Pendaftaran extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'no_pendaftaran',
         'user_id',
         'no_nisn',
         'nama_calon_siswa',
         'tempat_lahir',
         'tanggal_lahir',
+        'jenis_kelamin',
         'tinggi_badan',
         'no_kartu_keluarga',
         'no_wa_anak',
