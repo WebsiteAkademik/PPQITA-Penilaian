@@ -36,12 +36,7 @@
             </div>
             <div class="mb-3">
                 <label for="jenis_test" class="form-label">Jenis Test</label>
-                <select name="jenis_test" class="form-select" required>
-                    <option value="Umum">Umum</option>
-                    <option value="Dinniyah">Dinniyah</option>
-                    <option value="Hafalan">Hafalan</option>
-                    <option value="Matematika">Matematika</option>
-                </select>
+                <textarea class="form-control" id="jenis_test" name="jenis_test" rows="3" value="" required></textarea>
             </div>
             <div class="mb-3">
                 <label for="pic_test" class="form-label">PIC</label>
