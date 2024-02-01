@@ -92,9 +92,9 @@
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="mb-3">
-                                    <label for="no_nisn" class="form-label">NO NISN<span class="text-danger"
+                                    <label for="no_nisn" class="form-label">NISN<span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input type="number" class="form-control" name="no_nisn" id="no_nisn"
+                                    <input required type="text" class="form-control" name="no_nisn" id="no_nisn"
                                         value="{{ old('no_nisn') }}">
                                 </div>
                             </div>     
@@ -103,7 +103,7 @@
                                 <div class="mb-3">
                                     <label for="nama_calon_siswa" class="form-label">Nama Calon Peserta Didik <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input type="text" class="form-control" name="nama_calon_siswa" id="nama_calon_siswa"
+                                    <input required type="text" class="form-control" name="nama_calon_siswa" id="nama_calon_siswa"
                                         value="{{ old('nama_calon_siswa') }}">
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                                 <div class="mb-3">
                                 <label for="tempat_lahir" class="form-label">Tempat Lahir <span class="text-danger"
                                         style="font-weight: 700;font-size: 20px;">*</span></label>
-                                <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir"
+                                <input required type="text" class="form-control" name="tempat_lahir" id="tempat_lahir"
                                     value="{{ old('tempat_lahir') }}">
                                 </div>
                             </div>
@@ -119,15 +119,26 @@
                                 <div class="mb-3">
                                     <label for="tanggal_lahir" class="form-label">Tanggal Lahir <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input type="date" class="form-control" name="tanggal_lahir" id="tanggal_lahir"
+                                    <input required type="date" class="form-control" name="tanggal_lahir" id="tanggal_lahir"
                                         value="{{ old('tanggal_lahir') }}">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                <label for="jenis_kelamin" class="form-label">Jenis Kelamin<span class="text-danger"
+                                        style="font-weight: 700;font-size: 20px;">*</span></label>
+                                    <select required class="form-select" id="jenis_kelamin" name="jenis_kelamin" value="{{ old('jenis_kelamin') }}">
+                                        <option {{ old('jenis_kelamin') == '' ? 'selected' : '' }} disabled>--- Pilih Jenis Kelamin ---</option>
+                                        <option {{ old('jenis_kelamin') == 'LAKI-LAKI' ? 'selected' : '' }} value="LAKI-LAKI">LAKI-LAKI</option>
+                                        <option {{ old('jenis_kelamin') == 'PEREMPUAN' ? 'selected' : '' }} value="PEREMPUAN">PEREMPUAN</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="mb-3">
                                     <label for="no_kartu_keluarga" class="form-label">Nomor Kartu Keluarga <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input type="text" class="form-control" name="no_kartu_keluarga" id="no_kartu_keluarga"
+                                    <input required type="text" class="form-control" name="no_kartu_keluarga" id="no_kartu_keluarga"
                                         value="{{ old('no_kartu_keluarga') }}">
                                 </div>
                             </div>
@@ -135,7 +146,7 @@
                                 <div class="mb-3">
                                     <label for="tinggi_badan" class="form-label">Tinggi Badan <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input type="number" class="form-control" name="tinggi_badan" id="tinggi_badan"
+                                    <input required type="number" class="form-control" name="tinggi_badan" id="tinggi_badan"
                                         value="{{ old('tinggi_badan') }}">
                                 </div>
                             </div>
@@ -143,7 +154,7 @@
                                 <div class="mb-3">
                                     <label for="berat_badan" class="form-label">Berat Badan <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input type="number" class="form-control" name="berat_badan" id="berat_badan"
+                                    <input required type="number" class="form-control" name="berat_badan" id="berat_badan"
                                         value="{{ old('berat_badan') }}">
                                 </div>
                             </div>
@@ -151,14 +162,14 @@
                                 <div class="mb-3">
                                     <label for="no_wa_anak" class="form-label">Nomor WhatsApp Anak<span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input type="text" class="form-control" name="no_wa_anak" id="no_wa_anak"
+                                    <input required type="text" class="form-control" name="no_wa_anak" id="no_wa_anak"
                                         value="{{ old('no_wa_anak') }}">
                                 </div>
                             </div>
                             <div class="col-md-12 col-12">
                                 <div class="mb-3">
                                     <label for="penyakit_kronis" class="form-label">Memiliki Penyakit Kronis<span class="text-danger"
-                                            style="font-weight: 700;font-size: 20px;">*</span></label>
+                                            style="font-weight: 700;font-size: 20px;"></span></label>
                                     <textarea class="form-control" name="penyakit_kronis" id="penyakit_kronis"
                                         value="">{{ old('penyakit_kronis') }}</textarea>
                                 </div>
@@ -171,14 +182,14 @@
                                 <div class="mb-3">
                                     <label for="alamat_rumah" class="form-label">Jalan <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <textarea class="form-control" id="alamat_rumah" name="alamat_rumah" rows="3" value="">{{ old('alamat_rumah') }}</textarea>
+                                    <textarea required required class="form-control" id="alamat_rumah" name="alamat_rumah" rows="3" value="">{{ old('alamat_rumah') }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="mb-3">
                                     <label for="dukuh" class="form-label">Dukuh<span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input type="text" class="form-control" name="dukuh" id="dukuh"
+                                    <input required type="text" class="form-control" name="dukuh" id="dukuh"
                                         value="{{ old('dukuh') }}">
                                 </div>
                             </div>
@@ -186,7 +197,7 @@
                                 <div class="mb-3">
                                     <label for="kelurahan" class="form-label">Kelurahan<span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input type="text" class="form-control" name="kelurahan" id="kelurahan"
+                                    <input required type="text" class="form-control" name="kelurahan" id="kelurahan"
                                         value="{{ old('kelurahan') }}">
                                 </div>
                             </div>
@@ -194,7 +205,7 @@
                                 <div class="mb-3">
                                     <label for="kecamatan" class="form-label">Kecamatan<span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input type="text" class="form-control" name="kecamatan" id="kecamatan"
+                                    <input required type="text" class="form-control" name="kecamatan" id="kecamatan"
                                         value="{{ old('kecamatan') }}">
                                 </div>
                             </div>
@@ -202,7 +213,7 @@
                                 <div class="mb-3">
                                     <label for="kabupaten" class="form-label">Kabupaten / Kota<span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input type="text" class="form-control" name="kabupaten" id="kabupaten"
+                                    <input required type="text" class="form-control" name="kabupaten" id="kabupaten"
                                         value="{{ old('kabupaten') }}">
                                 </div>
                             </div>
@@ -210,7 +221,7 @@
                                 <div class="mb-3">
                                     <label for="kodepos" class="form-label">Kode Pos<span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input type="text" class="form-control" name="kodepos" id="kodepos"
+                                    <input required type="text" class="form-control" name="kodepos" id="kodepos"
                                         value="{{ old('kodepos') }}">
                                 </div>
                             </div>
@@ -224,7 +235,7 @@
                                 <div class="mb-3">
                                     <label for="asal_sekolah" class="form-label">Asal Sekolah <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input type="text" class="form-control" name="asal_sekolah" id="asal_sekolah"
+                                    <input required type="text" class="form-control" name="asal_sekolah" id="asal_sekolah"
                                         value="{{ old('asal_sekolah') }}">
                                 </div>
                             </div>
@@ -293,7 +304,7 @@
                                 <div class="mb-3">
                                     <label for="no_telepon_ortu" class="form-label">Nomor Whatsapp Orang Tua <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input type="number" class="form-control" name="no_telepon_ortu" id="no_telepon_ortu"
+                                    <input required type="number" class="form-control" name="no_telepon_ortu" id="no_telepon_ortu"
                                         value="{{ old('no_telepon_ortu') }}">
                                 </div>
                             </div>
@@ -301,7 +312,7 @@
                                 <div class="mb-3">
                                     <label for="penghasilan_per_bulan" class="form-label">Penghasilan Perbulan <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <select class="form-select" id="penghasilan_per_bulan" name="penghasilan_per_bulan" value="{{ old('penghasilan_per_bulan') }}">
+                                    <select required class="form-select" id="penghasilan_per_bulan" name="penghasilan_per_bulan" value="{{ old('penghasilan_per_bulan') }}">
                                         <option {{ old('penghasilan_per_bulan') == '' ? 'selected' : '' }} disabled>--- Pilih Penghasilan ---</option>
                                         <option {{ old('penghasilan_per_bulan') == 'Kurang Dari 1 Juta' ? 'selected' : '' }} value="Kurang Dari 1 Juta">Kurang Dari 1 Juta</option>
                                         <option {{ old('penghasilan_per_bulan') == '1 Juta - 2 Juta' ? 'selected' : '' }} value="1 Juta - 2 Juta">1 Juta - 2 Juta</option>
@@ -322,7 +333,7 @@
                                 <div class="mb-3">
                                     <label for="user_name" class="form-label">Username <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input type="text" class="form-control" name="user_name" id="user_name" placeholder="Isikan NISN"
+                                    <input required type="text" class="form-control" name="user_name" id="user_name" placeholder="Isikan NISN"
                                         value="{{ old('user_name') }}">
                                 </div>
                                 
@@ -331,7 +342,7 @@
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input type="text" class="form-control" name="password" id="password" placeholder="Isikan NISN"
+                                    <input required type="text" class="form-control" name="password" id="password" placeholder="Isikan NISN"
                                         value="{{ old('password') }}">
                                 </div>
                             </div>
