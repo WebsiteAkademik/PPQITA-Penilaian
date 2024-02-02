@@ -31,6 +31,9 @@
                         <td>{{ $jadwalTest->jam_test }}</td>
                         <td>{{ $jadwalTest->jenis_test }}</td>
                         <td>{{ $jadwalTest->pic_test }}</td>
+                        <td>
+                            <a href="{{ route('jadwaltest.edit', $jadwalTest->id) }}" class="btn btn-warning">Edit</a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

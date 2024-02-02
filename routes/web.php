@@ -97,6 +97,7 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::post('/jadwaltest.store', [JadwalTestController::class, 'store'])->name(
         'jadwaltest.store');
     Route::get('/jadwaltest/list', [JadwalTestController::class, 'list'])->name('jadwaltest.list');
+    Route::get('/jadwaltest/edit/{id}', [JadwalTestController::class, 'edit'])->name('jadwaltest.edit');
 
     // Laporan Profile
     Route::get('/profile', [PendaftaranOnlineController::class, 'profile'])->name('profile.index');

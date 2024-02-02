@@ -44,4 +44,12 @@ class JadwalTestController extends Controller
     return view('jadwaltest.list', ['jadwalTests' => $jadwalTests]);
     }
 
+    public function edit($id)
+    {
+        $jadwalTest = JadwalTest::find($id);
+        // Lakukan operasi edit atau tampilkan form edit
+        return view('pages.admin.edit_jadwaltest', compact('jadwalTest'));
+    }
+
+
 }
