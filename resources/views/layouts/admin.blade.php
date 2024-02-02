@@ -92,7 +92,7 @@
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
-                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
+                                href="{{ route('profile.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-solid fa-book"></i>
                                 </span>

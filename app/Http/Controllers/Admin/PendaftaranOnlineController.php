@@ -150,6 +150,16 @@ class PendaftaranOnlineController extends Controller {
         ]);
     }
 
+    public function profile()
+    {
+        $pendaftars = Pendaftaran::all();
+        $data = [
+            'pendaftars' => $pendaftars
+        ];
+
+        return view('pages.admin.profile.index', $data);
+    }
+
     public function rekap()
     {
         $pendaftars = Pendaftaran::all();

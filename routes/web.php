@@ -89,14 +89,16 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::put('/pendaftar/{id}', [PendaftaranOnlineController::class, 'update'])->name('pendaftar.update');
     Route::delete('/pendaftar/{id}/delete', [PendaftaranOnlineController::class, 'destroy'])->name('pendaftar.destroy');
     
-    // route untuk form jadwal test
+    // Jadwal test
     Route::get('/jadwaltest/form', [JadwalTestController::class, 'showform'])->name('jadwaltest.form');
     Route::post('/jadwaltest.store', [JadwalTestController::class, 'store'])->name(
         'jadwaltest.store');
     Route::get('/jadwaltest/list', [JadwalTestController::class, 'list'])->name('jadwaltest.list');
 
+    // Laporan Profile
+    Route::get('/profile', [PendaftaranOnlineController::class, 'profile'])->name('profile.index');
 
-    //Laporan Rekap
+    // Laporan Rekap
     Route::get('/rekap', [PendaftaranOnlineController::class, 'rekap'])->name('rekap.index');
     });
 
