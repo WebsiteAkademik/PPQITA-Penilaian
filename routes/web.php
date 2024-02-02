@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PendaftaranController;
 use App\Http\Controllers\Admin\PendaftaranOnlineController;
 use App\Http\Controllers\JadwalTestController;
 use App\Http\Controllers\LoginController;
+use App\Models\JadwalTest;
 use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
@@ -73,10 +74,12 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::get('/', function () {
         $pendaftarCount = Pendaftaran::count();
         $pendaftars = Pendaftaran::latest()->limit(5)->get();
+        $jadwalTests = JadwalTest::all();
 
         $data = [
             'pendaftars' => $pendaftars,
-            'pendaftarCount' => $pendaftarCount
+            'pendaftarCount' => $pendaftarCount,
+            'jadwalTests' => $jadwalTests,
         ];
         return view('pages.admin.dashboard', $data);
     })->name('dashboard');

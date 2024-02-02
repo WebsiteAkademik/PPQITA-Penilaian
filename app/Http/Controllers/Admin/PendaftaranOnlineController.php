@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Pendaftaran;
 use App\Models\User;
+use App\Models\JadwalTest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -326,4 +327,12 @@ class PendaftaranOnlineController extends Controller {
 
         return redirect()->route('pendaftar.index');
     }
+
+    public function list(){
+        // Ambil data jadwal test dari database
+        $jadwalTests = JadwalTest::all();
+    
+        // Kirim data jadwal test ke view
+        return view('jadwaltest.list', ['jadwalTests' => $jadwalTests]);
+        }
 }

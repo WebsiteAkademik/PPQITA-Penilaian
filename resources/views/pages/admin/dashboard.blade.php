@@ -177,4 +177,39 @@
             </div>
         </div>
     </div>
+
+    <div class="container">
+        <h1>Daftar Jadwal Test Pendaftar</h1>
+        <br>
+
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nama Calon Siswa</th>
+                    <th scope="col">Tanggal Test</th>
+                    <th scope="col">Jam Test</th>
+                    <th scope="col">Jenis Test</th>
+                    <th scope="col">PIC</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($jadwalTests as $jadwalTest)
+                    <tr>
+                        <th scope="row">{{ $loop->iteration }}</th>
+                        <td>{{ $jadwalTest->nama_calon_siswa }}</td>
+                        <td>{{ $jadwalTest->tanggal_test }}</td>
+                        <td>{{ $jadwalTest->jam_test }}</td>
+                        <td>{{ $jadwalTest->jenis_test }}</td>
+                        <td>{{ $jadwalTest->pic_test }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>    
+    </div>
+
 @endsection
