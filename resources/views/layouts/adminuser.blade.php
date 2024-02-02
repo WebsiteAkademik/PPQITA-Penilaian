@@ -1,3 +1,8 @@
+<?php
+use App\Models\Pendaftaran;
+$pendaftaran = Pendaftaran::where('user_id', auth()->user()->id)->first();
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -47,19 +52,14 @@
                             <a class="sidebar-link @if (Request::is('/daftar-online')) active @endif"
                                 href="{{ route('daftar-online') }}" aria-expanded="false">
                                 <span>
-                                    <i class="fa-solid fa-user"></i>
+                                    <i class="fa-solid fa-calendar-days"></i>  
                                 </span>
                                 <span class="hide-menu">Jadwal Test</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('/daftar-online')) active @endif"
-                                href="{{ route('daftar-online') }}" aria-expanded="false">
-                                <span>
-                                    <i class="fa-solid fa-user"></i>
-                                </span>
-                                <span class="hide-menu">Status</span>
-                            </a>
+                        <li class="sidebar-item d-grid" style="position: absolute;bottom: 60px;right: 0;left: 0;">
+                            <button type="button" onclick="window.location.href='{{ route('pendaftar.profile') }}';"
+                                class="btn btn-outline-primary mx-3 mt-2">Profile</button>
                         </li>
                         <li class="sidebar-item d-grid" style="position: absolute;bottom: 20px;right: 0;left: 0;">
                             <button type="button" onclick="logout();"
@@ -90,7 +90,7 @@
                             <li class="nav-item dropdown">
                                 <div class="d-flex align-items-center">
                                     <p class="text-white fs-4 mt-2" style="font-weight: 500">Hi,
-                                        {{ auth()->user()->name }}</p>
+                                        {{ ucwords(strtolower($pendaftaran->nama_calon_siswa)) }} <h6><span class="badge badge-primary" style="background-color: #00569c">{{ ucwords(strtolower($pendaftaran->status)) }}</span></h6></p>
                                     <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <img src="{{ asset('admin/src/assets/images/profile/user-1.jpg') }}"
@@ -98,6 +98,10 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
                                         aria-labelledby="drop2">
+                                        <div class="message-body d-grid">
+                                            <button type="button" onclick="window.location.href='{{ route('pendaftar.profile') }}';"
+                                                class="btn btn-outline-primary mx-3 mt-2 d-block">Profile</button>
+                                        </div>
                                         <div class="message-body d-grid">
                                             <button type="button" onclick="logout();"
                                                 class="btn btn-outline-danger mx-3 mt-2 d-block">Logout</button>

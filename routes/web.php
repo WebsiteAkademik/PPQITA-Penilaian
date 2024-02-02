@@ -119,9 +119,10 @@ Route::middleware('auth', 'cekrole:user')->prefix('dashboarduser')->group(functi
         return view('pages.menuuser.dashboarduser', $data);
     })->name('dashboarduser');
 
+    Route::get('/profile', [PendaftaranOnlineController::class, 'profileGET'])->name('pendaftar.profile');
+    Route::post('/profile', [PendaftaranOnlineController::class, 'profilePOST'])->name('pendaftar.profileUpdate');
     // menu user
     Route::get('/pendaftar', [PendaftaranController::class, 'indexuser'])->name('pendaftar.indexuser');
     // Pendaftar
     Route::get('/pendaftar/{no_nisn}', [PendaftaranController::class, 'detailbynisn'])->name('pendaftar.detailuser');
-    
 });

@@ -42,7 +42,7 @@
                             </li>
 
                         </ol>
-                    
+                    <b class="fw-semibold mb-4">Konfirmasi Pembayaran Ke : LINK (<a href="https://wa.me/+6281239616477">Share on WhatsApp</a>)</b>
 
                     <div class="table-responsive">
                         <table class="table text-nowrap mb-0 align-middle">
