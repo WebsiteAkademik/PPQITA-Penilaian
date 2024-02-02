@@ -53,6 +53,9 @@
                                     <th class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">No. Whatsapp</h6>
                                     </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Download Formulir</h6>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,6 +75,9 @@
                                     </td>
                                     <td class="border-bottom-0">
                                         <p class="mb-0 fw-normal"><a href="https://wa.me/{{ $pendaftar->no_telepon }}">{{ $pendaftar->no_wa_anak }}</a></p>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <p class="mb-0 fw-normal"><a href="{{ route('cetak_pdf', $pendaftar->no_nisn) }}" target="_blank" class="btn btn-primary">Unduh</a></p>
                                     </td>
                                 </tr>
                                 @endforeach
