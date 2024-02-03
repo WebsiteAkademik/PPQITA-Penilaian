@@ -137,4 +137,6 @@ Route::middleware('auth', 'cekrole:user')->prefix('dashboarduser')->group(functi
     Route::get('/pendaftar', [PendaftaranController::class, 'indexuser'])->name('pendaftar.indexuser');
     // Pendaftar
     Route::get('/pendaftar/{no_nisn}', [PendaftaranController::class, 'detailbynisn'])->name('pendaftar.detailuser');
+    // Jadwal Test User
+    Route::get('/jadwaltest', [JadwalTestController::class, 'indexuser'])->name('jadwaltestuser');
 });

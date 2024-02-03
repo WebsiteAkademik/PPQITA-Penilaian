@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\JadwalTest;
 use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -50,6 +51,14 @@ class JadwalTestController extends Controller
         // Lakukan operasi edit atau tampilkan form edit
         return view('pages.admin.edit_jadwaltest', compact('jadwalTest'));
     }
-
+    
+    public function indexuser()
+    {
+        $user = Auth::user();
+        // Untuk mengambil data jadwal test sesuai dengan user yang login
+        $jadwalTests = JadwalTest::where('nama_calon_siswa', $user->name)->get();
+        // Untuk menampilkan halaman jadwaltestuser
+        return view('pages.menuuser.jadwaltestuser', compact('jadwalTests'));
+    }
 
 }

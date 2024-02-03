@@ -49,8 +49,8 @@ $pendaftaran = Pendaftaran::where('user_id', auth()->user()->id)->first();
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('/daftar-online')) active @endif"
-                                href="{{ route('daftar-online') }}" aria-expanded="false">
+                            <a class="sidebar-link @if (Request::is('/jadwaltestuser')) active @endif"
+                                href="{{ route('jadwaltestuser') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-solid fa-calendar-days"></i>  
                                 </span>
