@@ -170,6 +170,7 @@ return [
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -198,6 +199,7 @@ return [
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
     ])->toArray(),
 
 ];

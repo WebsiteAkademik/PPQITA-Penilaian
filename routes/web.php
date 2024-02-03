@@ -24,9 +24,6 @@ use Illuminate\Support\Facades\DB;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/cetak_pdf/{no_nisn}', [HomeController::class, 'cetak_pdf'])->name('cetak_pdf');
-Route::get('/cetak_laporan/', [HomeController::class, 'cetak_laporan'])->name('cetak_laporan');
-Route::get('/export-pendaftar',[HomeController::class, 'exportPendaftar'])->name('export-pendaftar');
-
 
 Route::get('/daftar-online', [PendaftaranOnlineController::class, 'daftarOnlineGET'])->name('daftar-online');
 Route::get('/galeri', [HomeController::class, 'galeri'])->name('galeri');
@@ -72,14 +69,20 @@ Route::middleware('auth', 'cekrole:pengajar')->prefix('dashboardpengajar')->grou
 //role -> admin
 Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function () {
     Route::get('/', function () {
-        $pendaftarCount = Pendaftaran::count();
+        $pendaftarbaruCount = Pendaftaran::where('status', 'BARU')->count();
+        $pendaftartestCount = Pendaftaran::where('status', 'TEST')->count();
+        $diterimaCount = Pendaftaran::where('status', 'DITERIMA')->count();
+        $ditolakCount = Pendaftaran::where('status', 'DITOLAK')->count();
         $pendaftars = Pendaftaran::latest()->limit(5)->get();
         $jadwalTests = JadwalTest::all();
 
         $data = [
             'pendaftars' => $pendaftars,
-            'pendaftarCount' => $pendaftarCount,
             'jadwalTests' => $jadwalTests,
+            'pendaftarbaruCount' => $pendaftarbaruCount,
+            'pendaftartestCount' => $pendaftartestCount,
+            'diterimaCount' => $diterimaCount,
+            'ditolakCount' => $ditolakCount
         ];
         return view('pages.admin.dashboard', $data);
     })->name('dashboard');
@@ -87,7 +90,10 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     // menu user
     
     // Pendaftar
-    Route::get('/pendaftar', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');
+    Route::get('/pendaftar-baru', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');
+    Route::get('/pendaftar-test', [PendaftaranOnlineController::class, 'listTest'])->name('pendaftar.listTest');
+    Route::get('/pendaftar-diterima', [PendaftaranOnlineController::class, 'listTerima'])->name('pendaftar.listTerima');
+    Route::get('/pendaftar-ditolak', [PendaftaranOnlineController::class, 'listTolak'])->name('pendaftar.listTolak');
     Route::get('/pendaftar/{no_nisn}', [PendaftaranOnlineController::class, 'detail'])->name('pendaftar.detail');
     Route::put('/pendaftar/{id}', [PendaftaranOnlineController::class, 'update'])->name('pendaftar.update');
     Route::delete('/pendaftar/{id}/delete', [PendaftaranOnlineController::class, 'destroy'])->name('pendaftar.destroy');
@@ -103,7 +109,9 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::get('/profile', [PendaftaranOnlineController::class, 'profile'])->name('profile.index');
 
     // Laporan Rekap
-    Route::get('/rekap', [PendaftaranOnlineController::class, 'rekap'])->name('rekap.index');
+    Route::get('/rekap', [PendaftaranOnlineController::class, 'indexrekap'])->name('rekap.index');
+    Route::get('/cetak_laporan/', [PendaftaranOnlineController::class, 'cetak_laporan'])->name('cetak_laporan');
+    Route::get('/export-pendaftar',[PendaftaranOnlineController::class, 'exportPendaftar'])->name('export-pendaftar');
     });
 
 //role -> user

@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\exportPendaftar;
 
 class PendaftaranOnlineController extends Controller {
     public function daftarOnlineGET(Request $request){
@@ -269,6 +272,30 @@ class PendaftaranOnlineController extends Controller {
         ]);
     }
 
+    public function listTest()
+    {
+        $pendaftaran = Pendaftaran::where('status', 'TEST')->get();
+        return view('pages.admin.pendaftaran.list_pendaftar_test', [
+            "pendaftaran" => $pendaftaran
+        ]);
+    }
+
+    public function listTerima()
+    {
+        $pendaftaran = Pendaftaran::where('status', 'DITERIMA')->get();
+        return view('pages.admin.pendaftaran.list_pendaftar_diterima', [
+            "pendaftaran" => $pendaftaran
+        ]);
+    }
+
+    public function listTolak()
+    {
+        $pendaftaran = Pendaftaran::where('status', 'DITOLAK')->get();
+        return view('pages.admin.pendaftaran.list_pendaftar_ditolak', [
+            "pendaftaran" => $pendaftaran
+        ]);
+    }
+
     public function profile()
     {
         $pendaftars = Pendaftaran::all();
@@ -277,16 +304,6 @@ class PendaftaranOnlineController extends Controller {
         ];
 
         return view('pages.admin.profile.index', $data);
-    }
-
-    public function rekap()
-    {
-        $pendaftars = Pendaftaran::all();
-        $data = [
-            'pendaftars' => $pendaftars
-        ];
-
-        return view('pages.admin.rekap.index', $data);
     }
 
     public function detail($no_nisn)
@@ -309,9 +326,9 @@ class PendaftaranOnlineController extends Controller {
         return view('pages.menuuser.pendaftar.detailuser', $data);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $pendaftar = Pendaftar::findOrFail($id);
+        $pendaftar = Pendaftaran::findOrFail($request->pendaftar_id); // Menggunakan id pendaftar dari permintaan
         $pendaftar->update([
             'status' => $request->status
         ]);
@@ -322,7 +339,7 @@ class PendaftaranOnlineController extends Controller {
 
     public function destroy($id)
     {
-        $pendaftar = Pendaftar::findOrFail($id);
+        $pendaftar = Pendaftaran::findOrFail($id);
         $pendaftar->delete();
 
         return redirect()->route('pendaftar.index');
@@ -335,4 +352,23 @@ class PendaftaranOnlineController extends Controller {
         // Kirim data jadwal test ke view
         return view('jadwaltest.list', ['jadwalTests' => $jadwalTests]);
         }
+
+    public function indexrekap(){
+        $pendaftars = Pendaftaran::all();
+        $data = [
+            'pendaftars' => $pendaftars
+         ];
+    
+        return view('pages.admin.rekap.index', $data);
+    }
+    
+    public function cetak_laporan(){
+        $rekap = Pendaftaran::all();
+        $laporan = PDF::loadView('pages.laporan_pdf', ['rekap' => $rekap])->setPaper('A4', 'portrait');
+        return $laporan->stream('laporan_data_pendaftar.pdf');
+    }
+        
+    public function exportPendaftar(Request $request){
+        return Excel::download(new ExportPendaftar, 'pendaftar.xlsx');
+    }
 }

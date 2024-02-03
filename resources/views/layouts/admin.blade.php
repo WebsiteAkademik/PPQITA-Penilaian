@@ -56,7 +56,7 @@
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
-                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
+                                href="{{ route('pendaftar.listTest') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-solid fa-clock"></i>
                                 </span>
@@ -65,7 +65,7 @@
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
-                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
+                                href="{{ route('pendaftar.listTolak') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-solid fa-circle-xmark"></i>
                                 </span>
@@ -74,7 +74,7 @@
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
-                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
+                                href="{{ route('pendaftar.listTerima') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-solid fa-check"></i>
                                 </span>

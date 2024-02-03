@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Laporan Rekap Pendaftar
+    Pendaftar Test
 @endsection
 
 @push('style')
@@ -31,15 +31,19 @@
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body p-4">
-                    <h3 class="fw-bold">Rekap Pendaftar</h3>
-                    <h6>Tahun Ajaran: 2024/2025</h6>
-                    <h6>Bulan: Januari 2024</h6><br/>
+                    <h5 class="card-title fs-6 fw-semibold mb-4">Data Pendaftar yang Dijadwalkan Test</h5>
                     <div class="table-responsive">
-                        <table class="table mb-0 align-middle" id="table-pendaftaran">
-                            <thead class="text-dark">
+                        <table class="table text-nowrap mb-0 align-middle" id="table-pendaftaran">
+                            <thead class="text-dark fs-4">
                                 <tr>
                                     <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">No</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">No. Pendaftaran</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Tanggal Pendaftaran</h6>
                                     </th>
                                     <th class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">Nama Pendaftar</h6>
@@ -48,64 +52,60 @@
                                         <h6 class="fw-semibold mb-0">Kota</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Sekolah Asal</h6>
+                                        <h6 class="fw-semibold mb-0">Alamat</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">No. Whatsapp</h6>
+                                        <h6 class="fw-semibold mb-0">Nomor Whatsapp Orang Tua</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Status</h6>
+                                        <h6 class="fw-semibold mb-0">Jadwal Test</h6>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($pendaftars as $key => $pendaftar)
+                                @foreach ($pendaftaran as $key => $row)
                                 <tr>
                                     <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">{{ $pendaftar->no_pendaftaran }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $key + 1 }}</h6>
                                     </td>
                                     <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">{{ $pendaftar->nama_calon_siswa }}</h5>           
+                                        <h6 class="fw-semibold mb-0">NP</h6>
                                     </td>
                                     <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">{{ $pendaftar->kabupaten }}</h5>
+                                        <h6 class="fw-semibold mb-0">{{ $row->created_at }}</h6>
                                     </td>
                                     <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">{{ $pendaftar->asal_sekolah }}</h5>
+                                        <h3 class="fw-semibold mb-1">{{ $row->no_nisn }}</h3>
+                                        <h5 class="fw-normal mb-1">{{ $row->nama_calon_siswa }}</h5>
+                                        
                                     </td>
                                     <td class="border-bottom-0">
-                                        <p class="mb-0 fw-normal"><a href="https://wa.me/{{ $pendaftar->no_telepon }}">{{ $pendaftar->no_wa_anak }}</a></p>
+                                        <h6 class="fw-semibold mb-0">{{ $row->kecamatan }}</h6>
                                     </td>
                                     <td class="border-bottom-0">
-                                        @php
-                                            switch ($pendaftar->status) {
-                                                case 'BARU':
-                                                    echo "<div class='badge text-capitalize' style='background-color: #00569C;'>$pendaftar->status</div>";
-                                                    break;
-                                                case 'TEST':
-                                                    echo "<div class='badge text-capitalize bg-info'>$pendaftar->status</div>";
-                                                    break;
-                                                case 'DITERIMA':
-                                                    echo "<div class='badge text-capitalize bg-success'>$pendaftar->status</div>";
-                                                    break;
-                                                case 'DITOLAK':
-                                                    echo "<div class='badge text-capitalize bg-danger'>$pendaftar->status</div>";
-                                                    break;
-                                            }
-                                        @endphp
+                                        <h6 class="fw-semibold mb-0">{{ $row->alamat_rumah }}</h6>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        @if( $row->no_wa_ayah != null )
+                                        <p class="mb-0 fw-normal">Ayah: <a href="https://wa.me/{{ $row->no_wa_ayah }}">{{ $row->no_wa_ayah }}</a></p>
+                                        @endif
+                                        @if( $row->no_wa_ibu != null )
+                                        <p class="mb-0 fw-normal">Ibu: <a href="https://wa.me/{{ $row->no_wa_ibu }}">{{ $row->no_wa_ibu }}</a></p>
+                                        @endif
+                                        @if( $row->no_telepon_ortu != null )
+                                        <p class="mb-0 fw-normal">Ortu: <a href="https://wa.me/{{ $row->no_telepon_ortu }}">{{ $row->no_telepon_ortu }}</a></p>
+                                        @endif
+                                    </td>
+                                    <td class="border-bottom-0 d-flex gap-2 align-items-center">
+                                        JT
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
-                        </table><br/>
-                        <div class="d-flex">
-                            <a href="{{ route('cetak_laporan') }}" class="btn btn-primary m-1">Cetak PDF</a>
-                            <a href="{{ route('export-pendaftar') }}" class="btn btn-success m-1">Export Excel</a>
-                        </div>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-

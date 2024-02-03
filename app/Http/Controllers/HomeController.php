@@ -11,8 +11,6 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\exportPendaftar;
 
 class HomeController extends Controller
 {
@@ -50,17 +48,6 @@ class HomeController extends Controller
 
         $pdf = PDF::loadView('pages.pendaftar_pdf', ['pendaftar' => $data])->setPaper('A4', 'potrait');
         return $pdf->stream('formulir_daftarulang.pdf');
-    }
-
-    public function cetak_laporan(){
-        $rekap = Pendaftaran::all();
-        $laporan = PDF::loadView('pages.laporan_pdf', ['rekap' => $rekap])->setPaper('A4', 'portrait');
-        return $laporan->stream('laporan_data_pendaftar.pdf');
-    }
-
-    
-    public function exportPendaftar(Request $request){
-        return Excel::download(new ExportPendaftar, 'pendaftar.xlsx');
     }
     
     public function daftar(Request $request)

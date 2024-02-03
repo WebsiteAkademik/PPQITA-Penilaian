@@ -14,7 +14,7 @@
                             <i class="fa-solid fa-user" style="font-size: 4rem;"></i>
                         </div>
                         <div class="col-7 text-end">
-                            <h4 style="font-weight: 600">{{ $pendaftarCount }}</h4>
+                            <h4 style="font-weight: 600">{{ $pendaftarbaruCount }}</h4>
                             <p>Pendaftar Baru</p>
                         </div>
                     </div>
@@ -35,13 +35,13 @@
                             <i class="fa-solid fa-user" style="font-size: 4rem;"></i>
                         </div>
                         <div class="col-7 text-end">
-                            <h4 style="font-weight: 600">{{ $pendaftarCount }}</h4>
+                            <h4 style="font-weight: 600">{{ $pendaftartestCount }}</h4>
                             <p>Pendaftar Test</p>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="{{ route('pendaftar.index') }}" class="text-dark d-flex justify-content-between">
+                    <a href="{{ route('pendaftar.listTest') }}" class="text-dark d-flex justify-content-between">
                         <p style="font-weight: 500">Detail</p>
                         <i class="fa-solid fa-arrow-right-long"></i>
                     </a>
@@ -56,13 +56,13 @@
                             <i class="fa-solid fa-user" style="font-size: 4rem;"></i>
                         </div>
                         <div class="col-7 text-end">
-                            <h4 style="font-weight: 600">{{ $pendaftarCount }}</h4>
-                            <p>Pendaftar yang sudah Transfer</p>
+                            <h4 style="font-weight: 600">{{ $diterimaCount }}</h4>
+                            <p>Pendaftar Diterima</p>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="{{ route('pendaftar.index') }}" class="text-dark d-flex justify-content-between">
+                    <a href="{{ route('pendaftar.listTerima') }}" class="text-dark d-flex justify-content-between">
                         <p style="font-weight: 500">Detail</p>
                         <i class="fa-solid fa-arrow-right-long"></i>
                     </a>
@@ -77,13 +77,13 @@
                             <i class="fa-solid fa-user" style="font-size: 4rem;"></i>
                         </div>
                         <div class="col-7 text-end">
-                            <h4 style="font-weight: 600">{{ $pendaftarCount }}</h4>
+                            <h4 style="font-weight: 600">{{ $ditolakCount }}</h4>
                             <p>Pendaftar Tidak Diterima</p>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="{{ route('pendaftar.index') }}" class="text-dark d-flex justify-content-between">
+                    <a href="{{ route('pendaftar.listTolak') }}" class="text-dark d-flex justify-content-between">
                         <p style="font-weight: 500">Detail</p>
                         <i class="fa-solid fa-arrow-right-long"></i>
                     </a>
@@ -178,38 +178,44 @@
         </div>
     </div>
 
-    <div class="container">
-        <h1>Daftar Jadwal Test Pendaftar</h1>
-        <br>
+    <div class="row">
+        <div class="col-lg-12 d-flex align-items-stretch">
+            <div class="card w-100">
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-semibold mb-4">Daftar Jadwal Test Pendaftar</h5>
+                    <div class="table-responsive">
+                    @if(session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
 
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nama Calon Siswa</th>
-                    <th scope="col">Tanggal Test</th>
-                    <th scope="col">Jam Test</th>
-                    <th scope="col">Jenis Test</th>
-                    <th scope="col">PIC</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($jadwalTests as $jadwalTest)
-                    <tr>
-                        <th scope="row">{{ $loop->iteration }}</th>
-                        <td>{{ $jadwalTest->nama_calon_siswa }}</td>
-                        <td>{{ $jadwalTest->tanggal_test }}</td>
-                        <td>{{ $jadwalTest->jam_test }}</td>
-                        <td>{{ $jadwalTest->jenis_test }}</td>
-                        <td>{{ $jadwalTest->pic_test }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>    
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nama Calon Siswa</th>
+                                    <th scope="col">Tanggal Test</th>
+                                    <th scope="col">Jam Test</th>
+                                    <th scope="col">Jenis Test</th>
+                                    <th scope="col">PIC</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($jadwalTests as $jadwalTest)
+                                    <tr>
+                                        <th scope="row">{{ $loop->iteration }}</th>
+                                        <td>{{ $jadwalTest->nama_calon_siswa }}</td>
+                                        <td>{{ $jadwalTest->tanggal_test }}</td>
+                                        <td>{{ $jadwalTest->jam_test }}</td>
+                                        <td>{{ $jadwalTest->jenis_test }}</td>
+                                        <td>{{ $jadwalTest->pic_test }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>    
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 @endsection
