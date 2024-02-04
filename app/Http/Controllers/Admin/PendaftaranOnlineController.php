@@ -315,7 +315,7 @@ class PendaftaranOnlineController extends Controller {
 
     public function listTest()
     {
-        $pendaftaran = Pendaftaran::where('status', 'TEST')->get();
+        $pendaftaran = Pendaftaran::where('status', 'TEST')->orWhere('status', "MENUNGGU")->get();
         return view('pages.admin.pendaftaran.list_pendaftar_test', [
             "pendaftaran" => $pendaftaran
         ]);

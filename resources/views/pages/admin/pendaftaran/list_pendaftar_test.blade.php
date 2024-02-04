@@ -6,6 +6,11 @@
 
 @push('style')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <style>
+        .container-fluid {
+            max-width: none !important;
+        }
+    </style>
 @endpush
 
 @push('script')
@@ -58,6 +63,9 @@
                                         <h6 class="fw-semibold mb-0">Nomor Whatsapp Orang Tua</h6>
                                     </th>
                                     <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Status</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">Jadwal Test</h6>
                                     </th>
                                 </tr>
@@ -69,7 +77,9 @@
                                         <h6 class="fw-semibold mb-0">{{ $key + 1 }}</h6>
                                     </td>
                                     <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">NP</h6>
+                                        <h6 class="fw-semibold mb-0">
+                                            {{ $row->no_pendaftaran }}
+                                        </h6>
                                     </td>
                                     <td class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">{{ $row->created_at }}</h6>
@@ -96,7 +106,10 @@
                                         <p class="mb-0 fw-normal">Ortu: <a href="https://wa.me/{{ $row->no_telepon_ortu }}">{{ $row->no_telepon_ortu }}</a></p>
                                         @endif
                                     </td>
-                                    <td class="border-bottom-0 d-flex gap-2 align-items-center">
+                                    <td class="border-bottom-0">
+                                        {{ $row->status }}
+                                    </td>
+                                    <td class="border-bottom-0 align-items-center">
                                         JT
                                     </td>
                                 </tr>
