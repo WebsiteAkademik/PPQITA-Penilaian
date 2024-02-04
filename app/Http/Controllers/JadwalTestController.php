@@ -45,13 +45,29 @@ class JadwalTestController extends Controller
     return view('jadwaltest.list', ['jadwalTests' => $jadwalTests]);
     }
 
-    public function edit($id)
-    {
-        $jadwalTest = JadwalTest::find($id);
-        // Lakukan operasi edit atau tampilkan form edit
-        return view('pages.admin.edit_jadwaltest', compact('jadwalTest'));
+    public function update(Request $request, $id){
+        // 1. Retrieve the jadwal test to be updated
+        $jadwalTest = JadwalTest::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'tanggal_test' => 'required',
+            'jam_test' => 'required',
+            'jenis_test' => 'required',
+            'pic_test' => 'required',
+        ]);
+
+        $jadwalTest->update($validatedData);
+        return redirect()->route('jadwaltest.list')->with('success', 'Jadwal test updated successfully');
     }
+
+    public function edittest($id){
+        // Retrieve the jadwal test based on the $id
+        $jadwalTest = JadwalTest::findOrFail($id);
     
+        // Return the view for editing the jadwal test
+        return view('jadwaltest.edittest', compact('jadwalTest'));
+    }    
+
     public function indexuser()
     {
         $user = Auth::user();

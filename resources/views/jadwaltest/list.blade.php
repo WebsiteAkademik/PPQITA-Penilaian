@@ -22,6 +22,8 @@
                     <th scope="col">PIC</th>
                 </tr>
             </thead>
+
+            {{-- button yang mengarah ke form edit jadwal test --}}
             <tbody>
                 @foreach ($jadwalTests as $jadwalTest)
                     <tr>
@@ -32,7 +34,7 @@
                         <td>{{ $jadwalTest->jenis_test }}</td>
                         <td>{{ $jadwalTest->pic_test }}</td>
                         <td>
-                            <a href="{{ route('jadwaltest.edit', $jadwalTest->id) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ route('jadwaltest.edittest', $jadwalTest->id) }}" class="btn btn-warning">Edit</a>
                         </td>
                     </tr>
                 @endforeach
