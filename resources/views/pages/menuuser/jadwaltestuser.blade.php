@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.adminuser')
 
 @section('title', 'Jadwal Test Pendaftar Siswa')
 
@@ -33,9 +33,6 @@
                         <td>{{ $jadwalTest->jenis_test }}</td>
                         <td>{{ $jadwalTest->pic_test }}</td>
                         <td>{{ $pendaftaran->pic_test }}</td>
-                        <td>
-                            <a href="{{ route('jadwaltest.edit', $jadwalTest->id) }}" class="btn btn-warning">Edit</a>
-                        </td>
                     </tr>
                 @endforeach
             </tbody>
