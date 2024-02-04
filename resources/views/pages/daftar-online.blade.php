@@ -42,6 +42,16 @@
                 }
             });
         });
+
+        $(document).ready(function() {
+            $.ajax({
+                type: 'GET',
+                url: 'reload-captcha',
+                success: function(data) {
+                    $(".captcha span").html(data.captcha)
+                }
+            });
+        })
     </script>
 @endpush
 
@@ -333,7 +343,7 @@
                                 <div class="mb-3">
                                     <label for="user_name" class="form-label">Username <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input required type="text" class="form-control" name="user_name" id="user_name" placeholder="Isikan NISN"
+                                    <input required type="text" class="form-control" name="user_name" id="user_name"
                                         value="{{ old('user_name') }}">
                                 </div>
                                 
@@ -342,7 +352,7 @@
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input required type="text" class="form-control" name="password" id="password" placeholder="Isikan NISN"
+                                    <input required type="text" class="form-control" name="password" id="password"
                                         value="{{ old('password') }}">
                                 </div>
                             </div>
@@ -358,7 +368,7 @@
                             </div>
                             <div class="col-12 mt-2">
                                 <div class="captcha">
-                                    <span>{!! captcha_img('flat') !!}</span>
+                                    <span>CAPTCHA</span>
                                     <button type="button" class="btn btn-danger reload" id="reload">&#x21bb;</button>
                                 </div>
                             </div>

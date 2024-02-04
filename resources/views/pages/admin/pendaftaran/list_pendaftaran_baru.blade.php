@@ -58,7 +58,7 @@
                                         <h6 class="fw-semibold mb-0">Nomor Whatsapp Orang Tua</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Jadwal Test</h6>
+                                        <h6 class="fw-semibold mb-0">Update Status</h6>
                                     </th>
                                 </tr>
                             </thead>
@@ -69,7 +69,7 @@
                                         <h6 class="fw-semibold mb-0">{{ $key + 1 }}</h6>
                                     </td>
                                     <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">NP</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->no_pendaftaran }}</h6>
                                     </td>
                                     <td class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">{{ $row->created_at }}</h6>
@@ -97,7 +97,15 @@
                                         @endif
                                     </td>
                                     <td class="border-bottom-0 d-flex gap-2 align-items-center">
-                                        JT
+                                        <div class="row mt-4">
+                                            <div class="col-12 col-lg-5">
+                                                <form action="{{ route('pendaftar.indexUpdateStatusMenunggu') }}" method="post" style="display: inline">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{ $row->id }}"/>
+                                                    <button type="submit" class="btn btn-success" style="padding:10px;box-shadow:5px 5px 10px">Tambah</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 @endforeach

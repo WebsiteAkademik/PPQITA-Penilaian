@@ -44,4 +44,34 @@ class Pendaftaran extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function  updateStatusBaru(){
+        $this->update([
+            'status' => "BARU",
+        ]);
+    }
+
+    public function  updateStatusMenunggu(){
+        $this->update([
+            'status' => "MENUNGGU",
+        ]);
+    }
+
+    public function  updateStatusTest(){
+        $this->update([
+            'status' => "TEST",
+        ]);
+    }
+
+    public function  updateStatusDiterima(){
+        $this->update([
+            'status' => "DITERIMA",
+        ]);
+    }
+
+    public function  updateStatusDitolak(){
+        $this->update([
+            'status' => "DITOLAK",
+        ]);
+    }
 }

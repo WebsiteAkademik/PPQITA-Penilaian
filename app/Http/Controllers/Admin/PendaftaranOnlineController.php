@@ -122,15 +122,29 @@ class PendaftaranOnlineController extends Controller {
 
         unset($data['user_name']);
         unset($data['password']);
-
-        $user = User::create($dataUser);
+        $user = NULL;
+        try {
+            $user = User::create($dataUser);
+        } catch (Exception $e) {
+            Alert::error('Gagal! (E005)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
+            return redirect()->back()->withError($e)->withInput();
+        }
 
         $data["user_id"] = $user->id;
         $data["no_pendaftaran"] = "";
-        $pendaftar = Pendaftaran::create($data);
-        $pendaftar->update([
-            "no_pendaftaran" => date("Y-m-d") . "-" . $pendaftar->id,
-        ]);
+
+        $pendaftar = NULL;
+        try{
+            $pendaftar = Pendaftaran::create($data);
+            $pendaftar->update([
+                "no_pendaftaran" => date("Y-m-d") . "-" . $pendaftar->id,
+            ]);
+        }
+        catch(Exception $e){
+            $user->delete();
+            Alert::error('Gagal! (E006)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
+            return redirect()->back()->withError($e)->withInput();
+        }
 
         auth()->logout();
         request()->session()->invalidate();
@@ -270,6 +284,33 @@ class PendaftaranOnlineController extends Controller {
         return view('pages.admin.pendaftaran.list_pendaftaran_baru', [
             "pendaftaran" => $pendaftaran
         ]);
+    }
+
+    public function indexPOST(Request $request)
+    {
+        $user = Auth::user();
+        if($user->role == 'admin'){
+            $validator = Validator::make($request->all(), [
+                "id" => "required|exists:pendaftarans,id",
+            ]);
+
+            if ($validator->fails()) {
+                Alert::error('Gagal! (E007)', 'Terjadi kesalahan karena terdapat penyuntikan yang tidak sesuai dengan tabel');
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $pendaftaran_id = $request->all()["id"];
+
+            if(Pendaftaran::where('id', $pendaftaran_id)->count() == 0){
+                Alert::error('Gagal! (E008)', 'Terjadi kesalahan karena terdapat penyuntikan yang tidak sesuai dengan tabel');
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $pendaftaran = Pendaftaran::where('id', $pendaftaran_id)->first();
+            $pendaftaran->updateStatusMenunggu();
+        }
+
+        return redirect()->intended('/dashboard/pendaftar-baru');
     }
 
     public function listTest()
