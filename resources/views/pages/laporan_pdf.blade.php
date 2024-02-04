@@ -35,14 +35,14 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($rekap as $key => $rekap)
+                @foreach ($pendaftars as $key => $pendaftar)
                 <tr>
-                    <td>{{ $rekap->user_id }}</td>
-                    <td>{{ $rekap->nama_calon_siswa }}</td>
-                    <td>{{ $rekap->kabupaten }}</td>
-                    <td>{{ $rekap->asal_sekolah }}</td>
-                    <td>{{ $rekap->no_wa_anak }}</td>
-                    <td>{{ $rekap->status }}</td>
+                    <td>{{ $pendaftar->no_pendaftaran }}</td>
+                    <td>{{ $pendaftar->nama_calon_siswa }}</td>
+                    <td>{{ $pendaftar->kabupaten }}</td>
+                    <td>{{ $pendaftar->asal_sekolah }}</td>
+                    <td>{{ $pendaftar->no_wa_anak }}</td>
+                    <td>{{ $pendaftar->status }}</td>
                 </tr>
                 @endforeach
             </tbody>

@@ -355,20 +355,48 @@ class PendaftaranOnlineController extends Controller {
 
     public function indexrekap(){
         $pendaftars = Pendaftaran::all();
-        $data = [
-            'pendaftars' => $pendaftars
-         ];
     
-        return view('pages.admin.rekap.index', $data);
+        return view('pages.admin.rekap.index', compact('pendaftars'));
+    }
+
+    public function filter(Request $request){
+        $min_date = $request->min_date;
+        $max_date = $request->max_date;
+
+        $pendaftars = Pendaftaran::whereDate('created_at','>=',$min_date)
+                                    ->whereDate('created_at','<=',$max_date)
+                                    ->get();
+        
+        return view('pages.admin.rekap.index', compact('pendaftars'));
     }
     
-    public function cetak_laporan(){
-        $rekap = Pendaftaran::all();
-        $laporan = PDF::loadView('pages.laporan_pdf', ['rekap' => $rekap])->setPaper('A4', 'portrait');
+    public function cetak_laporan(Request $request){
+        $min_date = $request->min_date;
+        $max_date = $request->max_date;
+
+        if ($min_date && $max_date) {
+            $pendaftars = Pendaftaran::whereDate('created_at','>=',$min_date)
+                                    ->whereDate('created_at','<=',$max_date)
+                                    ->get();
+        } else {
+            $pendaftars = Pendaftaran::all();
+        }
+
+        $laporan = PDF::loadView('pages.laporan_pdf', ['pendaftars' => $pendaftars])->setPaper('A4', 'portrait');
         return $laporan->stream('laporan_data_pendaftar.pdf');
     }
         
     public function exportPendaftar(Request $request){
-        return Excel::download(new ExportPendaftar, 'pendaftar.xlsx');
+        if ($request->filled('min_date') && $request->filled('max_date')) {
+            $min_date = $request->min_date;
+            $max_date = $request->max_date;
+            $pendaftars = Pendaftaran::whereDate('created_at','>=',$min_date)
+                ->whereDate('created_at','<=',$max_date)
+                ->get();
+        } else {
+            $pendaftars = Pendaftaran::all();
+        }
+    
+        return Excel::download(new ExportPendaftar($pendaftars), 'pendaftar.xlsx');
     }
 }

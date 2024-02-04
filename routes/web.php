@@ -110,8 +110,9 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
 
     // Laporan Rekap
     Route::get('/rekap', [PendaftaranOnlineController::class, 'indexrekap'])->name('rekap.index');
-    Route::get('/cetak_laporan/', [PendaftaranOnlineController::class, 'cetak_laporan'])->name('cetak_laporan');
-    Route::get('/export-pendaftar',[PendaftaranOnlineController::class, 'exportPendaftar'])->name('export-pendaftar');
+    Route::get('/rekap/filter', [PendaftaranOnlineController::class, 'filter'])->name('rekap.filter');
+    Route::get('/rekap/cetak_laporan', [PendaftaranOnlineController::class, 'cetak_laporan'])->name('cetak_laporan');
+    Route::get('/rekap/export-pendaftar',[PendaftaranOnlineController::class, 'exportPendaftar'])->name('export-pendaftar');
     });
 
 //role -> user

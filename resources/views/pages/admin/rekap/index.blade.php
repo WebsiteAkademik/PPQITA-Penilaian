@@ -32,8 +32,22 @@
             <div class="card w-100">
                 <div class="card-body p-4">
                     <h3 class="fw-bold">Rekap Pendaftar</h3>
-                    <h6>Tahun Ajaran: 2024/2025</h6>
-                    <h6>Bulan: Januari 2024</h6><br/>
+                    <h6>Date Range:</h6>
+                    <form method="GET" action="/dashboard/rekap/filter">
+                        <div class="row pb-3">
+                            <div class="col-md-3">
+                                <label for="min-date" class="form-label">Minimum date:</label>
+                                <input type="date" name="min_date" id="min_date" class="form-control" />
+                            </div>
+                            <div class="col-md-3">
+                                <label for="max-date" class="form-label">Maximum date:</label>
+                                <input type="date" name="max_date" id="max_date" class="form-control" />
+                            </div>
+                            <div class="col-md-1 pt-4">
+                                <button type="submit" class="btn btn-primary">Filter</button>
+                            </div>
+                        </div>
+                    </form><br/>
                     <div class="table-responsive">
                         <table class="table mb-0 align-middle" id="table-pendaftaran">
                             <thead class="text-dark">
@@ -55,6 +69,9 @@
                                     </th>
                                     <th class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">Status</h6>
+                                    </th>
+                                    <th class="border-bottom-0 d-none">
+                                        <h6 class="fw-semibold mb-0">Dibuat pada</h6>
                                     </th>
                                 </tr>
                             </thead>
@@ -94,13 +111,16 @@
                                             }
                                         @endphp
                                     </td>
+                                    <td class="border-bottom-0 d-none">
+                                        <h5 class="fw-normal mb-1">{{ $pendaftar->created_at->format('Y-m-d') }}</h5>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table><br/>
                         <div class="d-flex">
-                            <a href="{{ route('cetak_laporan') }}" class="btn btn-primary m-1">Cetak PDF</a>
-                            <a href="{{ route('export-pendaftar') }}" class="btn btn-success m-1">Export Excel</a>
+                            <a href="{{ route('cetak_laporan', ['min_date' => request('min_date'), 'max_date' => request('max_date')]) }}" class="btn btn-primary m-1">Cetak PDF</a>
+                            <a href="{{ route('export-pendaftar', ['min_date' => request('min_date'), 'max_date' => request('max_date')]) }}" class="btn btn-success m-1">Export Excel</a>
                         </div>
                     </div>
                 </div>
