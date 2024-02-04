@@ -12,13 +12,11 @@ use RealRashid\SweetAlert\Facades\Alert;
 class JadwalTestController extends Controller
 {
     public function showForm(){
-        // Ambil data pendaftar dari database
-        $pendaftar = Pendaftaran::all();
+        // Ambil data pendaftar dengan status "MENUNGGU" dari database
+        $pendaftarMenunggu = Pendaftaran::where('status', 'MENUNGGU')->get();
 
         // Kirim data pendaftar ke view
-        return view('jadwaltest.form', ['pendaftars' => $pendaftar]);
-        
-        // return view('jadwaltest.form'); // kode sebelumnya
+        return view('jadwaltest.form', ['pendaftars' => $pendaftarMenunggu]);
     }
 
     public function store(Request $request){
@@ -30,11 +28,34 @@ class JadwalTestController extends Controller
             'pic_test' => 'required',
         ]);
 
+        // Memastikan peserta dengan status "MENUNGGU" dan nama_calon_siswa sesuai dengan db
+        $pendaftar = Pendaftaran::where('nama_calon_siswa', $validatedData['nama_calon_siswa'])
+            ->where('status', 'MENUNGGU')
+            ->first();
+
+        if (!$pendaftar) {
+            // Peserta tidak ditemukan atau tidak berstatus "MENUNGGU"
+            Alert::error('Gagal', 'Peserta tidak dapat dijadwalkan.');
+            return redirect()->back();
+        }
+
+        // Mengecek apakah peserta sudah memiliki jadwal test
+        $existingJadwal = JadwalTest::where('nama_calon_siswa', $validatedData['nama_calon_siswa'])->first();
+
+        if ($existingJadwal) {
+            // Jika peserta sudah memiliki jadwal test
+            Alert::error('Gagal', 'Peserta sudah memiliki jadwal test.');
+            return redirect()->back();
+        }
+
+        // Buat jadwal test
         JadwalTest::create($validatedData);
+
+        // Update status peserta menjadi "TEST" setelah dijadwalkan
+        $pendaftar->update(['status' => 'TEST']);
 
         Alert::success('Berhasil', 'Jadwal test berhasil disimpan!');
         return redirect()->route('dashboard')->with('success', 'Jadwal Test Berhasil Disimpan');
-        
     }
 
     public function list(){
@@ -57,7 +78,7 @@ class JadwalTestController extends Controller
         ]);
 
         $jadwalTest->update($validatedData);
-        return redirect()->route('jadwaltest.list')->with('success', 'Jadwal test updated successfully');
+        return redirect()->route('jadwaltest.list')->with('success', 'Jadwal test berhasil diperbaharui!');
     }
 
     public function edittest($id){
