@@ -87,7 +87,13 @@ class JadwalTestController extends Controller
     
         // Return the view for editing the jadwal test
         return view('jadwaltest.edittest', compact('jadwalTest'));
-    }    
+    }
+
+    public function delete($id){
+        $jadwalTest = JadwalTest::findOrFail($id);
+        $jadwalTest->delete();
+        return redirect()->route('jadwaltest.list')->with('success', 'Jadwal test berhasil dihapus!');
+    }
 
     public function indexuser()
     {

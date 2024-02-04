@@ -42,9 +42,14 @@
                     <option {{ $jadwalTest->pic_test == "Dhanny Ardiansyah" ? 'selected' : '' }} value="Dhanny Ardiansyah">Dhanny Ardiansyah</option>
                     <option {{ $jadwalTest->pic_test == "Diyan Utami" ? 'selected' : '' }} value="Diyan Utami">Diyan Utami</option>
                 </select>
-            </div>
-
+            </div>            
             <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+        </form>
+        <br>
+        <form action="{{ route('jadwaltest.delete', $jadwalTest->id) }}" method="post">
+            @csrf
+            @method('delete')
+            <button type="submit" class="btn btn-danger">Hapus</button>
         </form>
     </div>
 @endsection
