@@ -183,11 +183,12 @@
             <div class="card w-100">
                 <div class="card-body p-4">
                     <h5 class="card-title fw-semibold mb-4">Daftar Jadwal Test Pendaftar</h5>
+                    <h6>Jadwal 7 hari ke depan</h6>
                     <div class="table-responsive">
-                    @if(session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
-
+                        @if(session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+    
                         <table class="table">
                             <thead>
                                 <tr>
@@ -200,7 +201,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($jadwalTests as $jadwalTest)
+                                @php
+                                    $filteredJadwalTests = $jadwalTests->where('tanggal_test', '>=', now()->toDateString())
+                                        ->where('tanggal_test', '<=', now()->addDays(7)->toDateString())
+                                        ->sortBy('tanggal_test');
+                                @endphp
+    
+                                @foreach ($filteredJadwalTests as $jadwalTest)
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
                                         <td>{{ $jadwalTest->nama_calon_siswa }}</td>
@@ -211,7 +218,7 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                        </table>    
+                        </table>
                     </div>
                 </div>
             </div>
