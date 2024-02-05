@@ -93,6 +93,8 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::get('/pendaftar-baru', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');
     Route::post('/pendaftar-baru', [PendaftaranOnlineController::class, 'indexPOST'])->name('pendaftar.indexUpdateStatusMenunggu');
     Route::get('/pendaftar-test', [PendaftaranOnlineController::class, 'listTest'])->name('pendaftar.listTest');
+    Route::post('/pendaftar-test/diterima', [PendaftaranOnlineController::class, 'listTestDiterimaPOST'])->name('pendaftar.updateStatusDiterima');
+    Route::post('/pendaftar-test/ditolak', [PendaftaranOnlineController::class, 'listTestDitolakPOST'])->name('pendaftar.updateStatusDitolak');
     Route::get('/pendaftar-diterima', [PendaftaranOnlineController::class, 'listTerima'])->name('pendaftar.listTerima');
     Route::get('/pendaftar-ditolak', [PendaftaranOnlineController::class, 'listTolak'])->name('pendaftar.listTolak');
     Route::get('/pendaftar/{no_nisn}', [PendaftaranOnlineController::class, 'detail'])->name('pendaftar.detail');

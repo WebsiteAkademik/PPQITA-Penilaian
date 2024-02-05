@@ -32,6 +32,9 @@
             <div class="card w-100">
                 <div class="card-body p-4">
                     <h5 class="card-title fs-6 fw-semibold mb-4">Data Pendaftar Baru</h5>
+                    @if(session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
                     <div class="table-responsive">
                         <table class="table text-nowrap mb-0 align-middle" id="table-pendaftaran">
                             <thead class="text-dark fs-4">

@@ -37,6 +37,9 @@
             <div class="card w-100">
                 <div class="card-body p-4">
                     <h5 class="card-title fs-6 fw-semibold mb-4">Data Pendaftar yang Dijadwalkan Test</h5>
+                    @if(session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
                     <div class="table-responsive">
                         <table class="table text-nowrap mb-0 align-middle" id="table-pendaftaran">
                             <thead class="text-dark fs-4">
@@ -109,8 +112,27 @@
                                     <td class="border-bottom-0">
                                         {{ $row->status }}
                                     </td>
-                                    <td class="border-bottom-0 align-items-center">
-                                        JT
+                                    <td class="border-bottom-0 d-flex gap-2 align-items-center">
+                                        @if($row->status == "TEST")
+                                        <div class="row mt-4">
+                                            <div class="col-12 col-lg-5">
+                                                <form action="{{ route('pendaftar.updateStatusDiterima') }}" method="post" style="display: inline">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{ $row->id }}"/>
+                                                    <button type="submit" class="btn btn-success" style="padding:10px;box-shadow:5px 5px 10px">Diterima</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-4">
+                                            <div class="col-12 col-lg-5">
+                                                <form action="{{ route('pendaftar.updateStatusDitolak') }}" method="post" style="display: inline">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{ $row->id }}"/>
+                                                    <button type="submit" class="btn btn-danger" style="padding:10px;box-shadow:5px 5px 10px">Ditolak</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

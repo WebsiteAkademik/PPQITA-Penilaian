@@ -310,7 +310,70 @@ class PendaftaranOnlineController extends Controller {
             $pendaftaran->updateStatusMenunggu();
         }
 
+        Alert::success('Berhasil', 'Calon siswa telah menunggu!');
         return redirect()->intended('/dashboard/pendaftar-baru');
+    }
+
+    public function listTestDiterimaPOST(Request $request){
+        $user = Auth::user();
+        if($user->role == 'admin'){
+            $validator = Validator::make($request->all(), [
+                "id" => "required|exists:pendaftarans,id",
+            ]);
+
+            if ($validator->fails()) {
+                Alert::error('Gagal! (E009)', 'Terjadi kesalahan karena terdapat penyuntikan yang tidak sesuai dengan tabel');
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $pendaftaran_id = $request->all()["id"];
+
+            if(Pendaftaran::where('id', $pendaftaran_id)->count() == 0){
+                Alert::error('Gagal! (E010)', 'Terjadi kesalahan karena terdapat penyuntikan yang tidak sesuai dengan tabel');
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $pendaftaran = Pendaftaran::where('id', $pendaftaran_id)->first();
+            if($pendaftaran->status != "TEST"){
+                Alert::error('Gagal! (E011)', 'Terjadi kesalahan karena terdapat penyuntikan yang tidak sesuai dengan tabel');
+                return redirect()->back()->withInput();
+            }
+            $pendaftaran->updateStatusDiterima();
+        }
+
+        Alert::success('Berhasil', 'Calon siswa berhasil diterima!');
+        return redirect()->intended('/dashboard/pendaftar-test');
+    }
+
+    public function listTestDitolakPOST(Request $request){
+        $user = Auth::user();
+        if($user->role == 'admin'){
+            $validator = Validator::make($request->all(), [
+                "id" => "required|exists:pendaftarans,id",
+            ]);
+
+            if ($validator->fails()) {
+                Alert::error('Gagal! (E012)', 'Terjadi kesalahan karena terdapat penyuntikan yang tidak sesuai dengan tabel');
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $pendaftaran_id = $request->all()["id"];
+
+            if(Pendaftaran::where('id', $pendaftaran_id)->count() == 0){
+                Alert::error('Gagal! (E013)', 'Terjadi kesalahan karena terdapat penyuntikan yang tidak sesuai dengan tabel');
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $pendaftaran = Pendaftaran::where('id', $pendaftaran_id)->first();
+            if($pendaftaran->status != "TEST"){
+                Alert::error('Gagal! (E014)', 'Terjadi kesalahan karena terdapat penyuntikan yang tidak sesuai dengan tabel');
+                return redirect()->back()->withInput();
+            }
+            $pendaftaran->updateStatusDitolak();
+        }
+
+        Alert::success('Berhasil', 'Calon siswa berhasil ditolak!');
+        return redirect()->intended('/dashboard/pendaftar-test');
     }
 
     public function listTest()
