@@ -121,9 +121,22 @@ class JadwalTestController extends Controller
     {
         $user = Auth::user();
         // Untuk mengambil data jadwal test sesuai dengan user yang login
-        $jadwalTests = JadwalTest::where('nama_calon_siswa', $user->name)->get();
+        
+        $pendaftaran = Pendaftaran::where('user_id', $user->id)->first();
+
+        if (!$pendaftaran){
+            auth()->logout();
+            request()->session()->invalidate();
+            request()->session()->regenerateToken();
+            return redirect()->intended('/login');
+        }
+
+        $jadwalTests = JadwalTest::where("pendaftaran_id", $pendaftaran->id)->get();
+
         // Untuk menampilkan halaman jadwaltestuser
-        return view('pages.menuuser.jadwaltestuser', compact('jadwalTests'));
+        return view('pages.menuuser.jadwaltestuser', [
+            'jadwalTests' => $jadwalTests,
+        ]);
     }
 
 }

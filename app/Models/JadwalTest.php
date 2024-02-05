@@ -13,6 +13,6 @@ class JadwalTest extends Model
     protected $fillable = ['pendaftaran_id', 'tanggal_test', 'jam_test', 'jenis_test', 'pic_test'];
 
     public function pendaftaran(){
-        return $this->belongsTo(Pendaftaran::class, 'pendaftaran_id');
+        return Pendaftaran::where("id", $this->pendaftaran_id)->first();
     }
 };

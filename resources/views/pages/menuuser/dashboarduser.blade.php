@@ -46,7 +46,7 @@
 
                     <div class="row mt-4">
                             <div class="col-12 col-lg-5">
-                                <button type="submit" class="btn btn-success" style="padding:10px;box-shadow:5px 5px 10px">Download</button>
+                                <a href="{{ route('cetak_pdf', $pendaftars->first()->no_nisn) }}" target="_blank" class="btn btn-success">Download</a>
                             </div>
                         </div>
                 </div>
