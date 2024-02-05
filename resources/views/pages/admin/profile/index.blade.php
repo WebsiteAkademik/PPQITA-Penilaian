@@ -62,7 +62,7 @@
                                 @foreach ($pendaftars as $key => $pendaftar)
                                 <tr>
                                     <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">{{ $pendaftar->user_id }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $pendaftar->no_pendaftaran }}</h6>
                                     </td>
                                     <td class="border-bottom-0">
                                         <h5 class="fw-normal mb-1">{{ $pendaftar->nama_calon_siswa }}</h5>           
