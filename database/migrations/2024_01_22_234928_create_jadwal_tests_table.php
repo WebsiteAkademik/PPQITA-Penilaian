@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateJadwalTestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('jadwal_tests', function (Blueprint $table) {
-            $table->text('jenis_test')->after('jam_test');
+        Schema::create('jadwal_tests', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('no_pendaftaran')->index();
+            $table->date('tanggal_test');
+            $table->time('jam_test');
+            $table->string('jenis_test');
+            $table->text('pic_test');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('jadwal_tests', function (Blueprint $table) {
-            $table->dropColumn('jenis_test');
-        });
+        Schema::dropIfExists('jadwal_tests');
     }
-};
+}

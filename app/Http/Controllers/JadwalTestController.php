@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\JadwalTest;
 use App\Models\Pendaftaran;
+use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Validator;
 
 
 class JadwalTestController extends Controller
@@ -20,16 +22,36 @@ class JadwalTestController extends Controller
     }
 
     public function store(Request $request){
-        $validatedData = $request->validate([
-            'nama_calon_siswa' => 'required',
+        $globalValidator = Validator::make($request->all(), [
+            'pendaftaran_id' => 'required',
             'tanggal_test' => 'required',
             'jam_test' => 'required',
             'jenis_test' => 'required',
             'pic_test' => 'required',
         ]);
 
+        $validatedData = $request->validate([
+            'pendaftaran_id' => 'required',
+            'tanggal_test' => 'required',
+            'jam_test' => 'required',
+            'jenis_test' => 'required',
+            'pic_test' => 'required',
+        ]);
+
+        if ($globalValidator->fails()) {
+            Alert::error('Gagal! (E001)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
+            return redirect()->back()->withErrors($globalValidator)->withInput();
+        }
+
+        $pendaftaran_id = $request->all()["pendaftaran_id"];
+
+        if(Pendaftaran::where('id', $pendaftaran_id)->where("status", "MENUNGGU")->count() == 0){
+            Alert::error('Gagal! (E008)', 'Terjadi kesalahan karena terdapat penyuntikan yang tidak sesuai dengan tabel');
+            return redirect()->back()->withInput();
+        }        
+
         // Memastikan peserta dengan status "MENUNGGU" dan nama_calon_siswa sesuai dengan db
-        $pendaftar = Pendaftaran::where('nama_calon_siswa', $validatedData['nama_calon_siswa'])
+        $pendaftar = Pendaftaran::where('id', $validatedData['pendaftaran_id'])
             ->where('status', 'MENUNGGU')
             ->first();
 
@@ -40,7 +62,7 @@ class JadwalTestController extends Controller
         }
 
         // Mengecek apakah peserta sudah memiliki jadwal test
-        $existingJadwal = JadwalTest::where('nama_calon_siswa', $validatedData['nama_calon_siswa'])->first();
+        $existingJadwal = JadwalTest::where('pendaftaran_id', $validatedData['pendaftaran_id'])->first();
 
         if ($existingJadwal) {
             // Jika peserta sudah memiliki jadwal test

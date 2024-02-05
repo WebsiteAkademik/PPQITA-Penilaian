@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Pendaftaran;
 
 class JadwalTest extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama_calon_siswa', 'tanggal_test', 'jam_test', 'jenis_test', 'pic_test'];
+    protected $fillable = ['pendaftaran_id', 'tanggal_test', 'jam_test', 'jenis_test', 'pic_test'];
 
     public function pendaftaran(){
-        return $this->belongsTo(Pendaftar::class, 'nama_calon_siswa');
+        return $this->belongsTo(Pendaftaran::class, 'pendaftaran_id');
     }
 };

@@ -46,10 +46,10 @@ class PendaftaranOnlineController extends Controller {
             "kabupaten" => "required",
             "kodepos" => "required",
             "asal_sekolah" => "required",
-            "ayah_hidup" => "required",
+            //"ayah_hidup" => "required",
             // "nama_ayah" => "required",
             // "pekerjaan_ayah" => "required",
-            "ibu_hidup" => "required",
+            //"ibu_hidup" => "required",
             // "nama_ibu" => "required",
             // "pekerjaan_ibu" => "required",
             "no_telepon_ortu" => "required",
@@ -92,24 +92,39 @@ class PendaftaranOnlineController extends Controller {
         }
 
         $data = $request->all();
-        $data['ayah_hidup'] = $request->has('ayah_hidup') ? true : false;
-        $data['ibu_hidup'] = $request->has('ibu_hidup') ? true : false;
+        $data['ayah_hidup'] = $request->has('ayah_hidup') ? ($request->all()["ayah_hidup"] == "1") : false;
+        $data['ibu_hidup'] = $request->has('ibu_hidup') ? ($request->all()["ibu_hidup"] == "1") : false;
+        $data['nama_ayah'] = "";
+        $data['nama_ibu'] = "";
+        $data['pekerjaan_ayah'] = "";
+        $data['pekerjaan_ibu'] = "";
         $data['status'] = "BARU";
 
         if($data['ayah_hidup'] && $data['ibu_hidup']){
             if ($bothValidator->fails()) {
                 Alert::error('Gagal! (E002)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
                 return redirect()->back()->withErrors($bothValidator)->withInput();
+            } else {
+                $data['nama_ayah'] = $request->all()["nama_ayah"];
+                $data['nama_ibu'] = $request->all()["nama_ibu"];
+                $data['pekerjaan_ayah'] = $request->all()["pekerjaan_ayah"];
+                $data['pekerjaan_ibu'] = $request->all()["pekerjaan_ibu"];
             }
         } elseif ($data["ayah_hidup"]) {
             if ($ayahValidator->fails()) {
                 Alert::error('Gagal! (E003)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
                 return redirect()->back()->withErrors($ayahValidator)->withInput();
+            } else {
+                $data['nama_ayah'] = $request->all()["nama_ayah"];
+                $data['pekerjaan_ayah'] = $request->all()["pekerjaan_ayah"];
             }
         } elseif ($data["ibu_hidup"]) {
             if ($ibuValidator->fails()) {
                 Alert::error('Gagal! (E004)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
                 return redirect()->back()->withErrors($ibuValidator)->withInput();
+            } else {
+                $data['nama_ibu'] = $request->all()["nama_ibu"];
+                $data['pekerjaan_ibu'] = $request->all()["pekerjaan_ibu"];
             }
         }
 
