@@ -83,6 +83,8 @@ class JadwalTestController extends Controller
     public function list(){
     // Ambil data jadwal test dari database
     $jadwalTests = JadwalTest::all();
+    $jadwalTests = JadwalTest::orderBy('tanggal_test', 'asc')->get();
+    return view('jadwaltest.list', ['jadwalTests' => $jadwalTests]);
 
     // Kirim data jadwal test ke view
     return view('jadwaltest.list', ['jadwalTests' => $jadwalTests]);

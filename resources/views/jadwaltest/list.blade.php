@@ -23,17 +23,17 @@
                 </tr>
             </thead>
 
-            {{-- button yang mengarah ke form edit jadwal test --}}
             <tbody>
                 @foreach ($jadwalTests as $jadwalTest)
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
-                        <td>{{ $jadwalTest->nama_calon_siswa }}</td>
+                        <td>{{ $jadwalTest->pendaftaran()->nama_calon_siswa }}</td>
                         <td>{{ $jadwalTest->tanggal_test }}</td>
                         <td>{{ $jadwalTest->jam_test }}</td>
                         <td>{{ $jadwalTest->jenis_test }}</td>
                         <td>{{ $jadwalTest->pic_test }}</td>
                         <td>
+                            {{-- button yang mengarah ke form edit jadwal test --}}
                             <a href="{{ route('jadwaltest.edittest', $jadwalTest->id) }}" class="btn btn-warning">Edit</a>
                         </td>
                     </tr>
