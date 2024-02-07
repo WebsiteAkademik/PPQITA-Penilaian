@@ -4,6 +4,54 @@
     Dashboard USER
 @endsection
 
+@push('script')
+    <script>
+        let checkboxAyah = document.getElementById('ayah_hidup');
+        let checkboxIbu = document.getElementById('ibu_hidup');
+        const formPendaftaranAyah = document.getElementById('form-ayah');
+        const formPendaftaranIbu = document.getElementById('form-ibu');
+
+        let showFormPendaftaran = false;
+
+        checkboxAyah.addEventListener('change', function() {
+            if (checkboxAyah.checked) {
+                checkboxAyah.value = 1;
+                formPendaftaranAyah.classList.remove('d-none');
+            } else {
+                checkboxAyah.value = 0;
+                formPendaftaranAyah.classList.add('d-none');
+            }
+        });
+
+        checkboxIbu.addEventListener('change', function() {
+            if (checkboxIbu.checked) {
+                checkboxIbu.value = 1;
+                formPendaftaranIbu.classList.remove('d-none');
+            } else {
+                checkboxIbu.value = 0;
+                formPendaftaranIbu.classList.add('d-none');
+            }
+        });
+
+        if (checkboxAyah.checked) {
+            checkboxAyah.value = 1;
+            formPendaftaranAyah.classList.remove('d-none');
+        } else {
+            checkboxAyah.value = 0;
+            formPendaftaranAyah.classList.add('d-none');
+        }
+        
+        if (checkboxIbu.checked) {
+            checkboxIbu.value = 1;
+            formPendaftaranIbu.classList.remove('d-none');
+        } else {
+            checkboxIbu.value = 0;
+            formPendaftaranIbu.classList.add('d-none');
+        }
+
+    </script>
+@endpush
+
 @section('content')
     
 
@@ -185,7 +233,7 @@
                                 <div class="bg-white text-dark px-3 py-2 d-flex gap-1 ms-auto"
                                     style="border-radius: 2rem">
                                     <div class="ms-1">
-                                        <input type="checkbox" name="ayah_hidup" id="ayah_hidup" value="1" checked>
+                                        <input type="checkbox" name="ayah_hidup" id="ayah_hidup" {{ $profile->ayah_hidup == '1' ? 'checked' : '' }} >
                                         <label for="ayah_hidup">Ayah Hidup?</label>
                                     </div>
                                 </div>
@@ -215,7 +263,7 @@
                                 <div class="bg-white text-dark px-3 py-2 d-flex gap-1 ms-auto"
                                     style="border-radius: 2rem">
                                     <div class="ms-1">
-                                        <input type="checkbox" name="ibu_hidup" id="ibu_hidup" value="1" checked>
+                                        <input type="checkbox" name="ibu_hidup" id="ibu_hidup" {{ $profile->ibu_hidup == '1' ? 'checked' : '' }} >
                                         <label for="ibu_hidup">Ibu Hidup?</label>
                                     </div>
                                 </div>
