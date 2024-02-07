@@ -108,7 +108,7 @@
 			<td style="width: 35%; text-align:
 			 center;vertical-align:center;padding:30px;">
 			<center>
-				{{ "Surakarta, ".strftime('%e %B %Y') }} <br>
+				{{ "Surakarta, ".date('d-m-Y') }} <br>
 				Calon Siswa <br><br><br><br>
 				{{$p->nama_calon_siswa}}
 			</center>
