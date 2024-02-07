@@ -28,7 +28,7 @@
             </div>
             <div class="mb-3">
                 <label for="tanggal_test" class="form-label">Tanggal Test</label>
-                <input type="date" name="tanggal_test" class="form-control" required>
+                <input type="date" name="tanggal_test" class="form-control" min="{{ date('Y-m-d') }}" required>
             </div>
             <div class="mb-3">
                 <input type="time" name="jam_test" class="form-control" required>

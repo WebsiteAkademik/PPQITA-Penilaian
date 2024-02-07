@@ -20,7 +20,7 @@
             <div class="mb-3">
                 <label for="nama_calon_siswa" class="form-label">Nama Calon Siswa</label>
                 <select name="nama_calon_siswa" class="form-select" required>
-                    <option value="{{ $jadwalTest->nama_calon_siswa }}" selected>{{ $jadwalTest->nama_calon_siswa }}</option>
+                    <option value="{{ $jadwalTest->pendaftaran()->nama_calon_siswa }}" selected>{{ $jadwalTest->pendaftaran()->nama_calon_siswa }}</option>
                 </select>
             </div>
             <div class="mb-3">
