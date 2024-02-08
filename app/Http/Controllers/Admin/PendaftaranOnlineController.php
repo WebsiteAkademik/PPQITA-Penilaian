@@ -29,7 +29,7 @@ class PendaftaranOnlineController extends Controller {
         // }
         
         $globalValidatorData = [
-            "no_nisn" => "required",
+            "no_nisn" => "required|unique:pendaftarans,no_nisn",
             "nama_calon_siswa" => "required",
             "tempat_lahir" => "required",
             "tanggal_lahir" => "required",
@@ -284,6 +284,12 @@ class PendaftaranOnlineController extends Controller {
                 $data['nama_ibu'] = $request->all()["nama_ibu"];
                 $data['pekerjaan_ibu'] = $request->all()["pekerjaan_ibu"];
             }
+        }
+
+        $noNisnValid = Pendaftaran::where('id', '!=', $profile->id)->where('no_nisn', $data['no_nisn'])->count();
+        if($noNisnValid != 0){
+            Alert::error('Gagal! (E005)', 'NISN sudah terdaftar');
+            return redirect()->back()->withInput();
         }
 
         $newData = [];
