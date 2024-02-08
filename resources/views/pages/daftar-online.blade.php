@@ -271,7 +271,7 @@
                                 <div class="bg-white text-dark px-3 py-2 d-flex gap-1 ms-auto"
                                     style="border-radius: 2rem">
                                     <div class="ms-1">
-                                        <input type="checkbox" name="ayah_hidup" id="ayah_hidup" {{ $profile->ayah_hidup == '1' ? 'checked' : '' }} >
+                                        <input type="checkbox" name="ayah_hidup" id="ayah_hidup" {{ old('ayah_hidup') == '1' ? 'checked' : '' }} >
                                         <label for="ayah_hidup">Ayah Hidup?</label>
                                     </div>
                                 </div>
@@ -301,7 +301,7 @@
                                 <div class="bg-white text-dark px-3 py-2 d-flex gap-1 ms-auto"
                                     style="border-radius: 2rem">
                                     <div class="ms-1">
-                                        <input type="checkbox" name="ibu_hidup" id="ibu_hidup" {{ $profile->ibu_hidup == '1' ? 'checked' : '' }} >
+                                        <input type="checkbox" name="ibu_hidup" id="ibu_hidup" {{ old('ibu_hidup') == '1' ? 'checked' : '' }} >
                                         <label for="ibu_hidup">Ibu Hidup?</label>
                                     </div>
                                 </div>
