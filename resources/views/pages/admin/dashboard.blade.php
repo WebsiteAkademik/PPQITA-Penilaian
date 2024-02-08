@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="row align-items-center justify-content-between">
                         <div class="col-5">
-                            <i class="fa-solid fa-user" style="font-size: 4rem;"></i>
+                            <i class="fa-solid fa-user-plus text-primary" style="font-size: 4rem;"></i>
                         </div>
                         <div class="col-7 text-end">
                             <h4 style="font-weight: 600">{{ $pendaftarbaruCount }}</h4>
@@ -32,7 +32,7 @@
                 <div class="card-body">
                     <div class="row align-items-center justify-content-between">
                         <div class="col-5">
-                            <i class="fa-solid fa-user" style="font-size: 4rem;"></i>
+                            <i class="fa-solid fa-clock text-warning" style="font-size: 4rem;"></i>
                         </div>
                         <div class="col-7 text-end">
                             <h4 style="font-weight: 600">{{ $pendaftartestCount }}</h4>
@@ -53,7 +53,7 @@
                 <div class="card-body">
                     <div class="row align-items-center justify-content-between">
                         <div class="col-5">
-                            <i class="fa-solid fa-user" style="font-size: 4rem;"></i>
+                            <i class="fa-solid fa-check text-success" style="font-size: 4rem;"></i>
                         </div>
                         <div class="col-7 text-end">
                             <h4 style="font-weight: 600">{{ $diterimaCount }}</h4>
@@ -74,7 +74,7 @@
                 <div class="card-body">
                     <div class="row align-items-center justify-content-between">
                         <div class="col-5">
-                            <i class="fa-solid fa-user" style="font-size: 4rem;"></i>
+                            <i class="fa-solid fa-circle-xmark text-danger" style="font-size: 4rem;"></i>
                         </div>
                         <div class="col-7 text-end">
                             <h4 style="font-weight: 600">{{ $ditolakCount }}</h4>

@@ -30,7 +30,7 @@
     <div class="row">
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
-                <div class="card-body p-4">
+                <div class="card-body">
                     <h5 class="card-title fs-6 fw-semibold mb-4">Data Pendaftar Baru</h5>
                     @if(session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>

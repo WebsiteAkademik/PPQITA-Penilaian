@@ -109,7 +109,7 @@
                                                     echo "<div class='badge text-capitalize bg-success'>$pendaftar->status</div>";
                                                     break;
                                                 case 'DITOLAK':
-                                                    echo "<div class='badge text-capitalize bg-danger'>$pendaftar->status</div>";
+                                                    echo "<div class='badge text-capitalize bg-danger'>TIDAK DITERIMA</div>";
                                                     break;
                                             }
                                         @endphp
