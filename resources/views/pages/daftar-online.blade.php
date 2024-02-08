@@ -68,6 +68,21 @@
                 }
             });
         })
+
+        var capt = $('.ch')
+        var btn = $('.setuju')
+        capt.css('display', 'none')
+        btn.on('click', function() {
+            $.ajax({
+                type: 'GET',
+                url: 'reload-captcha',
+                success: function(data) {
+                    $(".captcha span").html(data.captcha)
+                    capt.css('display', 'block')
+                    btn.css('display', 'none')
+                }
+            });
+        })
     </script>
 @endpush
 
@@ -330,7 +345,7 @@
                                 <div class="mb-3">
                                     <label for="no_telepon_ortu" class="form-label">Nomor Whatsapp Orang Tua <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input required type="number" class="form-control" name="no_telepon_ortu" id="no_telepon_ortu"
+                                    <input required type="text" class="form-control" name="no_telepon_ortu" id="no_telepon_ortu"
                                         value="{{ old('no_telepon_ortu') }}">
                                 </div>
                             </div>
@@ -373,15 +388,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12 col-12">
-                                <div class="mb-3">
-                                    <label for="informasi_pmb" class="form-label">Memperoleh Informasi Dari Mana?
-                                        <span class="text-danger"
-                                            style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <textarea class="form-control" id="informasi_pmb" name="informasi_pmb" rows="3" value="">{{ old('informasi_pmb') }}</textarea>
-                                </div>
+                        <div class="col-md-12 col-12">
+                            <div class="mb-3">
+                                <label for="informasi_pmb" class="form-label">Memperoleh Informasi Dari Mana?
+                                    <span class="text-danger"
+                                        style="font-weight: 700;font-size: 20px;">*</span></label>
+                                <textarea class="form-control" id="informasi_pmb" name="informasi_pmb" rows="3" value="">{{ old('informasi_pmb') }}</textarea>
                             </div>
+                        </div>
+                        <div class="row ch">
                             <div class="col-12 mt-2">
                                 <div class="captcha">
                                     <span>CAPTCHA</span>
@@ -394,13 +409,18 @@
                                         placeholder="Input Captcha">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-12 col-lg-5">
-                                <button type="submit" class="btn btn-light" style="padding:10px;box-shadow:5px 5px 10px">Submit Pendaftaran</button>
+                            <div class="row mt-4">
+                                <div class="col-12 col-lg-5">
+                                    <button type="submit" class="btn btn-success" style="padding:10px;box-shadow:5px 5px 10px">Submit Pendaftaran</button>
+                                </div>
                             </div>
                         </div>
                     </form>
+                    <div class="row mt-4 setuju">
+                        <div class="col-12 col-lg-5">
+                            <button class="btn btn-success" style="padding:10px;box-shadow:5px 5px 10px">Saya mensetujui data saya benar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

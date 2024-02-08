@@ -292,7 +292,7 @@
                                 <div class="mb-3">
                                     <label for="no_telepon_ortu" class="form-label">Nomor Whatsapp Orang Tua <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
-                                    <input required type="number" class="form-control" name="no_telepon_ortu" id="no_telepon_ortu"
+                                    <input required type="text" class="form-control" name="no_telepon_ortu" id="no_telepon_ortu"
                                         value="{{ $profile->no_telepon_ortu }}">
                                 </div>
                             </div>
