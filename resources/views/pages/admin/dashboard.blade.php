@@ -145,6 +145,9 @@
                                                     case 'TEST':
                                                         echo "<div class='badge text-capitalize bg-info'>$pendaftar->status</div>";
                                                         break;
+                                                    case 'MENUNGGU':
+                                                        echo "<div class='badge text-capitalize bg-secondary'>$pendaftar->status</div>";
+                                                        break;
                                                     case 'DITERIMA':
                                                         echo "<div class='badge text-capitalize bg-success'>$pendaftar->status</div>";
                                                         break;

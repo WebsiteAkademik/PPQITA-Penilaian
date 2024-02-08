@@ -63,7 +63,7 @@
                                         <h6 class="fw-semibold mb-0">Alamat</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Nomor Whatsapp Orang Tua</h6>
+                                        <h6 class="fw-semibold mb-0">No. WA Orang Tua</h6>
                                     </th>
                                     <th class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">Status</h6>
@@ -110,7 +110,25 @@
                                         @endif
                                     </td>
                                     <td class="border-bottom-0">
-                                        {{ $row->status }}
+                                        @php
+                                            switch ($row->status) {
+                                                case 'BARU':
+                                                    echo "<div class='badge text-capitalize' style='background-color: #00569C;'>$row->status</div>";
+                                                    break;
+                                                case 'TEST':
+                                                    echo "<div class='badge text-capitalize bg-info'>$row->status</div>";
+                                                    break;
+                                                case 'MENUNGGU':
+                                                    echo "<div class='badge text-capitalize bg-secondary'>$row->status</div>";
+                                                    break;
+                                                case 'DITERIMA':
+                                                    echo "<div class='badge text-capitalize bg-success'>$row->status</div>";
+                                                    break;
+                                                case 'DITOLAK':
+                                                    echo "<div class='badge text-capitalize bg-danger'>$row->status</div>";
+                                                    break;
+                                            }
+                                        @endphp
                                     </td>
                                     <td class="border-bottom-0 d-flex gap-2 align-items-center">
                                         @if($row->status == "TEST")
