@@ -49,6 +49,15 @@ $pendaftaran = Pendaftaran::where('user_id', auth()->user()->id)->first();
                             </a>
                         </li>
                         <li class="sidebar-item">
+                            <a class="sidebar-link {{ Request::is(route('pendaftar.profile')) ? 'active' : '' }}"
+                                href="{{ route('pendaftar.profile') }}" aria-expanded="false">
+                                <span>
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                </span>
+                                <span class="hide-menu">Edit Data Profile</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
                             <a class="sidebar-link @if (Request::is('/jadwaltestuser')) active @endif"
                                 href="{{ route('jadwaltestuser') }}" aria-expanded="false">
                                 <span>
@@ -57,10 +66,10 @@ $pendaftaran = Pendaftaran::where('user_id', auth()->user()->id)->first();
                                 <span class="hide-menu">Jadwal Test</span>
                             </a>
                         </li>
-                        <li class="sidebar-item d-grid" style="position: absolute;bottom: 60px;right: 0;left: 0;">
+                        <!-- <li class="sidebar-item d-grid" style="position: absolute;bottom: 60px;right: 0;left: 0;">
                             <button type="button" onclick="window.location.href='{{ route('pendaftar.profile') }}';"
                                 class="btn btn-outline-primary mx-3 mt-2">Profile</button>
-                        </li>
+                        </li> -->
                         <li class="sidebar-item d-grid" style="position: absolute;bottom: 20px;right: 0;left: 0;">
                             <button type="button" onclick="logout();"
                                 class="btn btn-outline-danger mx-3 mt-2">Logout</button>
@@ -90,7 +99,7 @@ $pendaftaran = Pendaftaran::where('user_id', auth()->user()->id)->first();
                             <li class="nav-item dropdown">
                                 <div class="d-flex align-items-center">
                                     <p class="text-white fs-4 mt-2" style="font-weight: 500">Hi,
-                                        {{ ucwords(strtolower($pendaftaran->nama_calon_siswa)) }} <h6><span class="badge badge-primary" style="background-color: #00569c">{{ ucwords(strtolower($pendaftaran->status)) }}</span></h6></p>
+                                        {{ ucwords(strtolower($pendaftaran->nama_calon_siswa)) }}</p>
                                     <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <img src="{{ asset('admin/src/assets/images/profile/user-1.jpg') }}"

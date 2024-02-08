@@ -45,6 +45,30 @@ class Pendaftaran extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function printedStatus(){
+        $STATUS = [
+            "BARU" => "Menunggu",
+            "MENUNGGU" => "Menunggu",
+            "TEST" => "Test",
+            "DITERIMA" => "Diterima",
+            "DITOLAK" => "Tidak Diterima",
+        ];
+
+        return $STATUS[$this->status];
+    }
+
+    public function printedStatusDashboard(){
+        $STATUS = [
+            "BARU" => "Baru",
+            "MENUNGGU" => "Menunggu",
+            "TEST" => "Test",
+            "DITERIMA" => "Diterima",
+            "DITOLAK" => "Tidak Diterima",
+        ];
+
+        return $STATUS[$this->status];
+    }
+
     public function  updateStatusBaru(){
         $this->update([
             'status' => "BARU",

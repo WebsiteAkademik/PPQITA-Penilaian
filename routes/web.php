@@ -126,9 +126,7 @@ Route::middleware('auth', 'cekrole:user')->prefix('dashboarduser')->group(functi
 
         //$pendaftars = Pendaftar::latest()->limit(5)->get();
         //auth()->user()->name
-        $pendaftars = DB::table('pendaftarans')
-                   ->where('user_id','=',auth()->user()->id )
-                   ->get();
+        $pendaftars = Pendaftaran::where('user_id','=',auth()->user()->id )->get();
         $data = [
             'pendaftars' => $pendaftars,
             'pendaftarCount' => $pendaftarCount
