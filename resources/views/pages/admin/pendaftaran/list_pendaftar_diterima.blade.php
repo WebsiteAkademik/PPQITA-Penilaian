@@ -30,7 +30,7 @@
     <div class="row">
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
-                <div class="card-body p-4">
+                <div class="card-body">
                     <h5 class="card-title fs-6 fw-semibold mb-4">Data Pendaftar yang Diterima</h5>
                     <div class="table-responsive">
                         <table class="table text-nowrap mb-0 align-middle" id="table-pendaftaran">
@@ -114,7 +114,7 @@
                                                     echo "<div class='badge text-capitalize bg-success'>$row->status</div>";
                                                     break;
                                                 case 'DITOLAK':
-                                                    echo "<div class='badge text-capitalize bg-danger'>$row->status</div>";
+                                                    echo "<div class='badge text-capitalize bg-danger'>TIDAK DITERIMA</div>";
                                                     break;
                                             }
                                         @endphp

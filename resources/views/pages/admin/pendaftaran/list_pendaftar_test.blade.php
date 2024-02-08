@@ -35,7 +35,7 @@
     <div class="row">
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
-                <div class="card-body p-4">
+                <div class="card-body">
                     <h5 class="card-title fs-6 fw-semibold mb-4">Data Pendaftar yang Dijadwalkan Test</h5>
                     @if(session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
@@ -69,7 +69,7 @@
                                         <h6 class="fw-semibold mb-0">Status</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Jadwal Test</h6>
+                                        <h6 class="fw-semibold mb-0">Action</h6>
                                     </th>
                                 </tr>
                             </thead>
@@ -125,14 +125,21 @@
                                                     echo "<div class='badge text-capitalize bg-success'>$row->status</div>";
                                                     break;
                                                 case 'DITOLAK':
-                                                    echo "<div class='badge text-capitalize bg-danger'>$row->status</div>";
+                                                    echo "<div class='badge text-capitalize bg-danger'>TIDAK DITERIMA</div>";
                                                     break;
                                             }
                                         @endphp
                                     </td>
                                     <td class="border-bottom-0 d-flex gap-2 align-items-center">
+                                        @if($row->status == "MENUNGGU")
+                                        <div class="row mt-1">
+                                            <div class="col-12 col-lg-5">
+                                                <a href="{{ route('jadwaltest.form') }}" class="btn btn-info mt-1">Tambah Test</a>
+                                            </div>
+                                        </div>
+                                        @endif
                                         @if($row->status == "TEST")
-                                        <div class="row mt-4">
+                                        <div class="row mt-1">
                                             <div class="col-12 col-lg-5">
                                                 <form action="{{ route('pendaftar.updateStatusDiterima') }}" method="post" style="display: inline">
                                                     @csrf
@@ -141,7 +148,7 @@
                                                 </form>
                                             </div>
                                         </div>
-                                        <div class="row mt-4">
+                                        <div class="row mt-1">
                                             <div class="col-12 col-lg-5">
                                                 <form action="{{ route('pendaftar.updateStatusDitolak') }}" method="post" style="display: inline">
                                                     @csrf
