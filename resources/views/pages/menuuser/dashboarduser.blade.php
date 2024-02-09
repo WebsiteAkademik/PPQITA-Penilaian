@@ -111,22 +111,22 @@
                             <tr>
                                 <th>Nama Ayah</th>
                                 <td>:</td>
-                                <td>{{ $pendaftars->first()->nama_ayah }}</td>
+                                <td>{{ $pendaftars->first()->nama_ayah ? $pendaftars->first()->nama_ayah : '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Pekerjaan Ayah</th>
                                 <td>:</td>
-                                <td>{{ $pendaftars->first()->pekerjaan_ayah }}</td>
+                                <td>{{ $pendaftars->first()->pekerjaan_ayah ?$pendaftars->first()->pekerjaan_ayah : '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Nama Ibu</th>
                                 <td>:</td>
-                                <td>{{ $pendaftars->first()->nama_ibu }}</td>
+                                <td>{{ $pendaftars->first()->nama_ibu ? $pendaftars->first()->nama_ibu : '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Pekerjaan Ibu</th>
                                 <td>:</td>
-                                <td>{{ $pendaftars->first()->pekerjaan_ibu }}</td>
+                                <td>{{ $pendaftars->first()->pekerjaan_ibu ?$pendaftars->first()->pekerjaan_ibu : '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Penghasilan Perbulan</th>

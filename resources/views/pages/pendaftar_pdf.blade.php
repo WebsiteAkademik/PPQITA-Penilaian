@@ -53,14 +53,20 @@
 					:<br>
 					:<br>
 					:<br>
-					:<br>
-					:<br>
-					:<br>
-					:<br>
-					:<br>
-					:<br>
-					:<br>
-					:<br>
+					@if($p->nama_ayah)
+						:<br>
+						:<br>
+					@else
+						:<br>
+						:<br>
+					@endif
+					@if($p->nama_ibu)
+						:<br>
+						:<br>
+					@else
+						:<br>
+						:<br>
+					@endif
 					:<br>
 					:<br>
 				
@@ -74,10 +80,10 @@
 					{{$p->berat_badan}} kg<br>
 					{{$p->penyakit_kronis}}<br>
 					{{$p->asal_sekolah}}<br>
-					{{$p->nama_ayah}}<br>
-					{{$p->pekerjaan_ayah}}<br>
-					{{$p->nama_ibu}}<br>
-					{{$p->pekerjaan_ibu}}<br>
+					{{$p->nama_ayah ? $p->nama_ayah : '-'}}<br>
+					{{$p->pekerjaan_ayah ? $p->pekerjaan_ayah : '-'}}<br>
+					{{$p->nama_ibu ? $p->nama_ibu : '-'}}<br>
+					{{$p->pekerjaan_ibu ? $p->pekerjaan_ibu : '-'}}<br>
 					{{$p->penghasilan_per_bulan}}<br>
 					{{$p->no_telepon_ortu}}<br>
 					{{$p->no_wa_anak}}<br>
