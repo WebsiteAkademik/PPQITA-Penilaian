@@ -57,7 +57,11 @@
                             <a href="{{ route('cetak_pdf', $pendaftars->first()->no_nisn) }}" target="_blank" class="btn btn-success">Download</a>
                         </div>
                         <div class="col-4 col-lg-5">
-                            <h4 style="font-weight: bold; font-size: 24px">Status : {{ $pendaftars->first()->status }}</h4>
+                            @if($pendaftars->first()->status == "DITOLAK")
+                                <h4 style="font-weight: bold; font-size: 24px">Status : TIDAK DITERIMA</h4>
+                            @else 
+                                <h4 style="font-weight: bold; font-size: 24px">Status : {{ $pendaftars->first()->status }}</h4>
+                            @endif
                         </div>
                     </div>
 
