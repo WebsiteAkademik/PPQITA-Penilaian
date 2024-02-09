@@ -66,7 +66,7 @@
                                         <h6 class="fw-semibold mb-0">Nomor Whatsapp Orang Tua</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Update Status</h6>
+                                        <h6 class="fw-semibold mb-0">Action</h6>
                                     </th>
                                 </tr>
                             </thead>
@@ -105,12 +105,12 @@
                                         @endif
                                     </td>
                                     <td class="border-bottom-0 d-flex gap-2 align-items-center">
-                                        <div class="row mt-4">
+                                        <div class="row mt-1">
                                             <div class="col-12 col-lg-5">
                                                 <form action="{{ route('pendaftar.indexUpdateStatusMenunggu') }}" method="post" style="display: inline">
                                                     @csrf
                                                     <input type="hidden" name="id" value="{{ $row->id }}"/>
-                                                    <button type="submit" class="btn btn-success" style="padding:10px;box-shadow:5px 5px 10px">Tambah</button>
+                                                    <button type="submit" class="btn btn-success" style="padding:10px;box-shadow:5px 5px 10px">Update Status</button>
                                                 </form>
                                             </div>
                                         </div>
