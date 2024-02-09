@@ -377,7 +377,7 @@ class PendaftaranOnlineController extends Controller {
             $pendaftaran->updateStatusDiterima();
         }
 
-        Alert::success('Berhasil', 'Calon siswa berhasil diterima!');
+        Alert::success('Berhasil', 'Calon siswa dinyatakan berhasil diterima!');
         return redirect()->intended('/dashboard/pendaftar-test');
     }
 
@@ -408,7 +408,7 @@ class PendaftaranOnlineController extends Controller {
             $pendaftaran->updateStatusDitolak();
         }
 
-        Alert::success('Berhasil', 'Calon siswa berhasil ditolak!');
+        Alert::success('Berhasil', 'Calon siswa dinyatakan Tidak Diterima!');
         return redirect()->intended('/dashboard/pendaftar-test');
     }
 
