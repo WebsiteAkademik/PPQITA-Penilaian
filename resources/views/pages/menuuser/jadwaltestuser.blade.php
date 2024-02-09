@@ -21,6 +21,7 @@
                     <th scope="col">Jenis Test</th>
                     <th scope="col">PIC</th>
                     <th scope="col">No. Telepon/WhatsApp</th>
+                    <th scope="col">Status Test</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +34,7 @@
                         <td>{{ $jadwalTest->jenis_test }}</td>
                         <td>{{ $jadwalTest->pic_test }}</td>
                         <td>{{ $jadwalTest->pendaftaran()->no_wa_anak }}</td>
+                        <td>{{ $jadwalTest->pendaftaran()->printedStatus() }}</td>
                     </tr>
                 @endforeach
             </tbody>
