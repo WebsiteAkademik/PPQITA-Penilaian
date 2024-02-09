@@ -37,7 +37,9 @@
                         
                         @if($jadwalTest->pendaftaran()->status == "TEST")
                             <td>DIJADWALKAN</td>
-                        @elseif($jadwalTest->pendaftaran()->status == "DITERIMA" || status == "DITOLAK")
+                        @elseif($jadwalTest->pendaftaran()->status == "DITERIMA")
+                            <td>SELESAI</td>
+                        @elseif($jadwalTest->pendaftaran()->status == "DITOLAK")
                             <td>SELESAI</td>
                         @endif
                     </tr>
