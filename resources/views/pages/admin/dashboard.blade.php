@@ -5,88 +5,92 @@
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-5 col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center justify-content-between">
-                        <div class="col-5">
-                            <i class="fa-solid fa-user-plus text-primary" style="font-size: 4rem;"></i>
-                        </div>
-                        <div class="col-7 text-end">
-                            <h4 style="font-weight: 600">{{ $pendaftarbaruCount }}</h4>
-                            <p>Pendaftar Baru</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-5">
+                                <i class="fa-solid fa-user-plus text-primary" style="font-size: 4rem;"></i>
+                            </div>
+                            <div class="col-7 text-end">
+                                <h4 style="font-weight: 600; font-size:3rem;">{{ $pendaftarbaruCount }}</h4>
+                                <p style="font-size:1rem;">Pendaftar Baru</p>
+                            </div>
                         </div>
                     </div>
+                    <div class="card-footer">
+                        <a href="{{ route('pendaftar.index') }}" class="text-dark d-flex justify-content-between">
+                            <p style="font-weight: 500; font-size:1rem;">Detail</p>
+                            <i class="fa-solid fa-arrow-right-long pt-2"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <a href="{{ route('pendaftar.index') }}" class="text-dark d-flex justify-content-between">
-                        <p style="font-weight: 500">Detail</p>
-                        <i class="fa-solid fa-arrow-right-long"></i>
-                    </a>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-5">
+                                <i class="fa-solid fa-clock text-warning" style="font-size: 4rem;"></i>
+                            </div>
+                            <div class="col-7 text-end">
+                                <h4 style="font-weight: 600; font-size:3rem;">{{ $pendaftartestCount }}</h4>
+                                <p style="font-size:1rem;">Pendaftar Test</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ route('pendaftar.listTest') }}" class="text-dark d-flex justify-content-between">
+                            <p style="font-weight: 500; font-size:1rem;">Detail</p>
+                            <i class="fa-solid fa-arrow-right-long pt-2"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-5 col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center justify-content-between">
-                        <div class="col-5">
-                            <i class="fa-solid fa-clock text-warning" style="font-size: 4rem;"></i>
-                        </div>
-                        <div class="col-7 text-end">
-                            <h4 style="font-weight: 600">{{ $pendaftartestCount }}</h4>
-                            <p>Pendaftar Test</p>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-5">
+                                <i class="fa-solid fa-check text-success" style="font-size: 4rem;"></i>
+                            </div>
+                            <div class="col-7 text-end">
+                                <h4 style="font-weight: 600; font-size:3rem;">{{ $diterimaCount }}</h4>
+                                <p style="font-size:1rem;">Pendaftar Diterima</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <a href="{{ route('pendaftar.listTest') }}" class="text-dark d-flex justify-content-between">
-                        <p style="font-weight: 500">Detail</p>
-                        <i class="fa-solid fa-arrow-right-long"></i>
-                    </a>
+                    <div class="card-footer">
+                        <a href="{{ route('pendaftar.listTerima') }}" class="text-dark d-flex justify-content-between">
+                            <p style="font-weight: 500; font-size:1rem;">Detail</p>
+                            <i class="fa-solid fa-arrow-right-long pt-2"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-5 col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center justify-content-between">
-                        <div class="col-5">
-                            <i class="fa-solid fa-check text-success" style="font-size: 4rem;"></i>
-                        </div>
-                        <div class="col-7 text-end">
-                            <h4 style="font-weight: 600">{{ $diterimaCount }}</h4>
-                            <p>Pendaftar Diterima</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="{{ route('pendaftar.listTerima') }}" class="text-dark d-flex justify-content-between">
-                        <p style="font-weight: 500">Detail</p>
-                        <i class="fa-solid fa-arrow-right-long"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-5 col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center justify-content-between">
-                        <div class="col-5">
-                            <i class="fa-solid fa-circle-xmark text-danger" style="font-size: 4rem;"></i>
-                        </div>
-                        <div class="col-7 text-end">
-                            <h4 style="font-weight: 600">{{ $ditolakCount }}</h4>
-                            <p>Pendaftar Tidak Diterima</p>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-5">
+                                <i class="fa-solid fa-circle-xmark text-danger" style="font-size: 4rem;"></i>
+                            </div>
+                            <div class="col-7 text-end">
+                                <h4 style="font-weight: 600; font-size:3rem;">{{ $ditolakCount }}</h4>
+                                <p style="font-size:1rem;">Pendaftar Tidak Diterima</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <a href="{{ route('pendaftar.listTolak') }}" class="text-dark d-flex justify-content-between">
-                        <p style="font-weight: 500">Detail</p>
-                        <i class="fa-solid fa-arrow-right-long"></i>
-                    </a>
+                    <div class="card-footer">
+                        <a href="{{ route('pendaftar.listTolak') }}" class="text-dark d-flex justify-content-between">
+                            <p style="font-weight: 500; font-size:1rem;">Detail</p>
+                            <i class="fa-solid fa-arrow-right-long pt-2"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -152,7 +156,7 @@
                                                         echo "<div class='badge text-capitalize bg-success'>$pendaftar->status</div>";
                                                         break;
                                                     case 'DITOLAK':
-                                                        echo "<div class='badge text-capitalize bg-danger'>$pendaftar->status</div>";
+                                                        echo "<div class='badge text-capitalize bg-danger'>TIDAK DITERIMA</div>";
                                                         break;
                                                 }
                                             @endphp

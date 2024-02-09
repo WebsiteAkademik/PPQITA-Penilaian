@@ -31,9 +31,7 @@
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body p-4">
-                    <h3 class="fw-bold">Profile Pendaftar</h3>
-                    <h6>Tahun Ajaran: 2024/2025</h6>
-                    <h6>Bulan: Januari 2024</h6><br/>
+                    <h3 class="fw-bold">Profile Pendaftar</h3><br/>
                     <div class="table-responsive">
                         <table class="table mb-0 align-middle" id="table-pendaftaran">
                             <thead class="text-dark">

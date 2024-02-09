@@ -42,7 +42,27 @@
                     <td>{{ $pendaftar->kabupaten }}</td>
                     <td>{{ $pendaftar->asal_sekolah }}</td>
                     <td>{{ $pendaftar->no_wa_anak }}</td>
-                    <td>{{ $pendaftar->status }}</td>
+                    <td>
+                        @php
+                            switch ($pendaftar->status) {
+                                case 'BARU':
+                                    echo "<div class='text-capitalize text-bold'>$pendaftar->status</div>";
+                                    break;
+                                case 'TEST':
+                                    echo "<div class='text-capitalize text-bold'>$pendaftar->status</div>";
+                                    break;
+                                case 'MENUNGGU':
+                                    echo "<div class='text-capitalize text-bold'>$pendaftar->status</div>";
+                                    break;
+                                case 'DITERIMA':
+                                    echo "<div class='text-capitalize text-bold'>$pendaftar->status</div>";
+                                    break;
+                                case 'DITOLAK':
+                                    echo "<div class='text-capitalize text-bold'>TIDAK DITERIMA</div>";
+                                    break;
+                            }
+                        @endphp
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
