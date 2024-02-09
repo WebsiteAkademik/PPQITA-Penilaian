@@ -57,7 +57,7 @@
                             <a href="{{ route('cetak_pdf', $pendaftars->first()->no_nisn) }}" target="_blank" class="btn btn-success">Download</a>
                         </div>
                         <div class="col-4 col-lg-5">
-                            <h4 style="font-weight: bold; font-size: 24px">{{ $pendaftars->first()->printedStatus() }}</h4>
+                            <h4 style="font-weight: bold; font-size: 24px">Status : {{ $pendaftars->first()->status }}</h4>
                         </div>
                     </div>
 
