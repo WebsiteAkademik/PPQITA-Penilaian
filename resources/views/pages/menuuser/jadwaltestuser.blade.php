@@ -34,7 +34,12 @@
                         <td>{{ $jadwalTest->jenis_test }}</td>
                         <td>{{ $jadwalTest->pic_test }}</td>
                         <td>{{ $jadwalTest->pendaftaran()->no_wa_anak }}</td>
-                        <td>{{ $jadwalTest->pendaftaran()->printedStatus() }}</td>
+                        
+                        @if($jadwalTest->pendaftaran()->status == "TEST")
+                            <td>DIJADWALKAN</td>
+                        @elseif($jadwalTest->pendaftaran()->status == "DITERIMA" || status == "DITOLAK")
+                            <td>SELESAI</td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>
