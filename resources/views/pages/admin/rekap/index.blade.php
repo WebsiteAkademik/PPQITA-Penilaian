@@ -54,7 +54,7 @@
                         </div>
                     </form><br/>
                     <div class="d-flex">
-                        <a href="{{ route('cetak_laporan', ['min_date' => request('min_date'), 'max_date' => request('max_date')]) }}" class="btn btn-primary m-1">Cetak PDF</a>
+                        <a href="{{ route('cetak_laporan', ['min_date' => request('min_date'), 'max_date' => request('max_date')]) }}" target="_blank" class="btn btn-primary m-1">Cetak PDF</a>
                         <a href="{{ route('export-pendaftar', ['min_date' => request('min_date'), 'max_date' => request('max_date')]) }}" class="btn btn-success m-1">Export Excel</a>
                     </div><br/>
                     <div class="table">
