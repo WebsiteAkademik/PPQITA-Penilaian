@@ -7,24 +7,8 @@
 @push('style')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <style>
-        .card {
-            width: 100%;
-        }
-
-        @media (min-width: 576px) {
-            .card {
-                max-width: 100%;
-            }
-        }
-
-        .table{
-            width: 100%;
-        }
-
-        @media (max-width: 576px) {
-            .table {
-                overflow-x: auto;
-            }
+        .container-fluid {
+            max-width: none !important;
         }
     </style>
 @endpush
@@ -48,9 +32,9 @@
 @endpush
 
 @section('content')
-    <div class="row justify-content-center">
+    <div class="row">
         <div class="col-lg-12 d-flex align-items-stretch">
-            <div class="card">
+            <div class="card w-100">
                 <div class="card-body p-4">
                     <h3 class="fw-bold">Rekap Pendaftar</h3>
                     <h6>Date Range:</h6>
