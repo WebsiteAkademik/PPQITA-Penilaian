@@ -83,14 +83,34 @@
                                 <td>{{ $pendaftars->first()->nama_calon_siswa }}</td>
                             </tr>
                             <tr>
+                                <th>Konsentrasi Keahlian yang Diminati</th>
+                                <td>:</td>
+                                <td>{{ $pendaftars->first()->program_keahlian }}</td>
+                            </tr>
+                            <tr>
                                 <th>Tempat dan Tanggal Lahir</th>
                                 <td>:</td>
                                 <td>{{ $pendaftars->first()->tempat_lahir }}, {{ $pendaftars->first()->tanggal_lahir }}</td>
                             </tr>
                             <tr>
+                                <th>Jenis Kelamin</th>
+                                <td>:</td>
+                                <td>{{ $pendaftars->first()->jenis_kelamin }}</td>
+                            </tr>
+                            <tr>
                                 <th>Nomor Kartu Keluarga</th>
                                 <td>:</td>
                                 <td>{{ $pendaftars->first()->no_kartu_keluarga }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nomor Induk Keluarga</th>
+                                <td>:</td>
+                                <td>{{ $pendaftars->first()->no_induk_keluarga }}</td>
+                            </tr>
+                            <tr>
+                                <th>Agama</th>
+                                <td>:</td>
+                                <td>{{ $pendaftars->first()->agama }}</td>
                             </tr>
                             <tr>
                                 <th>Tinggi Badan</th>
@@ -101,6 +121,11 @@
                                 <th>Berat Badan</th>
                                 <td>:</td>
                                 <td>{{ $pendaftars->first()->berat_badan }} kg</td>
+                            </tr>
+                            <tr>
+                                <th>Bertato</th>
+                                <td>:</td>
+                                <td>{{ $pendaftars->first()->bertato }}</td>
                             </tr>
                             <tr>
                                 <th>Penyakit Kronis</th>

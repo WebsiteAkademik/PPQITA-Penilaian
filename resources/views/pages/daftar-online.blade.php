@@ -150,6 +150,19 @@
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
+                                <label for="program_keahlian" class="form-label">Konsentrasi Keahlian yang Diminati<span class="text-danger"
+                                        style="font-weight: 700;font-size: 20px;">*</span></label>
+                                    <select required class="form-select" id="program_keahlian" name="program_keahlian" value="{{ old('program_keahlian') }}">
+                                        <option {{ old('program_keahlian') == '' ? 'selected' : '' }} disabled>--- Pilih Jurusan ---</option>
+                                        <option {{ old('program_keahlian') == 'Teknik Pemesinan (TP)' ? 'selected' : '' }} value="Teknik Pemesinan (TP)">Teknik Pemesinan (TP)</option>
+                                        <option {{ old('program_keahlian') == 'Teknik Pengelasan (TLAS)' ? 'selected' : '' }} value="Teknik Pengelasan (TLAS)">Teknik Pengelasan (TLAS)</option>
+                                        <option {{ old('program_keahlian') == 'Teknik Kendaraan Ringan Otomotif (TKRO)' ? 'selected' : '' }} value="Teknik Kendaraan Ringan Otomotif (TKRO)">Teknik Kendaraan Ringan Otomotif (TKRO)</option>
+                                        <option {{ old('program_keahlian') == 'Teknik dan Bisnis Sepeda Motor (TBSM)' ? 'selected' : '' }} value="Teknik dan Bisnis Sepeda Motor (TBSM)">Teknik dan Bisnis Sepeda Motor (TBSM)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
                                 <label for="tempat_lahir" class="form-label">Tempat Lahir <span class="text-danger"
                                         style="font-weight: 700;font-size: 20px;">*</span></label>
                                 <input required type="text" class="form-control" name="tempat_lahir" id="tempat_lahir"
@@ -185,6 +198,29 @@
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="mb-3">
+                                    <label for="no_induk_keluarga" class="form-label">Nomor Induk Keluarga <span class="text-danger"
+                                            style="font-weight: 700;font-size: 20px;">*</span></label>
+                                    <input required type="text" class="form-control" name="no_induk_keluarga" id="no_induk_keluarga"
+                                        value="{{ old('no_induk_keluarga') }}">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                <label for="agama" class="form-label">Agama<span class="text-danger"
+                                        style="font-weight: 700;font-size: 20px;">*</span></label>
+                                    <select required class="form-select" id="agama" name="agama" value="{{ old('agama') }}">
+                                        <option {{ old('agama') == '' ? 'selected' : '' }} disabled>--- Pilih Agama ---</option>
+                                        <option {{ old('agama') == 'Islam' ? 'selected' : '' }} value="Islam">Islam</option>
+                                        <option {{ old('agama') == 'Kristen' ? 'selected' : '' }} value="Kristen">Kristen</option>
+                                        <option {{ old('agama') == 'Katolik' ? 'selected' : '' }} value="Katolik">Katolik</option>
+                                        <option {{ old('agama') == 'Hindu' ? 'selected' : '' }} value="Hindu">Hindu</option>
+                                        <option {{ old('agama') == 'Budha' ? 'selected' : '' }} value="Budha">Budha</option>
+                                        <option {{ old('agama') == 'Konghucu' ? 'selected' : '' }} value="Konghucu">Konghucu</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="mb-3">
                                     <label for="tinggi_badan" class="form-label">Tinggi Badan <span class="text-danger"
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
                                     <input required type="number" class="form-control" name="tinggi_badan" id="tinggi_badan"
@@ -197,6 +233,17 @@
                                             style="font-weight: 700;font-size: 20px;">*</span></label>
                                     <input required type="number" class="form-control" name="berat_badan" id="berat_badan"
                                         value="{{ old('berat_badan') }}">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                <label for="bertato" class="form-label">Bertato<span class="text-danger"
+                                        style="font-weight: 700;font-size: 20px;">*</span></label>
+                                    <select required class="form-select" id="bertato" name="bertato" value="{{ old('bertato') }}">
+                                        <option {{ old('bertato') == '' ? 'selected' : '' }} disabled>--- Bertato ---</option>
+                                        <option {{ old('bertato') == 'Ya' ? 'selected' : '' }} value="Ya">Ya</option>
+                                        <option {{ old('bertato') == 'Tidak' ? 'selected' : '' }} value="Tidak">Tidak</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
