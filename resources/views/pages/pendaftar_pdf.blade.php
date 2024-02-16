@@ -28,12 +28,18 @@
 
 			<tr>
 				<td style="width: 48%">
+					Nomor Pendaftaran<br> 
 					No NISN<br> 
-					Nama Calon Siswa<br>
+					Nama Calon Siswa<br> 
+					Program Keahlian<br> 
 					Tempat dan Tanggal lahir<br>
-					Nomor Kartu Keluarga<br>
+					Nomor Kartu Keluarga<br>  
+					Nomor Induk keluarga<br> 
+					Jenis Kelamin<br> 
+					Agama<br> 
 					Tinggi Badan<br> 
 					Berat Badan<br> 
+					Bertato<br> 
 					Penyakit Kronis<br> 
 					Sekolah Asal<br> 
 					Nama Ayah<br> 
@@ -45,7 +51,6 @@
 					Nomor Whatsapp Anak<br> 
 					Alamat<br> 
 					Kode Pos<br>
-					Asal Sekolah<br>
 				</td>
 				<td style="width: 4%">
 					:<br>
@@ -56,37 +61,50 @@
 					:<br>
 					:<br>
 					:<br>
-					@if($p->nama_ayah)
-						:<br>
-						:<br>
-					@else
-						:<br>
-						:<br>
-					@endif
-					@if($p->nama_ibu)
-						:<br>
-						:<br>
-					@else
-						:<br>
-						:<br>
-					@endif
 					:<br>
 					:<br>
-				
-				</td>
+					:<br>
+					:<br>
+					:<br>
+					:<br>
+					:<br>
+					:<br>
+					:<br>
+					:<br>
+					:<br>
+					:<br>
+					:<br>
+					:<br>
+					:<br>
 				<td style="width: 48%">
+					{{$p->no_pendaftaran}}<br>
 					{{$p->no_nisn}}<br>
 					{{$p->nama_calon_siswa}}<br>
-					{{$p->tempat_lahir}}, {{date('d-m-Y', strtotime($p->tanggal_lahir))}}<br>
+					{{$p->program_keahlian}}<br>
+					{{$p->tempat_lahir}} {{$p->tanggal_lahir}}<br>
 					{{$p->no_kartu_keluarga}}<br>
-					{{$p->tinggi_badan}} cm<br>
-					{{$p->berat_badan}} kg<br>
+					{{$p->no_induk_keluarga}}<br>
+					{{$p->jenis_kelamin}}<br>
+					{{$p->agama}}<br>
+					{{$p->tinggi_badan}}<br>
+					{{$p->berat_badan}}<br>
+					{{$p->bertato==0?'Tidak':'Bertato'}}<br>
 					{{$p->penyakit_kronis}}<br>
 					{{$p->asal_sekolah}}<br>
-					{{$p->nama_ayah ? $p->nama_ayah : '-'}}<br>
-					{{$p->pekerjaan_ayah ? $p->pekerjaan_ayah : '-'}}<br>
-					{{$p->nama_ibu ? $p->nama_ibu : '-'}}<br>
-					{{$p->pekerjaan_ibu ? $p->pekerjaan_ibu : '-'}}<br>
+					@if($p->nama_ayah)
+						{{$p->nama_ayah}}<br>
+						{{$p->pekerjaan_ayah}}<br>
+					@else
+						-<br>
+						-<br>
+					@endif
+					@if($p->nama_ibu)
+						{{$p->nama_ibu}}<br>
+						{{$p->pekerjaan_ibu}}<br>
+					@else
+						-<br>
+						-<br>
+					@endif
 					{{$p->penghasilan_per_bulan}}<br>
 					{{$p->no_telepon_ortu}}<br>
 					{{$p->no_wa_anak}}<br>
@@ -97,8 +115,8 @@
 					. ', ' . $p->kabupaten
 					}}
 					{{$p->kodepos}}<br>
-					{{$p->asal_sekolah}}<br>
 				</td>
+				
 			</tr>
 			
 		</tbody>

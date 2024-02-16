@@ -182,11 +182,6 @@
                                 <td>:</td>
                                 <td>{{ $pendaftars->first()->kodepos }}</td>
                             </tr>
-                            <tr>
-                                <th>Asal Sekolah</th>
-                                <td>:</td>
-                                <td>{{ $pendaftars->first()->asal_sekolah }}</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
