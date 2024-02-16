@@ -49,7 +49,7 @@
 					Penghasilan Perbulan<br> 
 					Nomor Whatsapp Ortu<br> 
 					Nomor Whatsapp Anak<br> 
-					Alamat<br> 
+					Alamat<br><br>
 					Kode Pos<br>
 				</td>
 				<td style="width: 4%">
@@ -74,7 +74,7 @@
 					:<br>
 					:<br>
 					:<br>
-					:<br>
+					:<br><br>
 					:<br>
 				<td style="width: 48%">
 					{{$p->no_pendaftaran}}<br>
@@ -113,7 +113,7 @@
 					. ', ' . $p->kelurahan 
 					. ', ' . $p->kecamatan
 					. ', ' . $p->kabupaten
-					}}
+					}}<br>
 					{{$p->kodepos}}<br>
 				</td>
 				
