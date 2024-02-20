@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="title" content="PPDB SKAPANSA">
-    <meta name="description" content="Penerimaan Siswa Baru SMK Pancasila 1 Wonogiri">
-    <title>@yield('title') - SMK PANCASILA 1 WONOGIRI</title>
+    <meta name="description" content="Website Akademik PPQITA">
+    <title>@yield('title') - PPQITA</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
@@ -45,31 +45,6 @@
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('/') ? 'active' : '' }}"
-                            href="{{ route('home') }}" target="_blank">Beranda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('galeri') ? 'active' : '' }}"
-                            href="{{ route('galeri') }}">Galeri</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('kontak') ? 'active' : '' }}"
-                            href="{{ route('kontak') }}">Kontak</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('daftar-online') ? 'active' : '' }}"
-                            href="{{ route('daftar-online') }}">Daftar Online</a>
-                    </li>
-                    <li class="nav-item ps-3">
-                        <a class="btn text-white px-4 py-2 {{ Request::is('login') ? 'active' : '' }}"
-                            style="background-color: #B90000; border-radius: 20px;"
-                            href="{{ route('login-user') }}">Login</a>
-                    </li>
-                </ul>
-            </div>
         </div>
     </nav>
 

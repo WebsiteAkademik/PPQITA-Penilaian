@@ -41,7 +41,7 @@
                     type="submit">Login</button>
                 <br><br>
                 <h6>Belum mendaftar sebagai calon santri?</h6>
-                <h6><a href="{{ route('daftar-online') }}">Daftar Sekarang</a></h6>
+                <h6><a href="#">Daftar Sekarang</a></h6>
             </form>
         </main>
     </div>

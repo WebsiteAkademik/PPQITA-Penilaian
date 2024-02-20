@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\PendaftaranController;
 use App\Http\Controllers\Admin\PendaftaranOnlineController;
+use App\Http\Controllers\Admin\AkademikController;
 use App\Http\Controllers\JadwalTestController;
 use App\Http\Controllers\LoginController;
 use App\Models\JadwalTest;
@@ -22,21 +23,12 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/cetak_pdf/{no_nisn}', [HomeController::class, 'cetak_pdf'])->name('cetak_pdf');
 
-Route::get('/daftar-online', [PendaftaranOnlineController::class, 'daftarOnlineGET'])->name('daftar-online');
-Route::get('/galeri', [HomeController::class, 'galeri'])->name('galeri');
-Route::get('/kontak', [HomeController::class, 'kontak'])->name('kontak');
-//Route::post('/logins', [AuthController::class, 'loginUser'])->name('login');
-Route::get('/reload-captcha', [HomeController::class, 'reloadCaptcha'])->name('reload-captcha');
-//insert tabel daftar
-Route::post('/daftar-online', [PendaftaranOnlineController::class, 'daftarOnlinePOST'])->name('daftar');
 
 // Login 
-Route::get('/login', function (){
+Route::get('/', function (){
     return view('pages.user.login');
-})->name('login-user');
+})->name('homelogin');
 
 Route::post('/postlogin', [LoginController::class, 'postlogin'])->name('postlogin');
 
@@ -69,20 +61,23 @@ Route::middleware('auth', 'cekrole:pengajar')->prefix('dashboardpengajar')->grou
 //role -> admin
 Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function () {
     Route::get('/', function () {
-        $pendaftarbaruCount = Pendaftaran::where('status', 'BARU')->count();
-        $pendaftartestCount = Pendaftaran::where('status', 'TEST')->count();
-        $diterimaCount = Pendaftaran::where('status', 'DITERIMA')->count();
-        $ditolakCount = Pendaftaran::where('status', 'DITOLAK')->count();
-        $pendaftars = Pendaftaran::latest()->limit(5)->get();
-        $jadwalTests = JadwalTest::all();
+        // $pendaftarbaruCount = Pendaftaran::where('status', 'BARU')->count();
+        // $pendaftartestCount = Pendaftaran::where('status', 'TEST')->count();
+        // $diterimaCount = Pendaftaran::where('status', 'DITERIMA')->count();
+        // $ditolakCount = Pendaftaran::where('status', 'DITOLAK')->count();
+        // $pendaftars = Pendaftaran::latest()->limit(5)->get();
+        // $jadwalTests = JadwalTest::all();
+        $tahunajars = TahunAjaran::all();
+
 
         $data = [
-            'pendaftars' => $pendaftars,
-            'jadwalTests' => $jadwalTests,
-            'pendaftarbaruCount' => $pendaftarbaruCount,
-            'pendaftartestCount' => $pendaftartestCount,
-            'diterimaCount' => $diterimaCount,
-            'ditolakCount' => $ditolakCount
+            // 'pendaftars' => $pendaftars,
+            // 'jadwalTests' => $jadwalTests,
+            // 'pendaftarbaruCount' => $pendaftarbaruCount,
+            // 'pendaftartestCount' => $pendaftartestCount,
+            // 'diterimaCount' => $diterimaCount,
+            // 'ditolakCount' => $ditolakCount
+            'tahunajars' => $tahunajars,
         ];
         return view('pages.admin.dashboard', $data);
     })->name('dashboard');
@@ -90,34 +85,38 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     // menu user
     
     // Pendaftar
-    Route::get('/pendaftar-baru', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');
-    Route::post('/pendaftar-baru', [PendaftaranOnlineController::class, 'indexPOST'])->name('pendaftar.indexUpdateStatusMenunggu');
-    Route::get('/pendaftar-test', [PendaftaranOnlineController::class, 'listTest'])->name('pendaftar.listTest');
-    Route::post('/pendaftar-test/diterima', [PendaftaranOnlineController::class, 'listTestDiterimaPOST'])->name('pendaftar.updateStatusDiterima');
-    Route::post('/pendaftar-test/ditolak', [PendaftaranOnlineController::class, 'listTestDitolakPOST'])->name('pendaftar.updateStatusDitolak');
-    Route::get('/pendaftar-diterima', [PendaftaranOnlineController::class, 'listTerima'])->name('pendaftar.listTerima');
-    Route::get('/pendaftar-ditolak', [PendaftaranOnlineController::class, 'listTolak'])->name('pendaftar.listTolak');
-    Route::get('/pendaftar/{no_nisn}', [PendaftaranOnlineController::class, 'detail'])->name('pendaftar.detail');
-    Route::put('/pendaftar/{id}', [PendaftaranOnlineController::class, 'update'])->name('pendaftar.update');
-    Route::delete('/pendaftar/{id}/delete', [PendaftaranOnlineController::class, 'destroy'])->name('pendaftar.destroy');
+    Route::get('/data_tahun-ajar', [AkademikController::class, 'listtahunajar'])->name('tahun-ajar');
+    Route::get('/data_tahun-ajar/form', [AkademikController::class, 'showFormtahunajar'])->name('form_tahun-ajar');
+    Route::post('/data_tahun-ajar/form', [AkademikController::class, 'tahunajarPost'])->name('form_tahun-ajarPOST');
+    
+    //Route::get('/pendaftar-baru', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');
+    // Route::post('/pendaftar-baru', [PendaftaranOnlineController::class, 'indexPOST'])->name('pendaftar.indexUpdateStatusMenunggu');
+    // Route::get('/pendaftar-test', [PendaftaranOnlineController::class, 'listTest'])->name('pendaftar.listTest');
+    // Route::post('/pendaftar-test/diterima', [PendaftaranOnlineController::class, 'listTestDiterimaPOST'])->name('pendaftar.updateStatusDiterima');
+    // Route::post('/pendaftar-test/ditolak', [PendaftaranOnlineController::class, 'listTestDitolakPOST'])->name('pendaftar.updateStatusDitolak');
+    // Route::get('/pendaftar-diterima', [PendaftaranOnlineController::class, 'listTerima'])->name('pendaftar.listTerima');
+    // Route::get('/pendaftar-ditolak', [PendaftaranOnlineController::class, 'listTolak'])->name('pendaftar.listTolak');
+    // Route::get('/pendaftar/{no_nisn}', [PendaftaranOnlineController::class, 'detail'])->name('pendaftar.detail');
+    // Route::put('/pendaftar/{id}', [PendaftaranOnlineController::class, 'update'])->name('pendaftar.update');
+    // Route::delete('/pendaftar/{id}/delete', [PendaftaranOnlineController::class, 'destroy'])->name('pendaftar.destroy');
     
     // Jadwal test
-    Route::get('/jadwaltest/form', [JadwalTestController::class, 'showform'])->name('jadwaltest.form');
-    Route::post('/jadwaltest.store', [JadwalTestController::class, 'store'])->name('jadwaltest.store');
-    Route::get('/jadwaltest/list', [JadwalTestController::class, 'list'])->name('jadwaltest.list');
-    Route::get('/jadwaltest/edittest/{id}', 'App\Http\Controllers\JadwalTestController@edittest')->name('jadwaltest.edittest');
-    Route::put('/jadwaltest/{id}', [JadwalTestController::class, 'update'])->name('jadwaltest.update');
-    Route::delete('/jadwaltest/{id}', [JadwalTestController::class, 'delete'])->name('jadwaltest.delete');
+    // Route::get('/jadwaltest/form', [JadwalTestController::class, 'showform'])->name('jadwaltest.form');
+    // Route::post('/jadwaltest.store', [JadwalTestController::class, 'store'])->name('jadwaltest.store');
+    // Route::get('/jadwaltest/list', [JadwalTestController::class, 'list'])->name('jadwaltest.list');
+    // Route::get('/jadwaltest/edittest/{id}', 'App\Http\Controllers\JadwalTestController@edittest')->name('jadwaltest.edittest');
+    // Route::put('/jadwaltest/{id}', [JadwalTestController::class, 'update'])->name('jadwaltest.update');
+    // Route::delete('/jadwaltest/{id}', [JadwalTestController::class, 'delete'])->name('jadwaltest.delete');
 
-    // Laporan Profile
-    Route::get('/profile', [PendaftaranOnlineController::class, 'profile'])->name('profile.index');
+    // // Laporan Profile
+    // Route::get('/profile', [PendaftaranOnlineController::class, 'profile'])->name('profile.index');
 
-    // Laporan Rekap
-    Route::get('/rekap', [PendaftaranOnlineController::class, 'indexrekap'])->name('rekap.index');
-    Route::get('/rekap/filter', [PendaftaranOnlineController::class, 'filter'])->name('rekap.filter');
-    Route::get('/rekap/cetak_laporan', [PendaftaranOnlineController::class, 'cetak_laporan'])->name('cetak_laporan');
-    Route::get('/rekap/export-pendaftar',[PendaftaranOnlineController::class, 'exportPendaftar'])->name('export-pendaftar');
-    });
+    // // Laporan Rekap
+    // Route::get('/rekap', [PendaftaranOnlineController::class, 'indexrekap'])->name('rekap.index');
+    // Route::get('/rekap/filter', [PendaftaranOnlineController::class, 'filter'])->name('rekap.filter');
+    // Route::get('/rekap/cetak_laporan', [PendaftaranOnlineController::class, 'cetak_laporan'])->name('cetak_laporan');
+    // Route::get('/rekap/export-pendaftar',[PendaftaranOnlineController::class, 'exportPendaftar'])->name('export-pendaftar');
+     });
 
 //role -> user
 Route::middleware('auth', 'cekrole:user')->prefix('dashboarduser')->group(function () {

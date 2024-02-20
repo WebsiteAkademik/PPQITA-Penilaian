@@ -24,7 +24,7 @@
             <!-- Sidebar scroll-->
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between mt-2">
-                    <a href="{{ route('home') }}" class="text-nowrap logo-img">
+                    <a href="{{ route('homelogin') }}" class="text-nowrap logo-img">
                         <img src="{{ asset('assets/galeri/logo-transparent.png') }}" width="25%" alt="logo img" />
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -46,66 +46,12 @@
                         </li>
                         <hr>
                         <li class="sidebar-item mt-2">
-                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
-                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
+                            <a class="sidebar-link @if (Request::is('/data_tahun-ajar')) active @endif"
+                                href="{{ route('tahun-ajar') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-solid fa-user-plus"></i>
                                 </span>
-                                <span class="hide-menu">Data Pendaftar Baru</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
-                                href="{{ route('pendaftar.listTest') }}" aria-expanded="false">
-                                <span>
-                                    <i class="fa-solid fa-clock"></i>
-                                </span>
-                                <span class="hide-menu">Data Pendaftar Dijadwalkan Test</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
-                                href="{{ route('pendaftar.listTolak') }}" aria-expanded="false">
-                                <span>
-                                    <i class="fa-solid fa-circle-xmark"></i>
-                                </span>
-                                <span class="hide-menu">Data Pendaftar Tidak Diterima</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
-                                href="{{ route('pendaftar.listTerima') }}" aria-expanded="false">
-                                <span>
-                                    <i class="fa-solid fa-check"></i>
-                                </span>
-                                <span class="hide-menu">Data Pendaftar Diterima</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('jadwaltest/form')) active @endif"
-                                href="{{ route('jadwaltest.form') }}" aria-expanded="false">
-                                <span>
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </span>
-                                <span class="hide-menu">Input Jadwal Test Peserta</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
-                                href="{{ route('profile.index') }}" aria-expanded="false">
-                                <span>
-                                    <i class="fa-solid fa-book"></i>
-                                </span>
-                                <span class="hide-menu">Laporan Profile Pendaftar</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('/rekap')) active @endif"
-                                href="{{ route('rekap.index') }}" aria-expanded="false">
-                                <span>
-                                    <i class="fa-solid fa-print"></i>
-                                </span>
-                                <span class="hide-menu">Laporan Rekap Pendaftar</span>
+                                <span class="hide-menu">Data Tahun Ajaran</span>
                             </a>
                         </li>
                         <li class="sidebar-item d-grid" style="position: absolute;bottom: 20px;right: 0;left: 0;">
