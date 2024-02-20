@@ -53,6 +53,8 @@ class AkademikController extends Controller
             return redirect()->back()->withError($e)->withInput();
         }
 
-        return view('pages.admin.akademik.datatahunajaran');
+        Alert::success('Berhasil', 'Tahun Ajaran berhasil disimpan!');
+
+        return redirect()->route('tahun-ajar')->with('success', 'Jadwal Test Berhasil Disimpan');
     }
 }

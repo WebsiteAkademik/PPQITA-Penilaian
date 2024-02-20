@@ -17,10 +17,10 @@
                         <input required type="text" class="form-control" name="tahun_ajaran" id="tahun_ajaran" value="{{ old('tahun_ajaran') }}">
                     </div>
                     <div class="mb-3">
-                        <label for="status" class="form-label">Status</label><br/>
-                        <input required type="radio" name="status" id="aktif" value="aktif">
+                        <label class="form-label">Status</label><br/>
+                        <input required type="radio" name="status" id="aktif" value="aktif" {{ old('status') == 'aktif' ? 'checked' : '' }}>
                         <label for="aktif" class="form-label">AKTIF</label><br/>
-                        <input required type="radio" name="status_tahunajar" id="tidakaktif" value="tidak aktif">
+                        <input required type="radio" name="status" id="tidakaktif" value="tidak aktif" {{ old('status') == 'tidak aktif' ? 'checked' : '' }}>
                         <label for="tidakaktif" class="form-label">TIDAK AKTIF</label><br/>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>

@@ -74,7 +74,7 @@
                                                 echo "<div class='badge text-capitalize bg-success'>AKTIF</div>";
                                                 break;
                                             case 'tidak aktif':
-                                                echo "<div class='badge text-capitalize bg-success'>TIDAK AKTIF</div>";
+                                                echo "<div class='badge text-capitalize bg-danger'>TIDAK AKTIF</div>";
                                                 break;
                                             }
                                         @endphp

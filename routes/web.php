@@ -2,6 +2,7 @@
 
 use App\Models\Pendaftar;
 use App\Models\Pendaftaran;
+use App\Models\TahunAjaran;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
