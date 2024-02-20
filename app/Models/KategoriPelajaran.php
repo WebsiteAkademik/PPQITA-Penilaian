@@ -11,8 +11,8 @@ class KategoriPelajaran extends Model
 
     protected $fillable = ['tahun_ajaran_id', 'kode_kategori', 'nama_kategori'];
 
-    public function kategoriPelajarans()
+    public function tahunAjaran()
     {
-        return $this->hasMany(KategoriPelajaran::class);
+        return $this->belongsTo(TahunAjaran::class);
     }
 }

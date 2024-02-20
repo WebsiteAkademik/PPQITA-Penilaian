@@ -14,4 +14,9 @@ class TahunAjaran extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function kategoriPelajarans()
+    {
+        return $this->hasMany(KategoriPelajaran::class);
+    }
 }
