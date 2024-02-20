@@ -43,7 +43,12 @@ class AkademikController extends Controller
 
         $data = $request->all();
 
+        if ($data['status'] === 'aktif') {
+            TahunAjaran::where('status', 'aktif')->update(['status' => 'tidak aktif']);
+        }
+        
         $tahunajar = NULL;
+        
         try{
             $tahunajar = TahunAjaran::create($data);
         }
