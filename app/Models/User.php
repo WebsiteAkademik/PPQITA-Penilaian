@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return in_array($this->role, $roles);
     }
+
+    public function tahunAjaran()
+    {
+        return $this->hasMany(TahunAjaran::class);
+    }
 }
