@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class KategoriPelajaran extends Model
+class SubKategoriPelajaran extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tahun_ajaran_id', 'kode_kategori', 'nama_kategori'];
+    protected $fillable = ['kode_sub_kategori', 'nama_sub_kategori', 'kategori_id', 'tahun_ajaran_id'];
 
     public function tahunAjaran()
     {
         return $this->belongsTo(TahunAjaran::class);
     }
     
-    public function subKategoriPelajaran()
+    public function kategoriPelajaran()
     {
-        return $this->hasMany(SubKategoriPelajaran::class);
+        return $this->belongsTo(KategoriPelajaran::class);
     }
 }

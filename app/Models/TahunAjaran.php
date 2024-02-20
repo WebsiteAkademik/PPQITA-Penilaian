@@ -19,4 +19,9 @@ class TahunAjaran extends Model
     {
         return $this->hasMany(KategoriPelajaran::class);
     }
+    
+    public function subKategoriPelajarans()
+    {
+        return $this->hasMany(SubKategoriPelajaran::class);
+    }
 }
