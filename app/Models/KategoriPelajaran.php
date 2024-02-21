@@ -20,4 +20,9 @@ class KategoriPelajaran extends Model
     {
         return $this->hasMany(SubKategoriPelajaran::class);
     }
+
+    public function mataPelajaran()
+    {
+        return $this->hasMany(MataPelajaran::class);
+    }
 }
