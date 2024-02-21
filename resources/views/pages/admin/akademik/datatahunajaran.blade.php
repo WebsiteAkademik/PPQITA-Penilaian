@@ -79,8 +79,17 @@
                                             }
                                         @endphp
                                     </td>
-                                    <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0"></h6>
+                                    <td class="border-bottom-0 d-flex gap-2 align-items-center">
+                                        <div class="row mt-1">
+                                            <div class="col-12 col-lg-5">
+                                                <a href="" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-1">
+                                            <div class="col-12 col-lg-5">
+                                                <a href="" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-trash"></i></a>
+                                            </div>
+                                        </div>
                                     </td> 
                                 </tr>
                                 @endforeach
