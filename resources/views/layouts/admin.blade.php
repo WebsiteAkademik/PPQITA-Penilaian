@@ -46,13 +46,160 @@
                         </li>
                         <hr>
                         <li class="sidebar-item mt-2">
-                            <a class="sidebar-link @if (Request::is('/data_tahun-ajar')) active @endif"
-                                href="{{ route('tahun-ajar') }}" aria-expanded="false">
+                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
+                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-solid fa-user-plus"></i>
                                 </span>
-                                <span class="hide-menu">Data Tahun Ajaran</span>
+                                <span class="hide-menu">Data Pendaftar Baru</span>
                             </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
+                                href="{{ route('pendaftar.listTest') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-solid fa-clock"></i>
+                                </span>
+                                <span class="hide-menu">Data Pendaftar Dijadwalkan Test</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
+                                href="{{ route('pendaftar.listTolak') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </span>
+                                <span class="hide-menu">Data Pendaftar Tidak Diterima</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
+                                href="{{ route('pendaftar.listTerima') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+                                <span class="hide-menu">Data Pendaftar Diterima</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('jadwaltest/form')) active @endif"
+                                href="{{ route('jadwaltest.form') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </span>
+                                <span class="hide-menu">Input Jadwal Test Peserta</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
+                                href="{{ route('profile.index') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-solid fa-book"></i>
+                                </span>
+                                <span class="hide-menu">Laporan Profile Pendaftar</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('/rekap')) active @endif"
+                                href="{{ route('rekap.index') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-solid fa-print"></i>
+                                </span>
+                                <span class="hide-menu">Laporan Rekap Pendaftar</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle sidebar-link">
+                                <span><i class="fa-solid fa-chart-line"></i></span>
+                                <span class="hide-menu">Akademik</span>
+                            </a>
+                            <ul class="collapse list-unstyled" id="homeSubmenu">
+                                <li>
+                                    <a class="sidebar-link @if (Request::is('/data_tahun-ajar')) active @endif"
+                                        href="{{ route('tahun-ajar') }}" aria-expanded="false">
+                                        <span><i class="fa-solid fa-calendar"></i></span>
+                                        <span class="hide-menu">Tahun Ajaran</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#homeSubmenu" class="sidebar-link">
+                                        <span><i class="fa-solid fa-chalkboard-user"></i></span>
+                                        <span class="hide-menu">Kelas</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#homeSubmenu" class="sidebar-link">
+                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span class="hide-menu">Pegawai</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#homeSubmenu" class="sidebar-link">
+                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span class="hide-menu">Mata Pelajaran</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#homeSubmenu" class="sidebar-link">
+                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span class="hide-menu">Sub Kategori Mata Pelajaran</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#homeSubmenu" class="sidebar-link">
+                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span class="hide-menu">Kategori Mata Pelajaran</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#homeSubmenu" class="sidebar-link">
+                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span class="hide-menu">Setup Mata Pelajaran</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#homeSubmenu" class="sidebar-link">
+                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span class="hide-menu">Penilaian Tahfidz</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#homeSubmenu" class="sidebar-link">
+                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span class="hide-menu">Penilaian Pelajaran</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#homeSubmenu" class="sidebar-link">
+                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span class="hide-menu">Rapor UTS</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#homeSubmenu" class="sidebar-link">
+                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span class="hide-menu">Rapor UAS</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#homeSubmenu" class="sidebar-link">
+                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span class="hide-menu">Laporan Rekap Penilaian Pelajaran</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#homeSubmenu" class="sidebar-link">
+                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span class="hide-menu">Laporan Rekap Penilaian Tahfidz</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#homeSubmenu" class="sidebar-link">
+                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span class="hide-menu">Input Jadwal Ujian</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="sidebar-item d-grid" style="position: absolute;bottom: 20px;right: 0;left: 0;">
                             <button type="button" onclick="logout();"
