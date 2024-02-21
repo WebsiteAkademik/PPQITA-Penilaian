@@ -43,18 +43,18 @@
                     <div class="table-responsive">
                         <table class="table text-nowrap mb-0 align-middle" id="table-tahunajar">
                             <thead class="text-dark fs-4">
-                                <tr>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">No.</h6>
+                                <tr style="background-color: #2E8CB5">
+                                    <th style="width: 100px;" class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0 text-white">ID</h6>
                                     </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Tahun Ajaran</h6>
+                                    <th class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0 text-white">Tahun Ajaran</h6>
                                     </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Status</h6>
+                                    <th style="width: 100px;" class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0 text-white">Status</h6>
                                     </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Action</h6>
+                                    <th style="width: 100px;" class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0 text-white">Action</h6>
                                     </th>
                                 </tr>
                             </thead>
@@ -67,7 +67,7 @@
                                     <td class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">{{ $row->tahun_ajaran }}</h6>
                                     </td>
-                                    <td class="border-bottom-0 d-flex gap-2 align-items-center">
+                                    <td class="border-bottom-0 align-items-center">
                                         @php
                                         switch ($row->status) {
                                             case 'aktif':
@@ -79,14 +79,12 @@
                                             }
                                         @endphp
                                     </td>
-                                    <td class="border-bottom-0 d-flex gap-2 align-items-center">
+                                    <td class="border-bottom-0 align-items-center">
                                         <div class="row mt-1">
-                                            <div class="col-12 col-lg-5">
+                                            <div class="col-6 col-lg-5">
                                                 <a href="" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
                                             </div>
-                                        </div>
-                                        <div class="row mt-1">
-                                            <div class="col-12 col-lg-5">
+                                            <div class="col-6 col-lg-5">
                                                 <a href="" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-trash"></i></a>
                                             </div>
                                         </div>
