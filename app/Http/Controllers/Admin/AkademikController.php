@@ -21,11 +21,11 @@ class AkademikController extends Controller
     public function listtahunajar(){
         $tahunajars = TahunAjaran::all();
     
-        return view('pages.admin.akademik.datatahunajaran', compact('tahunajars'));
+        return view('pages.admin.akademik.tahunajar.datatahunajaran', compact('tahunajars'));
     }
 
     public function showFormtahunajar(){
-        return view('pages.admin.akademik.formtahunajaran');
+        return view('pages.admin.akademik.tahunajar.formtahunajaran');
     }
 
     public function tahunajarPost(Request $request){
