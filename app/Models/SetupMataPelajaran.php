@@ -15,4 +15,9 @@ class SetupMataPelajaran extends Model
     {
         return $this->belongsTo(MataPelajaran::class);
     }
+
+    public function detailSetupMataPelajaran()
+    {
+        return $this->hasOne(DetailSetupMataPelajaran::class);
+    }
 }
