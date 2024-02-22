@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\TahunAjaran;
 use App\Models\KategoriPelajaran;
+use App\Models\SubKategoriPelajaran;
+use App\Models\MataPelajaran;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -150,6 +152,38 @@ class AkademikController extends Controller
             Alert::error('Gagal! (E006)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
             return redirect()->back()->withError($e)->withInput();
         }
+    }
+
+    public function editkategori($id){
+        // Retrieve the jadwal test based on the $id
+        $kategori = KategoriPelajaran::findOrFail($id);
+    
+        return view('pages.admin.akademik.kategorimapel.edit', compact('kategori'));
+    }
+
+    public function updatekategori(Request $request, $id){
+        $kategori = KategoriPelajaran::findOrFail($id);
+
+        // Validasi data yang diupdate
+        $validatedData = $request->validate([
+            'kode_kategori' => 'required|unique:kategori_pelajarans,kode_kategori',
+            'nama_kategori' => 'required',
+        ]);
+
+        // Update data kategori pelajaran
+        try {
+            $kategori->update($validatedData);
+            return redirect()->route('kategori.index')->with('success', 'Kategori Pelajaran berhasil diperbaharui!');
+        } catch (\Exception $e) {
+            // Tangani jika terjadi kesalahan saat update
+            return redirect()->back()->withErrors([$e->getMessage()])->withInput();
+        }
+    }
+
+    public function deletekategori($id){
+        $kategori = KategoriPelajaran::findOrFail($id);
+        $kategori->delete();
+        return redirect()->route('kategori.index')->with('success', 'Kategori Pelajaran berhasil dihapus!');
     }
 
     //Sub Kategori Pelajaran

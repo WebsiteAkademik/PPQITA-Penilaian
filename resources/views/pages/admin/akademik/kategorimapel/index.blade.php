@@ -62,10 +62,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($kategori as $row)
+                                @foreach ($kategori as $key => $row)
                                 <tr>
                                     <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">{{ $row->id }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $key + 1 }}</h6>
                                     </td>
                                     <td class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">{{ $row->kode_kategori }}</h6>
@@ -76,14 +76,14 @@
                                     <td class="border-bottom-0 align-items-center">
                                         <div class="row mt-1">
                                             <div class="col-6 col-lg-5">
-                                                <a href="" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <a href="{{ route('kategori.edit', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
                                             </div>
                                             <div class="col-6 col-lg-5">
-                                                <!-- <form id="deleteForm{{ $row->id }}" action="{{ route('tahunajar.delete', $row->id) }}" method="POST" style="display: none;">
+                                                <form id="deleteForm{{ $row->id }}" action="{{ route('kategori.delete', $row->id) }}" method="POST" style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
-                                                </form> -->
-                                                <!-- <a href="#" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus data tahun ajaran ini?')) document.getElementById('deleteForm{{ $row->id }}').submit();"><i class="fa-solid fa-trash"></i></a> -->
+                                                </form>
+                                                <a href="#" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus kategori pelajaran ini?')) document.getElementById('deleteForm{{ $row->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
                                             </div>
                                         </div>
                                     </td> 
