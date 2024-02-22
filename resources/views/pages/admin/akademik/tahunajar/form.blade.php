@@ -8,9 +8,12 @@
     <div class="col-lg-12 d-flex align-items-stretch" id="form-container">
         <div class="card w-100">
             <div class="card-body">
+                <div class="d-flex">
+                    <a href="{{ route('tahunajar.index') }}" class="btn btn-primary m-1">Batal</a>
+                </div><br/>
                 <h5 class="card-title fs-6 fw-semibold mb-4">Form Tambah Tahun Ajaran</h5>
                 <!-- Formulir input tahun ajaran -->
-                <form method="post" action="{{ route('form_tahun-ajarPOST') }}">
+                <form method="post" action="{{ route('tahunajar.formPOST') }}">
                     @csrf
                     <div class="mb-3">
                         <label for="tahun_ajaran" class="form-label">Tahun Ajaran</label>

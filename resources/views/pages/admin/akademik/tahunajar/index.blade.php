@@ -37,8 +37,11 @@
             <div class="card w-100">
                 <div class="card-body">
                     <h5 class="card-title fs-6 fw-semibold mb-4">Data Tahun Ajaran</h5>
+                    @if(session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
                     <div>
-                        <a href="{{ route('form_tahun-ajar') }}" class="btn btn-primary m-3" id="tambahTahunAjar">+ Tambah Tahun Ajaran</a>
+                        <a href="{{ route('tahunajar.form') }}" class="btn btn-primary m-3" id="tambahTahunAjar">+ Tambah Tahun Ajaran</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-nowrap mb-0 align-middle" id="table-tahunajar">
@@ -59,10 +62,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($tahunajars as $key => $row)
+                                @foreach ($tahunajar as $row)
                                 <tr>
                                     <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">{{ $key + 1 }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->id }}</h6>
                                     </td>
                                     <td class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">{{ $row->tahun_ajaran }}</h6>
@@ -82,10 +85,14 @@
                                     <td class="border-bottom-0 align-items-center">
                                         <div class="row mt-1">
                                             <div class="col-6 col-lg-5">
-                                                <a href="" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <a href="{{ route('tahunajar.edit', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
                                             </div>
                                             <div class="col-6 col-lg-5">
-                                                <a href="" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-trash"></i></a>
+                                                <form id="deleteForm{{ $row->id }}" action="{{ route('tahunajar.delete', $row->id) }}" method="POST" style="display: none;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                                <a href="#" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus data tahun ajaran ini?')) document.getElementById('deleteForm{{ $row->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
                                             </div>
                                         </div>
                                     </td> 

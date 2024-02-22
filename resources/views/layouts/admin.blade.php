@@ -116,7 +116,7 @@
                             <ul class="collapse list-unstyled" id="homeSubmenu">
                                 <li>
                                     <a class="sidebar-link @if (Request::is('/data_tahun-ajar')) active @endif"
-                                        href="{{ route('tahun-ajar') }}" aria-expanded="false">
+                                        href="{{ route('tahunajar.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-calendar"></i></span>
                                         <span class="hide-menu">Tahun Ajaran</span>
                                     </a>
