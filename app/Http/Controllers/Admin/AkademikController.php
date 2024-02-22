@@ -18,7 +18,6 @@ class AkademikController extends Controller
 {
     
     //Tahun Ajar
-
     public function listtahunajar(){
         $tahunajar = TahunAjaran::all();
     
@@ -104,8 +103,15 @@ class AkademikController extends Controller
     }
 
     //Kategori Pelajaran
+    public function listkategori(){
+        $kategori = KategoriPelajaran::all();
     
+        return view('pages.admin.akademik.kategorimapel.index', ['kategori' => $kategori]);
+    }
+
     //Sub Kategori Pelajaran
+
+
     //Mata Pelajaran
     //Pengajar
 }
