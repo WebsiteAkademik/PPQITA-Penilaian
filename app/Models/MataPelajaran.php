@@ -9,7 +9,7 @@ class MataPelajaran extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['kode_mata_pelajaran', 'nama_mata_pelajaran', 'kkm', 'sub_kategori_id', 'kategori_id', 'tahun_ajaran_id'];
+    protected $fillable = ['kode_mata_pelajaran', 'nama_mata_pelajaran', 'kkm', 'sub_kategori_pelajaran_id', 'kategori_pelajaran_id', 'tahun_ajaran_id'];
 
     public function tahunAjaran()
     {
@@ -25,6 +25,9 @@ class MataPelajaran extends Model
     {
         return $this->belongsTo(SubKategoriPelajaran::class);
     }
-    
-    
+
+    public function setupMataPelajaran()
+    {
+        return $this->hasMany(SetupMataPelajaran::class);
+    }
 }
