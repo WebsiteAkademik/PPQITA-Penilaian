@@ -104,9 +104,52 @@ class AkademikController extends Controller
 
     //Kategori Pelajaran
     public function listkategori(){
-        $kategori = KategoriPelajaran::all();
-    
+        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
+
+        if (!$tahunAjaranAktif) {
+            return view('pages.admin.akademik.kategorimapel.index', ['kategori' => []]);
+        }
+
+        $kategori = KategoriPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get();
+        
         return view('pages.admin.akademik.kategorimapel.index', ['kategori' => $kategori]);
+    }
+
+    public function showFormkategori(){
+        return view('pages.admin.akademik.kategorimapel.form');
+    }
+
+    public function kategoriPost(Request $request){
+        $globalValidatorData = [
+            'kode_kategori' => 'required|unique:kategori_pelajarans,kode_kategori',
+            'nama_kategori' => 'required',
+        ];
+
+        $globalValidator = Validator::make($request->all(), $globalValidatorData);
+
+        if ($globalValidator->fails()) {
+            Alert::error('Gagal! (E001)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
+            return redirect()->back()->withErrors($globalValidator)->withInput();
+        }
+
+        $data = $request->all();
+
+        try {
+            // Mendapatkan tahun ajaran aktif
+            $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->firstOrFail();
+            
+            // Memasukkan ID tahun ajaran aktif ke data yang akan disimpan
+            $data['tahun_ajaran_id'] = $tahunAjaranAktif->id;
+    
+            // Membuat kategori pelajaran
+            $kategori = KategoriPelajaran::create($data);
+    
+            Alert::success('Berhasil', 'Kategori Pelajaran berhasil disimpan!');
+            return redirect()->route('kategori.index')->with('success', 'Kategori Pelajaran berhasil disimpan!');
+        } catch (\Exception $e) {
+            Alert::error('Gagal! (E006)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
+            return redirect()->back()->withError($e)->withInput();
+        }
     }
 
     //Sub Kategori Pelajaran

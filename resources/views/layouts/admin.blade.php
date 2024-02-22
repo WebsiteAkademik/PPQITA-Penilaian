@@ -134,7 +134,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#homeSubmenu" class="sidebar-link">
+                                    <a class="sidebar-link @if (Request::is('/data_kategori')) active @endif"
+                                        href="{{ route('kategori.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-users"></i></span>
                                         <span class="hide-menu">Kategori Mata Pelajaran</span>
                                     </a>

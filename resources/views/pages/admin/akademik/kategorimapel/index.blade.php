@@ -41,7 +41,7 @@
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
                     <div>
-                        <a href="" class="btn btn-primary m-3" id="tambahTahunAjar">+ Tambah Tahun Ajaran</a>
+                        <a href="{{ route('kategori.form') }}" class="btn btn-primary m-3" id="tambahKategori">+ Tambah Kategori Pelajaran</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-nowrap mb-0 align-middle" id="table-kategori">
@@ -71,7 +71,7 @@
                                         <h6 class="fw-semibold mb-0">{{ $row->kode_kategori }}</h6>
                                     </td>
                                     <td class="border-bottom-0 align-items-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->kategori_pelajaran }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->nama_kategori }}</h6>
                                     </td>
                                     <td class="border-bottom-0 align-items-center">
                                         <div class="row mt-1">

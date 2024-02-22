@@ -96,7 +96,9 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     
     //Kategori Pelajaran
     Route::get('/data_kategori', [AkademikController::class, 'listkategori'])->name('kategori.index');
-
+    Route::get('/data_kategori/form', [AkademikController::class, 'showFormkategori'])->name('kategori.form');
+    Route::post('/data_kategori/form', [AkademikController::class, 'kategoriPost'])->name('kategori.formPOST');
+    
     // Pendaftar
     Route::get('/pendaftar-baru', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');
     Route::post('/pendaftar-baru', [PendaftaranOnlineController::class, 'indexPOST'])->name('pendaftar.indexUpdateStatusMenunggu');
