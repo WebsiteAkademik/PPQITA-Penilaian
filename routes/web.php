@@ -68,7 +68,7 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
         $ditolakCount = Pendaftaran::where('status', 'DITOLAK')->count();
         $pendaftars = Pendaftaran::latest()->limit(5)->get();
         $jadwalTests = JadwalTest::all();
-        $tahunajars = TahunAjaran::all();
+        $tahunajar = TahunAjaran::all();
 
 
         $data = [
@@ -78,18 +78,26 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
             'pendaftartestCount' => $pendaftartestCount,
             'diterimaCount' => $diterimaCount,
             'ditolakCount' => $ditolakCount,
-            'tahunajars' => $tahunajars,
+            'tahunajar' => $tahunajar,
         ];
         return view('pages.admin.dashboard', $data);
     })->name('dashboard');
 
     // menu user
     
-    // Pendaftar
-    Route::get('/data_tahun-ajar', [AkademikController::class, 'listtahunajar'])->name('tahun-ajar');
-    Route::get('/data_tahun-ajar/form', [AkademikController::class, 'showFormtahunajar'])->name('form_tahun-ajar');
-    Route::post('/data_tahun-ajar/form', [AkademikController::class, 'tahunajarPost'])->name('form_tahun-ajarPOST');
+    //Akademik
+    //Tahun Ajaran
+    Route::get('/data_tahun-ajar', [AkademikController::class, 'listtahunajar'])->name('tahunajar.index');
+    Route::get('/data_tahun-ajar/form', [AkademikController::class, 'showFormtahunajar'])->name('tahunajar.form');
+    Route::post('/data_tahun-ajar/form', [AkademikController::class, 'tahunajarPost'])->name('tahunajar.formPOST');
+    Route::get('/data_tahun-ajar/edit/{id}', [AkademikController::class, 'edittahunajar'])->name('tahunajar.edit');
+    Route::put('/data_tahun-ajar/edit/{id}', [AkademikController::class, 'updatetahunajar'])->name('tahunajar.update');
+    Route::delete('/data_tahun-ajar/{id}/delete', [AkademikController::class, 'deletetahunajar'])->name('tahunajar.delete');
     
+    //Kategori Pelajaran
+    Route::get('/data_kategori', [AkademikController::class, 'listkategori'])->name('kategori.index');
+
+    // Pendaftar
     Route::get('/pendaftar-baru', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');
     Route::post('/pendaftar-baru', [PendaftaranOnlineController::class, 'indexPOST'])->name('pendaftar.indexUpdateStatusMenunggu');
     Route::get('/pendaftar-test', [PendaftaranOnlineController::class, 'listTest'])->name('pendaftar.listTest');
