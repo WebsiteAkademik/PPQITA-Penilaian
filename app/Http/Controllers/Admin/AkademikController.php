@@ -104,6 +104,7 @@ class AkademikController extends Controller
     }
 
     //Kategori Pelajaran
+    
     //Sub Kategori Pelajaran
     //Mata Pelajaran
     //Pengajar
