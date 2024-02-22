@@ -130,13 +130,13 @@
                                 <li>
                                     <a href="#homeSubmenu" class="sidebar-link">
                                         <span><i class="fa-solid fa-users"></i></span>
-                                        <span class="hide-menu">Pegawai</span>
+                                        <span class="hide-menu">Pengajar</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#homeSubmenu" class="sidebar-link">
                                         <span><i class="fa-solid fa-users"></i></span>
-                                        <span class="hide-menu">Mata Pelajaran</span>
+                                        <span class="hide-menu">Kategori Mata Pelajaran</span>
                                     </a>
                                 </li>
                                 <li>
@@ -148,7 +148,7 @@
                                 <li>
                                     <a href="#homeSubmenu" class="sidebar-link">
                                         <span><i class="fa-solid fa-users"></i></span>
-                                        <span class="hide-menu">Kategori Mata Pelajaran</span>
+                                        <span class="hide-menu">Mata Pelajaran</span>
                                     </a>
                                 </li>
                                 <li>
@@ -201,9 +201,11 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="sidebar-item d-grid" style="position: absolute;bottom: 20px;right: 0;left: 0;">
+                    </ul>
+                    <ul>
+                        <li class="sidebar-item d-grid" style="right: 0;left: 0;">
                             <button type="button" onclick="logout();"
-                                class="btn btn-outline-danger mx-3 mt-2">Logout</button>
+                             class="btn btn-outline-danger mx-3 mt-2">Logout</button>
                         </li>
                     </ul>
                 </nav>
