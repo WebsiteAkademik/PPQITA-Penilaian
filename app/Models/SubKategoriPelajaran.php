@@ -9,7 +9,7 @@ class SubKategoriPelajaran extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['kode_sub_kategori', 'nama_sub_kategori', 'kategori_id', 'tahun_ajaran_id'];
+    protected $fillable = ['kode_sub_kategori', 'nama_sub_kategori', 'kategori_pelajaran_id', 'tahun_ajaran_id'];
 
     public function tahunAjaran()
     {
@@ -24,5 +24,9 @@ class SubKategoriPelajaran extends Model
     public function mataPelajaran()
     {
         return $this->hasMany(MataPelajaran::class);
+    }
+
+    public function kategoriID(){
+        return KategoriPelajaran::where("id", $this->kategori_pelajaran_id)->first();
     }
 }

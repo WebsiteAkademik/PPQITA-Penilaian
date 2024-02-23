@@ -18,7 +18,7 @@
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
 
-                <!-- Form untuk edit Tahun Ajaran -->
+                <!-- Form untuk edit Kategori Pelajaran -->
                 <form method="post" action="{{ route('kategori.update', $kategori->id) }}">
                     @csrf
                     @method('put')

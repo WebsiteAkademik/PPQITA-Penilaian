@@ -102,6 +102,14 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::put('/data_kategori/edit/{id}', [AkademikController::class, 'updatekategori'])->name('kategori.update');
     Route::delete('/data_kategori/{id}/delete', [AkademikController::class, 'deletekategori'])->name('kategori.delete');
     
+    //Sub Kategori Pelajaran
+    Route::get('/data_subkategori', [AkademikController::class, 'listsubkategori'])->name('subkategori.index');
+    Route::get('/data_subkategori/form', [AkademikController::class, 'showFormsubkategori'])->name('subkategori.form');
+    Route::post('/data_subkategori/form', [AkademikController::class, 'subkategoriPost'])->name('subkategori.formPOST');
+    Route::get('/data_subkategori/edit/{id}', [AkademikController::class, 'editsubkategori'])->name('subkategori.edit');
+    Route::put('/data_subkategori/edit/{id}', [AkademikController::class, 'updatesubkategori'])->name('subkategori.update');
+    Route::delete('/data_subkategori/{id}/delete', [AkademikController::class, 'deletesubkategori'])->name('subkategori.delete');
+    
     // Pendaftar
     Route::get('/pendaftar-baru', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');
     Route::post('/pendaftar-baru', [PendaftaranOnlineController::class, 'indexPOST'])->name('pendaftar.indexUpdateStatusMenunggu');
