@@ -273,7 +273,7 @@
                 <!--  Row 1 -->
                 @yield('content')
                 <div class="py-6 px-6 text-center">
-                    <p class="mb-0 fs-4">Copyright &copy; 2024 ❤ Made By Tim Magang PTIK UNS
+                    <p class="mb-0 fs-4">Copyright &copy; 2024 Made with ❤ By Tim Magang PTIK UNS x <a href="https://toekangdigital.com">Toekang Digital</a>
                     </p>
                 </div>
             </div>
