@@ -13,7 +13,7 @@
         <main class="form-signin m-auto">
             <form action="" method="POST">
                 @csrf
-                <img class="mb-4" src="{{ asset('assets/galeri/logo-transparent.png') }}" alt="" style="width: 25%">
+                <img class="mb-4" src="{{ asset('assets/galeri/logo_ppqita.png') }}" alt="" style="width: 25%">
                 <h1>LOGIN ADMIN</h1>
                 @if (session()->has('loginError'))
                     <div class="alert alert-danger alert-dismissible fade show mb-2" role="alert">

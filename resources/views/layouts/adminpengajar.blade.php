@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title') - AKADEMIK SMK PANCASILA 1 WONOGIRI</title>
-    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/galeri/logo-transparent.png') }}" />
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/galeri/logo_ppqita.png') }}" />
     <link rel="stylesheet" href="{{ asset('admin/src/assets/css/styles.min.css') }}" />
 
     {{-- FontAwesome Icon --}}
@@ -25,7 +25,7 @@
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between mt-2">
                     <a href="{{ route('home') }}" class="text-nowrap logo-img">
-                        <img src="{{ asset('assets/galeri/logo-transparent.png') }}" width="25%" alt="logo img" />
+                        <img src="{{ asset('assets/galeri/logo_ppqita.png') }}" width="25%" alt="logo img" />
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                         <i class="ti ti-x fs-8"></i>

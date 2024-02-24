@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title') - AKADEMIK SMK PANCASILA 1 WONOGIRI</title>
-    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/galeri/logo-transparent.png') }}" />
+    <title>@yield('title') - AKADEMIK PPQITA</title>
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/galeri/logo_ppqita.png') }}" />
     <link rel="stylesheet" href="{{ asset('admin/src/assets/css/styles.min.css') }}" />
 
     {{-- FontAwesome Icon --}}
@@ -25,7 +25,7 @@
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between mt-2">
                     <a href="{{ route('homelogin') }}" class="text-nowrap logo-img">
-                        <img src="{{ asset('assets/galeri/logo-transparent.png') }}" width="25%" alt="logo img" />
+                        <img src="{{ asset('assets/galeri/logo_ppqita.png') }}" width="25%" alt="logo img" />
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                         <i class="ti ti-x fs-8"></i>
@@ -141,6 +141,12 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a href="#homeSubmenu" class="sidebar-link">
+                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span class="hide-menu">Siswa</span>
+                                    </a>
+                                </li>
+                                <li>
                                     <a class="sidebar-link @if (Request::is('/data_kategori')) active @endif"
                                         href="{{ route('kategori.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-users"></i></span>
@@ -156,14 +162,14 @@
                                 </li>
                                 <li>
                                     <a class="sidebar-link @if (Request::is('/data_matpel')) active @endif"
-                                        href="{{ route('mapel.index') }}" aria-expanded="false">
+                                        href="{{ route('subkategori.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-users"></i></span>
                                         <span class="hide-menu">Mata Pelajaran</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="sidebar-link @if (Request::is('/data_setupmapel')) active @endif"
-                                        href="{{ route('setupmapel.index') }}" aria-expanded="false">
+                                        href="{{ route('subkategori.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-users"></i></span>
                                         <span class="hide-menu">Setup Mata Pelajaran</span>
                                     </a>
@@ -228,7 +234,7 @@
         <!--  Main wrapper -->
         <div class="body-wrapper">
             <!--  Header Start -->
-            <header class="app-header" style="background-color: #B90000;">
+            <header class="app-header" style="background-color: #35A4E2;">
                 <nav class="navbar navbar-expand-lg navbar-dark">
                     <ul class="navbar-nav">
                         <li class="nav-item d-block d-xl-none">
