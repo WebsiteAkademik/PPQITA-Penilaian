@@ -13,6 +13,6 @@ class Kelas extends Model
 
     public function kelas()
     {
-        return $this->belongsTo(MataPelajaran::class);
+        return $this->hasMany(MataPelajaran::class);
     }
 }
