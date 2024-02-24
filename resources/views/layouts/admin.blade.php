@@ -155,14 +155,15 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="sidebar-link @if (Request::is('/data_kategori')) active @endif"
-                                        href="{{ route('kategori.index') }}" aria-expanded="false">
+                                    <a class="sidebar-link @if (Request::is('/data_matpel')) active @endif"
+                                        href="{{ route('mapel.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-users"></i></span>
                                         <span class="hide-menu">Mata Pelajaran</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#homeSubmenu" class="sidebar-link">
+                                    <a class="sidebar-link @if (Request::is('/data_setupmapel')) active @endif"
+                                        href="{{ route('setupmapel.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-users"></i></span>
                                         <span class="hide-menu">Setup Mata Pelajaran</span>
                                     </a>
