@@ -142,77 +142,77 @@
                                 </li>
                                 <li>
                                     <a href="#homeSubmenu" class="sidebar-link">
-                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span><i class="fa-solid fa-user"></i></span>
                                         <span class="hide-menu">Siswa</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="sidebar-link @if (Request::is('/data_kategori')) active @endif"
                                         href="{{ route('kategori.index') }}" aria-expanded="false">
-                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span><i class="fa-solid fa-book"></i></span>
                                         <span class="hide-menu">Kategori Mata Pelajaran</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="sidebar-link @if (Request::is('/data_subkategori')) active @endif"
                                         href="{{ route('subkategori.index') }}" aria-expanded="false">
-                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span><i class="fa-solid fa-book"></i></span>
                                         <span class="hide-menu">Sub Kategori Mata Pelajaran</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="sidebar-link @if (Request::is('/data_matpel')) active @endif"
                                         href="{{ route('subkategori.index') }}" aria-expanded="false">
-                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span><i class="fa-solid fa-book"></i></span>
                                         <span class="hide-menu">Mata Pelajaran</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="sidebar-link @if (Request::is('/data_setupmapel')) active @endif"
                                         href="{{ route('subkategori.index') }}" aria-expanded="false">
-                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span><i class="fa-solid fa-chalkboard"></i></span>
                                         <span class="hide-menu">Setup Mata Pelajaran</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#homeSubmenu" class="sidebar-link">
-                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span><i class="fa-solid fa-circle-check"></i></span>
                                         <span class="hide-menu">Penilaian Tahfidz</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#homeSubmenu" class="sidebar-link">
-                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span><i class="fa-solid fa-circle-check"></i></span>
                                         <span class="hide-menu">Penilaian Pelajaran</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#homeSubmenu" class="sidebar-link">
-                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span><i class="fas fa-file-alt"></i></span>
                                         <span class="hide-menu">Rapor UTS</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#homeSubmenu" class="sidebar-link">
-                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span><i class="fa-regular fa-file-lines"></i></span>
                                         <span class="hide-menu">Rapor UAS</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#homeSubmenu" class="sidebar-link">
-                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span><i class="fa-solid fa-print"></i></span>
                                         <span class="hide-menu">Laporan Rekap Penilaian Pelajaran</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#homeSubmenu" class="sidebar-link">
-                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span><i class="fa-solid fa-print"></i></span>
                                         <span class="hide-menu">Laporan Rekap Penilaian Tahfidz</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#homeSubmenu" class="sidebar-link">
-                                        <span><i class="fa-solid fa-users"></i></span>
+                                        <span><i class="fa-solid fa-pen-to-square"></i></span>
                                         <span class="hide-menu">Input Jadwal Ujian</span>
                                     </a>
                                 </li>
