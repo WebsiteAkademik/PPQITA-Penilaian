@@ -233,7 +233,7 @@ class AkademikController extends Controller
         $globalValidatorData = [
             'kode_sub_kategori' => 'required|unique:sub_kategori_pelajarans,kode_sub_kategori',
             'nama_sub_kategori' => 'required',
-            'kategori_pelajaran_id' => 'required',
+            'kategori_id' => 'required',
         ];
 
         $globalValidator = Validator::make($request->all(), $globalValidatorData);
@@ -244,7 +244,6 @@ class AkademikController extends Controller
         }
 
         $data = $request->all();
-        $kategori_pelajaran_id = $request->all()["kategori_pelajaran_id"];
 
         try {
             // Mendapatkan tahun ajaran aktif
@@ -253,13 +252,24 @@ class AkademikController extends Controller
             // Memasukkan ID tahun ajaran aktif ke data yang akan disimpan
             $data['tahun_ajaran_id'] = $tahunAjaranAktif->id;
     
-            // Membuat kategori pelajaran
+            // Mengecek apakah terdapat nama kategori yang sama pada tahun ajaran aktif yang sama
+            $kategoriSama = SubKategoriPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)
+                ->where('kategori_id', $data['kategori_id'])
+                ->where('nama_sub_kategori', $data['nama_sub_kategori'])
+                ->first();
+
+            if ($kategoriSama) {
+                Alert::error('Gagal! (E002)', 'Nama Sub kategori yang sama sudah ada pada kategori dan tahun ajaran ini!');
+                return redirect()->back()->withInput();
+            }
+
+            // Membuat Sub kategori pelajaran
             $subkategori = SubKategoriPelajaran::create($data);
     
             Alert::success('Berhasil', 'Sub Kategori Pelajaran berhasil disimpan!');
             return redirect()->route('subkategori.index')->with('success', 'Sub Kategori Pelajaran berhasil disimpan!');
         } catch (\Exception $e) {
-            Alert::error('Gagal! (E006)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
+            Alert::error('Gagal! (E006)', 'Cek kembali kesesuaian isi form dengan validasi database');
             return redirect()->back()->withInput();
         }
     }
