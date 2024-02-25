@@ -130,7 +130,7 @@ class AkademikController extends Controller
         $globalValidator = Validator::make($request->all(), $globalValidatorData);
 
         if ($globalValidator->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada kode yang sama!');
+            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada kode kategori yang sama!');
             return redirect()->back()->withErrors($globalValidator)->withInput();
         }
 
@@ -142,6 +142,16 @@ class AkademikController extends Controller
             
             // Memasukkan ID tahun ajaran aktif ke data yang akan disimpan
             $data['tahun_ajaran_id'] = $tahunAjaranAktif->id;
+
+            // Mengecek apakah terdapat nama kategori yang sama pada tahun ajaran aktif yang sama
+                $kategoriSama = KategoriPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)
+                    ->where('nama_kategori', $data['nama_kategori'])
+                    ->first();
+
+            if ($kategoriSama) {
+                Alert::error('Gagal! (E002)', 'Nama kategori yang sama sudah ada pada tahun ajaran ini!');
+                return redirect()->back()->withInput();
+            }
     
             // Membuat kategori pelajaran
             $kategori = KategoriPelajaran::create($data);
@@ -149,8 +159,8 @@ class AkademikController extends Controller
             Alert::success('Berhasil', 'Kategori Pelajaran berhasil disimpan!');
             return redirect()->route('kategori.index')->with('success', 'Kategori Pelajaran berhasil disimpan!');
         } catch (\Exception $e) {
-            Alert::error('Gagal! (E006)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
-            return redirect()->back()->withError($e)->withInput();
+            Alert::error('Gagal! (E006)', 'Cek kembali kesesuaian isi form dengan validasi database');
+            return redirect()->back()->withErrors([$e->getMessage()])->withInput();
         }
     }
 

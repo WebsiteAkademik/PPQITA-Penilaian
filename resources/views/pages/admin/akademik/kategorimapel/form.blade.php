@@ -13,11 +13,11 @@
                 </div><br/>
                 <h5 class="card-title fs-6 fw-semibold mb-4">Form Tambah Kategori Pelajaran</h5>
                 <!-- Formulir input kategori pelajaran -->
-                <form method="post" action="{{ route('kategori.formPOST') }}">
+                <form method="post" action="{{ route('kategori.formPOST') }}" onsubmit="return validateKodeKategori()">
                     @csrf
                     <div class="mb-3">
                         <label for="kode_kategori" class="form-label">Kode Kategori</label>
-                        <input required type="text" class="form-control" name="kode_kategori" id="kode_kategori" value="{{ old('kode_kategori') }}" placeholder="">
+                        <input required type="text" class="form-control" name="kode_kategori" id="kode_kategori" value="{{ old('kode_kategori') }}" placeholder="Kode harus terdiri atas 10 digit">
                     </div>
                     <div class="mb-3">
                         <label for="nama_kategori" class="form-label">Kategori Pelajaran</label>
@@ -29,3 +29,21 @@
         </div>
     </div>
 @endsection
+
+@push('script')
+    <script>
+        function validateKodeKategori() {
+            var kodeKategoriInput = document.getElementById('kode_kategori').value;
+
+            // Validasi tambahan jika diperlukan
+            var regex = /^[a-zA-Z0-9]{10}$/;
+            if (!regex.test(kodeKategoriInput)) {
+                alert('Format kode kategori tidak valid. Kode kategori harus terdiri atas 10 digit.');
+                return false;
+            }
+
+            // Formulir valid, kirim ke server
+            return true;
+        }
+    </script>
+@endpush
