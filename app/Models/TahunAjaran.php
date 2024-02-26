@@ -29,4 +29,9 @@ class TahunAjaran extends Model
     {
         return $this->hasMany(MataPelajaran::class);
     }
+    
+    public function penilaianTahfidz()
+    {
+        return $this->hasMany(PenilaianTahfidz::class);
+    }
 }

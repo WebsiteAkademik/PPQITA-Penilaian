@@ -30,4 +30,14 @@ class MataPelajaran extends Model
     {
         return $this->hasMany(SetupMataPelajaran::class);
     }
+    
+    public function kelas()
+    {
+        return $this->belongsToMany(Kelas::class);
+    }
+    
+    public function penilaianTahfidz()
+    {
+        return $this->belongsToMany(PenilaianTahfidz::class);
+    }
 }
