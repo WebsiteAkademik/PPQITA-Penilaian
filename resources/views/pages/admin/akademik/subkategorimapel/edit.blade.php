@@ -19,7 +19,7 @@
                 @endif
 
                 <!-- Form untuk edit Sub Kategori Pelajaran -->
-                <form method="post" action="{{ route('subkategori.update', $subkategori->id) }}">
+                <form method="post" action="{{ route('subkategori.update', $subkategori->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('put')
                     <div class="mb-3">
@@ -32,10 +32,10 @@
                     </div>
                     <div class="mb-3">
                         <label for="nama_kategori" class="form-label">Kategori Pelajaran</label>
-                        <select name="kategori_pelajaran_id" class="form-select" required>
-                            <option value="{{ $subkategori->kategori_pelajaran_id }}" selected>{{ $subkategori->kategoriID()->nama_kategori }}</option>
-                            @foreach ($kategori as $kategori)
-                                <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
+                        <select name="kategori_id" id="kategori_id" class="form-select" required>
+                            <option value="" disabled selected>Kategori</option>
+                            @foreach ($kategori as $kat)
+                                <option value="{{ $kat->id }}" {{ $subkategori->kategori_id == $kat->id ? 'selected' : '' }}>{{ $kat->nama_kategori }}</option>
                             @endforeach
                         </select>
                     </div>

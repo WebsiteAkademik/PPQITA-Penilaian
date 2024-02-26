@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -171,31 +172,30 @@ class AkademikController extends Controller
     }
 
     public function updatekategori(Request $request, $id){
-        $kategori = KategoriPelajaran::findOrFail($id);
+        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->firstOrFail();
 
-        // Validasi data yang diupdate
-        $validatedData = $request->validate([
-            'kode_kategori' => 'required|unique:kategori_pelajarans,kode_kategori',
-            'nama_kategori' => 'required',
+        $validatedData = Validator::make($request->all(), [
+            'kode_kategori' => ['required', Rule::unique('kategori_pelajarans', 'kode_kategori')->ignore($id)],
+            'nama_kategori' => ['required', Rule::unique('kategori_pelajarans', 'nama_kategori')->where(function ($query) use ($tahunAjaranAktif, $request) {
+                return $query->where('tahun_ajaran_id', $tahunAjaranAktif->id);
+            })->ignore($id)],
         ]);
-
-        // Update data kategori pelajaran
-        try {
-            // Periksa dan update data jika tersedia dalam permintaan
-            if ($request->has('kode_kategori')) {
-                $kategori->kode_kategori = $validatedData['kode_kategori'];
-            }
-
-            if ($request->has('nama_kategori')) {
-                $kategori->nama_kategori = $validatedData['nama_kategori'];
-            }
-
-            $kategori->update($validatedData);
-            return redirect()->route('kategori.index')->with('success', 'Kategori Pelajaran berhasil diperbaharui!');
-        } catch (\Exception $e) {
-            // Tangani jika terjadi kesalahan saat update
-            return redirect()->back()->withErrors([$e->getMessage()])->withInput();
+        
+        if ($validatedData->fails()) {
+            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada kode kategori yang sama atau nama kategori yang sama!');
+            return redirect()->back()->withErrors($validatedData)->withInput();
         }
+    
+        $kategori = KategoriPelajaran::findOrFail($id);
+    
+        $kategori->fill([
+            'kode_kategori' => $request->kode_kategori,
+            'nama_kategori' => $request->nama_kategori,
+        ])->save();
+    
+        Alert::success('Berhasil', 'Kategori Pelajaran berhasil diperbarui!');
+        return redirect()->route('kategori.index')->with('success', 'Kategori Pelajaran berhasil diperbarui!');
+        
     }
 
     public function deletekategori($id){
@@ -289,37 +289,29 @@ class AkademikController extends Controller
     }
 
     public function updatesubkategori(Request $request, $id){
-        $subkategori = SubKategoriPelajaran::findOrFail($id);
-
-        // Validasi data yang diupdate
-        $validatedData = $request->validate([
-            'kode_sub_kategori' => 'required|unique:sub_kategori_pelajarans,kode_sub_kategori',
-            'nama_sub_kategori' => 'required',
-            'kategori_pelajaran_id' => 'required',
+        $validatedData = Validator::make($request->all(), [
+            'kode_sub_kategori' => ['required', Rule::unique('sub_kategori_pelajarans', 'kode_sub_kategori')->ignore($id)],
+            'nama_sub_kategori' => ['required', Rule::unique('sub_kategori_pelajarans')->where(function ($query) use ($request) {
+                return $query->where('kategori_id', $request->kategori_id);
+            })->ignore($id)],
+            'kategori_id' => 'required',
         ]);
-        
-        $kategori_pelajaran_id = $request->all()["kategori_pelajaran_id"];
-        
-        // Update data Sub kategori pelajaran
-        try {
-            if ($request->has('kode_sub_kategori')) {
-                $subkategori->kode_sub_kategori = $validatedData['kode_sub_kategori'];
-            }
-
-            if ($request->has('nama_sub_kategori')) {
-                $subkategori->nama_sub_kategori = $validatedData['nama_sub_kategori'];
-            }
-
-            if ($request->has('kategori_pelajaran_id')) {
-                $subkategori->kategori_pelajaran_id = $validatedData['kategori_pelajaran_id'];
-            }
-
-            $subkategori->update($validatedData);
-            return redirect()->route('subkategori.index')->with('success', 'Sub Kategori Pelajaran berhasil diperbaharui!');
-        } catch (\Exception $e) {
-            // Tangani jika terjadi kesalahan saat update
-            return redirect()->back()->withErrors([$e->getMessage()])->withInput();
+    
+        if ($validatedData->fails()) {
+            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada kode sub kategori yang sama atau nama sub kategori pada kategori pelajaran yang sama!');
+            return redirect()->back()->withErrors($validatedData)->withInput();
         }
+    
+        $subkategori = SubKategoriPelajaran::findOrFail($id);
+    
+        $subkategori->fill([
+            'kode_sub_kategori' => $request->kode_sub_kategori,
+            'nama_sub_kategori' => $request->nama_sub_kategori,
+            'kategori_id' => $request->kategori_id,
+        ])->save();
+    
+        Alert::success('Berhasil', 'Sub Kategori Pelajaran berhasil diperbarui!');
+        return redirect()->route('subkategori.index')->with('success', 'Sub Kategori Pelajaran berhasil diperbarui!');
     }
 
     public function deletesubkategori($id){
