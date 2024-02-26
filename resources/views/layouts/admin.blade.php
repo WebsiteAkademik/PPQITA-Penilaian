@@ -161,8 +161,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="sidebar-link @if (Request::is('/data_matpel')) active @endif"
-                                        href="{{ route('subkategori.index') }}" aria-expanded="false">
+                                    <a class="sidebar-link @if (Request::is('/data_mapel')) active @endif"
+                                        href="{{ route('mapel.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-book"></i></span>
                                         <span class="hide-menu">Mata Pelajaran</span>
                                     </a>

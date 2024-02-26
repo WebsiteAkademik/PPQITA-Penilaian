@@ -21,9 +21,17 @@ class MataPelajaran extends Model
         return $this->belongsTo(KategoriPelajaran::class);
     }
 
+    public function kategoriID(){
+        return KategoriPelajaran::where("id", $this->kategori_pelajaran_id)->first();
+    }
+
     public function subKategoriPelajaran()
     {
         return $this->belongsTo(SubKategoriPelajaran::class);
+    }
+
+    public function subkategoriID(){
+        return SubKategoriPelajaran::where("id", $this->sub_kategori_pelajaran_id)->first();
     }
 
     public function setupMataPelajaran()

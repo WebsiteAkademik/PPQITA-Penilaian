@@ -209,7 +209,7 @@ class AkademikController extends Controller
         $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
 
         if (!$tahunAjaranAktif) {
-            return view('pages.admin.akademik.subkategorimapel.index', ['kategori' => []]);
+            return view('pages.admin.akademik.subkategorimapel.index', ['subkategori' => []]);
         }
 
         $subkategori = SubKategoriPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get();
@@ -321,5 +321,30 @@ class AkademikController extends Controller
     }
 
     //Mata Pelajaran
+    public function listmapel(){
+        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
+
+        if (!$tahunAjaranAktif) {
+            return view('pages.admin.akademik.mapel.index', ['mapel' => []]);
+        }
+
+        $mapel = MataPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get();
+        
+        return view('pages.admin.akademik.mapel.index', ['mapel' => $mapel]);
+    }
+
+    public function showFormmapel(){
+        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
+
+        if (!$tahunAjaranAktif) {
+            return view('pages.admin.akademik.mapel.form', ['mapel' => []]);
+        }
+
+        $kategori = KategoriPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get();
+        $subkategori = SubKategoriPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get();
+
+        return view('pages.admin.akademik.mapel.form', ['kategori' => $kategori, 'subkategori' => $subkategori,]);
+    }
+
     //Pengajar
 }

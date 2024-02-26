@@ -109,7 +109,12 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::get('/data_subkategori/edit/{id}', [AkademikController::class, 'editsubkategori'])->name('subkategori.edit');
     Route::put('/data_subkategori/edit/{id}', [AkademikController::class, 'updatesubkategori'])->name('subkategori.update');
     Route::delete('/data_subkategori/{id}/delete', [AkademikController::class, 'deletesubkategori'])->name('subkategori.delete');
+
+    //Mata Pelajaran
+    Route::get('/data_mapel', [AkademikController::class, 'listmapel'])->name('mapel.index');
+    Route::get('/data_mapel/form', [AkademikController::class, 'showFormmapel'])->name('mapel.form');
     
+
     // Pendaftar
     Route::get('/pendaftar-baru', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');
     Route::post('/pendaftar-baru', [PendaftaranOnlineController::class, 'indexPOST'])->name('pendaftar.indexUpdateStatusMenunggu');

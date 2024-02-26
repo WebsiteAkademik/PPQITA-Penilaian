@@ -48,6 +48,9 @@
                             <thead class="text-dark fs-4">
                                 <tr style="background-color: #2E8CB5">
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0 text-white">No.</h6>
+                                    </th>
+                                    <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Kode Mapel</h6>
                                     </th>
                                     <th class="border-bottom-0 text-center">
@@ -65,29 +68,35 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($kategori as $key => $row)
+                                @foreach ($mapel as $key => $row)
                                 <tr>
                                     <td class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">{{ $key + 1 }}</h6>
                                     </td>
                                     <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">{{ $row->kode_kategori }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->kode_mata_pelajaran }}</h6>
                                     </td>
                                     <td class="border-bottom-0 align-items-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->nama_kategori }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->nama_mata_pelajaran }}</h6>
+                                    </td>
+                                    <td class="border-bottom-0 align-items-center">
+                                        <h6 class="fw-semibold mb-0">{{ $row->subkategoriID()->nama_sub_kategori }}</h6>
+                                    </td>
+                                    <td class="border-bottom-0 align-items-center">
+                                        <h6 class="fw-semibold mb-0">{{ $row->kategoriID()->nama_kategori }}</h6>
                                     </td>
                                     <td class="border-bottom-0 align-items-center">
                                         <div class="row mt-1">
-                                            <div class="col-6 col-lg-5">
-                                                <a href="{{ route('kategori.edit', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <!-- <div class="col-6 col-lg-5">
+                                                <a href="{{ route('mapel.edit', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
                                             </div>
                                             <div class="col-6 col-lg-5">
-                                                <form id="deleteForm{{ $row->id }}" action="{{ route('kategori.delete', $row->id) }}" method="POST" style="display: none;">
+                                                <form id="deleteForm{{ $row->id }}" action="{{ route('mapel.delete', $row->id) }}" method="POST" style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>
-                                                <a href="#" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus kategori pelajaran ini?')) document.getElementById('deleteForm{{ $row->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
-                                            </div>
+                                                <a href="#" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus mata pelajaran ini?')) document.getElementById('deleteForm{{ $row->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
+                                            </div> -->
                                         </div>
                                     </td> 
                                 </tr>
