@@ -53,9 +53,9 @@
                     <b class="fw-semibold mb-4">Konfirmasi Pembayaran Ke : LINK (<a href="https://wa.me/+6281239616477">Share on WhatsApp</a>)</b>
 
                     <div class="row mt-6">
-                        <div class="col-4 col-lg-5">
+                        <!-- <div class="col-4 col-lg-5">
                             <a href="{{ route('cetak_pdf', $pendaftars->first()->no_nisn) }}" target="_blank" class="btn btn-success">Download</a>
-                        </div>
+                        </div> -->
                         <div class="col-4 col-lg-5">
                             @if($pendaftars->first()->status == "DITOLAK")
                                 <h4 style="font-weight: bold; font-size: 24px">Status : TIDAK DITERIMA</h4>
