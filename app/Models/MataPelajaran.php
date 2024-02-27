@@ -11,6 +11,11 @@ class MataPelajaran extends Model
 
     protected $fillable = ['kode_mata_pelajaran', 'nama_mata_pelajaran', 'kkm', 'sub_kategori_pelajaran_id', 'kategori_pelajaran_id', 'tahun_ajaran_id'];
 
+    public function pengajar()
+    {
+        return $this->belongsTo(Pengajar::class);
+    }
+    
     public function tahunAjaran()
     {
         return $this->belongsTo(TahunAjaran::class);
