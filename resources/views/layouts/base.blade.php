@@ -49,7 +49,7 @@
     @yield('content')
 
     {{-- Footer --}}
-    <footer class="py-1" style="background-color: #023b5c">
+    <footer class="py-1 fixed-bottom" style="background-color: #023b5c">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-12">
