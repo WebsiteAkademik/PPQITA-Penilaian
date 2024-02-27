@@ -1,8 +1,3 @@
-<?php
-use App\Models\Pendaftaran;
-$pendaftaran = Pendaftaran::where('user_id', auth()->user()->id)->first();
-?>
-
 <!doctype html>
 <html lang="en">
 
@@ -39,37 +34,53 @@ $pendaftaran = Pendaftaran::where('user_id', auth()->user()->id)->first();
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
                     <ul id="sidebarnav">
-                        <li class="sidebar-item mt-4">
-                            <a class="sidebar-link {{ Request::is('/dashboarduser') ? 'active' : '' }}"
-                                href="{{ route('dashboarduser') }}" aria-expanded="false">
+                        <hr>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link {{ Request::is('/') ? 'active' : '' }}"
+                                href="{{ route('dashboard') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-solid fa-house"></i>
                                 </span>
-                                <span class="hide-menu">Dashboard</span>
+                                <span class="hide-menu">Dashboard Pengajar</span>
+                            </a>
+                        </li>
+                        <hr>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
+                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </span>
+                                <span class="hide-menu">Penilaian Tahfidz</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link {{ Request::is(route('pendaftar.profile')) ? 'active' : '' }}"
-                                href="{{ route('pendaftar.profile') }}" aria-expanded="false">
+                            <a class="sidebar-link @if (Request::is('/rekap')) active @endif"
+                                href="{{ route('rekap.index') }}" aria-expanded="false">
                                 <span>
-                                    <i class="fa-solid fa-chart-bar"></i>
+                                    <i class="fa-solid fa-pen-to-square"></i>
                                 </span>
-                                <span class="hide-menu">Nilai</span>
+                                <span class="hide-menu">Penilaian Pelajaran</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('/jadwaltestuser')) active @endif"
-                                href="{{ route('jadwaltestuser') }}" aria-expanded="false">
+                            <a class="sidebar-link @if (Request::is('/rekap')) active @endif"
+                                href="{{ route('rekap.index') }}" aria-expanded="false">
                                 <span>
-                                    <i class="fa-regular fa-user"></i>
+                                    <i class="fa-solid fa-calendar-check"></i>
                                 </span>
-                                <span class="hide-menu">Profile</span>
+                                <span class="hide-menu">Absensi Siswa</span>
                             </a>
                         </li>
-                        <!-- <li class="sidebar-item d-grid" style="position: absolute;bottom: 60px;right: 0;left: 0;">
-                            <button type="button" onclick="window.location.href='{{ route('pendaftar.profile') }}';"
-                                class="btn btn-outline-primary mx-3 mt-2">Profile</button>
-                        </li> -->
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('/rekap')) active @endif"
+                                href="{{ route('rekap.index') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-regular fa-calendar-check"></i>
+                                </span>
+                                <span class="hide-menu">Absensi Pengajar</span>
+                            </a>
+                        </li>
                         <li class="sidebar-item d-grid" style="position: absolute;bottom: 20px;right: 0;left: 0;">
                             <button type="button" onclick="logout();"
                                 class="btn btn-outline-danger mx-3 mt-2">Logout</button>
@@ -99,7 +110,7 @@ $pendaftaran = Pendaftaran::where('user_id', auth()->user()->id)->first();
                             <li class="nav-item dropdown">
                                 <div class="d-flex align-items-center">
                                     <p class="text-white fs-4 mt-2" style="font-weight: 500">Hi,
-                                        {{ ucwords(strtolower($pendaftaran->nama_calon_siswa)) }}</p>
+                                        {{ auth()->user()->name }}</p>
                                     <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <img src="{{ asset('admin/src/assets/images/profile/user-1.jpg') }}"
