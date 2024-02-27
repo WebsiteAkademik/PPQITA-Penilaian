@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Data Tahun Ajaran
+    Data Pengajar
 @endsection
 
 @push('style')
@@ -19,7 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
-            new DataTable('#table-tahunajar', {
+            new DataTable('#table-kategori', {
                 "oLanguage": {
                     "sLengthMenu": "Tampilkan _MENU_ data per halaman",
                     "sZeroRecords": "Data tidak ditemukan",
@@ -36,25 +36,28 @@
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body">
-                    <h5 class="card-title fs-6 fw-semibold mb-4">Data Tahun Ajaran</h5>
+                    <h5 class="card-title fs-6 fw-semibold mb-4">Data Mata Pelajaran</h5>
                     @if(session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
                     <div>
-                        <a href="{{ route('tahunajar.form') }}" class="btn btn-primary m-3" id="tambahTahunAjar">+ Tambah Tahun Ajaran</a>
+                        <a href="{{ route('mapel.form') }}" class="btn btn-primary m-3" id="tambahMapel">+ Tambah Pengajar</a>
                     </div>
                     <div class="table-responsive">
-                        <table class="table text-nowrap mb-0 align-middle" id="table-tahunajar">
+                        <table class="table text-nowrap mb-0 align-middle" id="table-kategori">
                             <thead class="text-dark fs-4">
                                 <tr style="background-color: #2E8CB5">
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">ID</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Nama Pengajar</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Tahun Ajaran</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Alamat</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Status</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">No. WA</h6>
+                                    </th>
+                                    <th style="width: 100px;" class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0 text-white">Mapel yang Diampu</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Action</h6>
@@ -62,41 +65,37 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($tahunajar as $key => $row)
+                                @foreach ($mapel as $key => $row)
                                 <tr>
-                                    <td class="border-bottom-0 text-center">
+                                    <td class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">{{ $key + 1 }}</h6>
                                     </td>
-                                    <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->tahun_ajaran }}</h6>
+                                    <td class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">{{ $row->kode_mata_pelajaran }}</h6>
                                     </td>
-                                    <td class="border-bottom-0 align-items-center text-center">
-                                        @php
-                                        switch ($row->status) {
-                                            case 'aktif':
-                                                echo "<div class='badge text-capitalize bg-success'>AKTIF</div>";
-                                                break;
-                                            case 'tidak aktif':
-                                                echo "<div class='badge text-capitalize bg-danger'>TIDAK AKTIF</div>";
-                                                break;
-                                            }
-                                        @endphp
+                                    <td class="border-bottom-0 align-items-center">
+                                        <h6 class="fw-semibold mb-0">{{ $row->nama_mata_pelajaran }}</h6>
+                                    </td>
+                                    <td class="border-bottom-0 align-items-center">
+                                        <h6 class="fw-semibold mb-0">{{ $row->subkategoriID()->nama_sub_kategori }}</h6>
+                                    </td>
+                                    <td class="border-bottom-0 align-items-center">
+                                        <h6 class="fw-semibold mb-0">{{ $row->kategoriID()->nama_kategori }}</h6>
                                     </td>
                                     <td class="border-bottom-0 align-items-center">
                                         <div class="row mt-1">
-                                            <div class="col-2 col-lg-2 d-flex justify-content-center">
-                                                <a href="{{ route('tahunajar.edit', $row->id) }}" class="text-black d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <div class="col-6 col-lg-5">
+                                                <a href="{{ route('mapel.edit', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
                                             </div>
-                                            <div class="col-2 col-lg-2 d-flex justify-content-center">
-                                                <form id="deleteForm{{ $row->id }}" action="{{ route('tahunajar.delete', $row->id) }}" method="POST" style="display: none;">
+                                            <div class="col-6 col-lg-5">
+                                                <form id="deleteForm{{ $row->id }}" action="{{ route('mapel.delete', $row->id) }}" method="POST" style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>
-                                                <a href="#" class="text-black d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus data tahun ajaran ini?')) document.getElementById('deleteForm{{ $row->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
+                                                <a href="#" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus mata pelajaran ini?')) document.getElementById('deleteForm{{ $row->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
                                             </div>
                                         </div>
-                                    </td>
- 
+                                    </td> 
                                 </tr>
                                 @endforeach
                             </tbody>
