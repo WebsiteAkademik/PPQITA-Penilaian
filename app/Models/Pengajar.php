@@ -9,6 +9,8 @@ class Pengajar extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['nama_pengajar', 'alamat', 'no_wa_pengajar', 'mata_pelajaran_id', 'user_id'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
