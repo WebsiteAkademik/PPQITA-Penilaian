@@ -129,7 +129,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#homeSubmenu" class="sidebar-link">
+                                    <a class="sidebar-link @if (Request::is('/data_kelas')) active @endif"
+                                        href="{{ route('kelas.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-chalkboard-user"></i></span>
                                         <span class="hide-menu">Kelas</span>
                                     </a>

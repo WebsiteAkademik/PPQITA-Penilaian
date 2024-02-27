@@ -8,6 +8,7 @@ use App\Models\TahunAjaran;
 use App\Models\KategoriPelajaran;
 use App\Models\SubKategoriPelajaran;
 use App\Models\MataPelajaran;
+use App\Models\Kelas;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -442,6 +443,70 @@ class AkademikController extends Controller
         $mapel = MataPelajaran::findOrFail($id);
         $mapel->delete();
         return redirect()->route('mapel.index')->with('success', 'Mata Pelajaran berhasil dihapus!');
+    }
+
+
+    //Kelas
+    public function listkelas(){
+        $kelas = Kelas::all();
+    
+        return view('pages.admin.akademik.kelas.index', ['kelas' => $kelas]);
+    }
+
+    public function showFormkelas(){
+        return view('pages.admin.akademik.kelas.form');
+    }
+
+    public function kelasPost(Request $request){
+        $globalValidatorData = [
+            'kelas' => 'required|unique:kelas,kelas',
+        ];
+
+        $globalValidator = Validator::make($request->all(), $globalValidatorData);
+
+        if ($globalValidator->fails()) {
+            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada data yang sama!');
+            return redirect()->back()->withErrors($globalValidator)->withInput();
+        }
+
+        $data = $request->all();
+        
+        try{
+            $kelas = Kelas::create($data);
+        }
+        catch(Exception $e){
+            $kelas->delete();
+            Alert::error('Gagal! (E006)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
+            return redirect()->back()->withError($e)->withInput();
+        }
+
+        Alert::success('Berhasil', 'Kelas berhasil disimpan!');
+
+        return redirect()->route('kelas.index')->with('success', 'Kelas Berhasil Disimpan');
+    }
+
+    public function editkelas($id){
+        $kelas = Kelas::findOrFail($id);
+    
+        return view('pages.admin.akademik.kelas.edit', compact('kelas'));
+    }
+
+    public function updatekelas(Request $request, $id){
+        $kelas = Kelas::findOrFail($id);
+
+        // Validasi data yang diupdate
+        $validatedData = $request->validate([
+            'kelas' => 'required|unique:kelas,kelas',
+        ]);
+
+        // Update data Kelas
+        try {
+            $kelas->update($validatedData);
+            return redirect()->route('kelas.index')->with('success', 'Kelas berhasil diperbaharui!');
+        } catch (\Exception $e) {
+            // Tangani jika terjadi kesalahan saat update
+            return redirect()->back()->withErrors([$e->getMessage()])->withInput();
+        }
     }
 
     //Pengajar
