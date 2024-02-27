@@ -87,7 +87,7 @@
                                     </td>
                                     <td class="border-bottom-0 align-items-center">
                                         <div class="row mt-1">
-                                            <!-- <div class="col-6 col-lg-5">
+                                            <div class="col-6 col-lg-5">
                                                 <a href="{{ route('mapel.edit', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
                                             </div>
                                             <div class="col-6 col-lg-5">
@@ -96,7 +96,7 @@
                                                     @method('DELETE')
                                                 </form>
                                                 <a href="#" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus mata pelajaran ini?')) document.getElementById('deleteForm{{ $row->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
-                                            </div> -->
+                                            </div>
                                         </div>
                                     </td> 
                                 </tr>

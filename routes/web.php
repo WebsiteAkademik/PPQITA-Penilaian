@@ -113,7 +113,11 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     //Mata Pelajaran
     Route::get('/data_mapel', [AkademikController::class, 'listmapel'])->name('mapel.index');
     Route::get('/data_mapel/form', [AkademikController::class, 'showFormmapel'])->name('mapel.form');
-    
+    Route::post('/data_mapel/form', [AkademikController::class, 'mapelPost'])->name('mapel.formPOST');
+    Route::get('/data_mapel/edit/{id}', [AkademikController::class, 'editmapel'])->name('mapel.edit');
+    Route::put('/data_mapel/edit/{id}', [AkademikController::class, 'updatemapel'])->name('mapel.update');
+    Route::delete('/data_mapel/{id}/delete', [AkademikController::class, 'deletemapel'])->name('mapel.delete');
+
 
     // Pendaftar
     Route::get('/pendaftar-baru', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');
