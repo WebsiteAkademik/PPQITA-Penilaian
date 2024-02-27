@@ -36,8 +36,9 @@
                 <div class="checkbox mb-4 mt-2">
                     <label>
                         <input type="checkbox" name="rememberme" value="rememberme"> Remember me
-                    </label>               </div>
-                <button class="w-100 btn btn-lg mb-3 text-white" style="background-color: var(--primary-color);"
+                    </label>
+                </div>
+                <button class="w-100 btn btn-lg mb-3 text-white" style="background-color: #005280;"
                     type="submit">Login</button>
                 <br><br>
                 <h6>Belum mendaftar sebagai calon santri?</h6>

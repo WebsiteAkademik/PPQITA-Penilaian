@@ -50,7 +50,7 @@
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">ID</h6>
                                     </th>
-                                    <th class="border-bottom-0 text-center">
+                                    <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Kode Kategori</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
@@ -75,10 +75,9 @@
                                     </td>
                                     <td class="border-bottom-0 align-items-center">
                                         <div class="row mt-1">
-                                            <div class="col-6 col-lg-5">
+                                            <div class="col-6 col-lg-5 align-items-center">
                                                 <a href="{{ route('kategori.edit', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
-                                            </div>
-                                            <div class="col-6 col-lg-5">
+                                            
                                                 <form id="deleteForm{{ $row->id }}" action="{{ route('kategori.delete', $row->id) }}" method="POST" style="display: none;">
                                                     @csrf
                                                     @method('DELETE')

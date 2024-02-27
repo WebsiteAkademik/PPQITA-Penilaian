@@ -53,7 +53,7 @@
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Kode Mapel</h6>
                                     </th>
-                                    <th class="border-bottom-0 text-center">
+                                    <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Nama Mapel</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
