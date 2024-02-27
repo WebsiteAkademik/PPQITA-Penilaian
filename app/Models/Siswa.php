@@ -54,4 +54,9 @@ class Siswa extends Model
     {
         return $this->belongsTo(PenilaianTahfidz::class);
     }
+    
+    public function penilaianPelajaran()
+    {
+        return $this->belongsTo(PenilaianPelajaran::class);
+    }
 }

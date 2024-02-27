@@ -18,4 +18,9 @@ class Pengajar extends Model
     {
         return $this->belongsToMany(PenilaianTahfidz::class);
     }
+    
+    public function penilaianPelajaran()
+    {
+        return $this->belongsToMany(PenilaianPelajaran::class);
+    }
 }
