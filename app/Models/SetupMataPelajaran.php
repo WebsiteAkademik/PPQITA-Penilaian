@@ -9,7 +9,7 @@ class SetupMataPelajaran extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['mata_pelajaran_id', 'sub_kategori_pelajaran_id', 'kategori_pelajaran_id', 'tahun_ajaran_id'];
+    protected $fillable = ['tanggal_setup', 'kelas_id', 'pengajar_id', 'tahun_ajaran_id'];
 
     public function mataPelajaran()
     {

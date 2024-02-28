@@ -9,6 +9,8 @@ class DetailSetupMataPelajaran extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['jam_pelajaran', 'kkm', 'setup_mata_pelajaran_id', 'mata_pelajaran_id', 'tahun_ajaran_id'];
+
     public function mataPelajaran()
     {
         return $this->belongsTo(MataPelajaran::class);

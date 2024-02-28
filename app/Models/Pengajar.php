@@ -9,7 +9,7 @@ class Pengajar extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama_pengajar', 'alamat', 'no_wa_pengajar', 'mata_pelajaran_id', 'user_id'];
+    protected $fillable = ['nama_pengajar', 'alamat', 'no_wa_pengajar'];
 
     public function user()
     {
