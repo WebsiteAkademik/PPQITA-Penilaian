@@ -28,15 +28,6 @@
                         <input required type="text" class="form-control" name="no_wa_pengajar" id="no_wa_pengajar" value="{{ old('no_wa_pengajar') }}" placeholder="">
                     </div>
                     <div class="mb-3">
-                        <label for="nama_mata_pelajaran" class="form-label">Mapel yang Diampu</label>
-                        <select name="mata_pelajaran_id" id="mata_pelajaran_id" class="form-select" required>
-                            <option value="" disabled selected>Mata Pelajaran</option>
-                            @foreach ($mapel as $mapel)
-                                <option value="{{ $mapel->id }}">{{ $mapel->nama_mata_pelajaran }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
                         <input required type="text" class="form-control" name="username" id="username" value="{{ old('username') }}" placeholder="">
                     </div>

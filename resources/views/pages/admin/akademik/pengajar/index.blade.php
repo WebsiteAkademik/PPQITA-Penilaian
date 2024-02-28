@@ -60,9 +60,6 @@
                                         <h6 class="fw-semibold mb-0 text-white">No. WA</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Mapel yang Diampu</h6>
-                                    </th>
-                                    <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Action</h6>
                                     </th>
                                 </tr>
@@ -81,9 +78,6 @@
                                     </td>
                                     <td class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0">{{ $row->no_wa_pengajar }}</h6>
-                                    </td>
-                                    <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->mapelID()->nama_mata_pelajaran }}</h6>
                                     </td>
                                     <td class="border-bottom-0 align-items-center">
                                         <div class="row" style="width: 100px; margin: 0 auto">
