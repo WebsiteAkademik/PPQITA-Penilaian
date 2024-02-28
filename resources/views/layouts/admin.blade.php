@@ -144,7 +144,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#homeSubmenu" class="sidebar-link">
+                                    <a class="sidebar-link @if (Request::is('/data_pengajar')) active @endif"
+                                        href="{{ route('pengajar.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-users"></i></span>
                                         <span class="hide-menu">Pengajar</span>
                                     </a>

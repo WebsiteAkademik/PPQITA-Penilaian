@@ -118,6 +118,10 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::put('/data_mapel/edit/{id}', [AkademikController::class, 'updatemapel'])->name('mapel.update');
     Route::delete('/data_mapel/{id}/delete', [AkademikController::class, 'deletemapel'])->name('mapel.delete');
 
+    //Setup Mata Pelajaran
+
+    //Setup Mata Pelajaran Detail
+    
     //Kelas
     Route::get('/data_kelas', [AkademikController::class, 'listkelas'])->name('kelas.index');
     Route::get('/data_kelas/form', [AkademikController::class, 'showFormkelas'])->name('kelas.form');
@@ -126,7 +130,12 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::put('/data_kelas/edit/{id}', [AkademikController::class, 'updatekelas'])->name('kelas.update');
     
     //Pengajar
-
+    Route::get('/data_pengajar', [AkademikController::class, 'listpengajar'])->name('pengajar.index');
+    Route::get('/data_pengajar/form', [AkademikController::class, 'showFormpengajar'])->name('pengajar.form');
+    Route::post('/data_pengajar/form', [AkademikController::class, 'pengajarPost'])->name('pengajar.formPOST');
+    Route::get('/data_pengajar/edit/{id}', [AkademikController::class, 'editpengajar'])->name('pengajar.edit');
+    Route::put('/data_pengajar/edit/{id}', [AkademikController::class, 'updatepengajar'])->name('pengajar.update');
+    Route::delete('/data_pengajar/{id}/delete', [AkademikController::class, 'deletepengajar'])->name('pengajar.delete');
 
     // Pendaftar
     Route::get('/pendaftar-baru', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');

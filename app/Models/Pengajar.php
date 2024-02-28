@@ -20,7 +20,7 @@ class Pengajar extends Model
     {
         return $this->hasMany(MataPelajaran::class);
     }
-    
+
     public function penilaianTahfidz()
     {
         return $this->belongsToMany(PenilaianTahfidz::class);
@@ -29,5 +29,9 @@ class Pengajar extends Model
     public function penilaianPelajaran()
     {
         return $this->belongsToMany(PenilaianPelajaran::class);
+    }
+
+    public function mapelID(){
+        return MataPelajaran::where("id", $this->mata_pelajaran_id)->first();
     }
 }

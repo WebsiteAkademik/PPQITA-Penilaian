@@ -36,17 +36,20 @@
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body">
-                    <h5 class="card-title fs-6 fw-semibold mb-4">Data Mata Pelajaran</h5>
+                    <h5 class="card-title fs-6 fw-semibold mb-4">Data Pengajar</h5>
                     @if(session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
                     <div>
-                        <a href="{{ route('mapel.form') }}" class="btn btn-primary m-3" id="tambahMapel">+ Tambah Pengajar</a>
+                        <a href="{{ route('pengajar.form') }}" class="btn btn-primary m-3" id="tambahMapel">+ Tambah Pengajar</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-nowrap mb-0 align-middle" id="table-kategori">
                             <thead class="text-dark fs-4">
                                 <tr style="background-color: #2E8CB5">
+                                    <th style="width: 100px;" class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0 text-white">No.</h6>
+                                    </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Nama Pengajar</h6>
                                     </th>
@@ -65,34 +68,34 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($mapel as $key => $row)
+                                @foreach ($pengajar as $key => $row)
                                 <tr>
                                     <td class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0">{{ $key + 1 }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->kode_mata_pelajaran }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->nama_pengajar }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->nama_mata_pelajaran }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->alamat }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->subkategoriID()->nama_sub_kategori }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->no_wa_pengajar }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->kategoriID()->nama_kategori }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->mapelID()->nama_mata_pelajaran }}</h6>
                                     </td>
-                                    <td class="border-bottom-0 align-items-center text-center">
+                                    <td class="border-bottom-0 align-items-center">
                                         <div class="row" style="width: 100px; margin: 0 auto">
                                             <div class="col-6 d-flex justify-content-center">
-                                                <a href="{{ route('mapel.edit', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <a href="{{ route('pengajar.edit', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
                                             </div>
                                             <div class="col-6 d-flex justify-content-center">
-                                                <form id="deleteForm{{ $row->id }}" action="{{ route('mapel.delete', $row->id) }}" method="POST" style="display: none;">
+                                                <form id="deleteForm{{ $row->id }}" action="{{ route('pengajar.delete', $row->id) }}" method="POST" style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>
-                                                <a href="#" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus mata pelajaran ini?')) document.getElementById('deleteForm{{ $row->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
+                                                <a href="#" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus data pengajar ini?')) document.getElementById('deleteForm{{ $row->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
                                             </div>
                                         </div>
                                     </td> 

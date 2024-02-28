@@ -9,6 +9,7 @@ use App\Models\KategoriPelajaran;
 use App\Models\SubKategoriPelajaran;
 use App\Models\MataPelajaran;
 use App\Models\Kelas;
+use App\Models\Pengajar;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -445,6 +446,9 @@ class AkademikController extends Controller
         return redirect()->route('mapel.index')->with('success', 'Mata Pelajaran berhasil dihapus!');
     }
 
+    //Setup mata pelajaran
+
+    //Setup mata pelajaran detail
 
     //Kelas
     public function listkelas(){
@@ -509,5 +513,129 @@ class AkademikController extends Controller
         }
     }
 
+
     //Pengajar
+    public function listpengajar(){
+        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
+
+        if (!$tahunAjaranAktif) {
+            return view('pages.admin.akademik.pengajar.index', ['pengajar' => []]);
+        }
+
+        $pengajar = Pengajar::join('mata_pelajarans', 'pengajars.mata_pelajaran_id', '=', 'mata_pelajarans.id')
+                        ->where('mata_pelajarans.tahun_ajaran_id', $tahunAjaranAktif->id)
+                        ->get(['pengajars.*']);
+        
+        return view('pages.admin.akademik.pengajar.index', ['pengajar' => $pengajar]);
+    }
+
+    public function showFormpengajar(){
+        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
+
+        if (!$tahunAjaranAktif) {
+            return view('pages.admin.akademik.pengajar.form', ['mapel' => []]);
+        }
+
+        $mapel = MataPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get();
+
+        return view('pages.admin.akademik.pengajar.form', ['mapel' => $mapel,]);
+    }
+
+    public function pengajarPost(Request $request){
+        $globalValidatorData = [
+            'nama_pengajar' => 'required',
+            'alamat' => 'required',
+            'no_wa_pengajar' => 'required',
+            'mata_pelajaran_id' => 'required|unique:pengajars,mata_pelajaran_id',
+            'username' => 'required|alpha_dash|unique:users,name',
+            'password' => 'required'
+        ];
+
+        $globalValidator = Validator::make($request->all(), $globalValidatorData);
+
+        if ($globalValidator->fails()) {
+            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan validasi data dengan database sudah benar!');
+            return redirect()->back()->withErrors($globalValidator)->withInput();
+        }
+
+        $data = $request->all();
+
+        $dataUser = [
+            "name" => $data['username'],
+            "email" => $data['username'],
+            "role" => "pengajar",
+            "password" => Hash::make($data['password']),
+        ];
+
+        unset($data['username']);
+        unset($data['password']);
+        $user = NULL;
+        try {
+            $user = User::create($dataUser);
+        } catch (Exception $e) {
+            Alert::error('Gagal! (E005)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
+            return redirect()->back()->withError($e)->withInput();
+        }
+
+        $data["user_id"] = $user->id;
+
+        try {
+            $pengajar = Pengajar::create($data);
+    
+            Alert::success('Berhasil', 'Pengajar berhasil disimpan!');
+            return redirect()->route('pengajar.index')->with('success', 'Pengajar berhasil disimpan!');
+        } catch (\Exception $e) {
+            Alert::error('Gagal! (E006)', 'Cek kembali kesesuaian isi form dengan validasi database');
+            return redirect()->back()->withInput();
+        }
+    }
+
+    public function editpengajar($id){
+        $pengajar = Pengajar::findOrFail($id);
+
+        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
+
+        if (!$tahunAjaranAktif) {
+            return view('pages.admin.akademik.pengajar.edit', ['pengajar' => []]);
+        }
+
+        $mapel = MataPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get();
+
+        return view('pages.admin.akademik.pengajar.edit', ['pengajar' => $pengajar, 'mapel' => $mapel,]);
+    }
+
+    public function updatepengajar(Request $request, $id){
+        $validatedData = Validator::make($request->all(), [
+            'nama_pengajar' => 'required',
+            'alamat' => 'required',
+            'no_wa_pengajar' => 'required',
+            'mata_pelajaran_id' => ['required', Rule::unique('pengajars', 'mata_pelajaran_id')->ignore($id)],
+        ]);
+    
+        if ($validatedData->fails()) {
+            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada kode sub kategori yang sama atau nama sub kategori pada kategori pelajaran yang sama!');
+            return redirect()->back()->withErrors($validatedData)->withInput();
+        }
+    
+        $pengajar = Pengajar::findOrFail($id);
+    
+        $pengajar->fill([
+            'nama_pengajar' => $request->nama_pengajar,
+            'alamat' => $request->alamat,
+            'no_wa_pengajar' => $request->no_wa_pengajar,
+            'mata_pelajaran_id' => $request->mata_pelajaran_id,
+        ])->save();
+    
+        Alert::success('Berhasil', 'Data Pengajar berhasil diperbarui!');
+        return redirect()->route('pengajar.index')->with('success', 'Data Pengajar berhasil diperbarui!');
+    }
+
+    public function deletepengajar($id){
+        $pengajar = Pengajar::findOrFail($id);
+        $user = User::where('id', $pengajar->user_id);
+        $user->delete();
+        $pengajar->delete();
+        return redirect()->route('pengajar.index')->with('success', 'Data Pengajar berhasil dihapus!');
+    }
+
 }

@@ -9,35 +9,40 @@
         <div class="card w-100">
             <div class="card-body">
                 <div class="d-flex">
-                    <a href="{{ route('mapel.index') }}" class="btn btn-primary m-1">Batal</a>
+                    <a href="{{ route('pengajar.index') }}" class="btn btn-primary m-1">Batal</a>
                 </div><br/>
                 <h5 class="card-title fs-6 fw-semibold mb-4">Form Tambah Pengajar</h5>
-                <!-- Formulir input kategori pelajaran -->
-                <form method="post" action="{{ route('mapel.formPOST') }}" onsubmit="return validateKode()">
+                <!-- Formulir input pengajar -->
+                <form method="post" action="{{ route('pengajar.formPOST') }}">
                     @csrf
                     <div class="mb-3">
-                        <label for="kode_mata_pelajaran" class="form-label">Nama Pengajar</label>
-                        <input required type="text" class="form-control" name="kode_mata_pelajaran" id="kode_mata_pelajaran" value="{{ old('kode_mata_pelajaran') }}" placeholder="Kode harus terdiri atas 10 digit">
+                        <label for="nama_pengajar" class="form-label">Nama Pengajar</label>
+                        <input required type="text" class="form-control" name="nama_pengajar" id="nama_pengajar" value="{{ old('nama_pengajar') }}">
                     </div>
                     <div class="mb-3">
-                        <label for="nama_mata_pelajaran" class="form-label">Alamat</label>
-                        <input required type="text" class="form-control" name="nama_mata_pelajaran" id="nama_mata_pelajaran" value="{{ old('nama_mata_pelajaran') }}" placeholder="">
+                        <label for="alamat" class="form-label">Alamat</label>
+                        <textarea class="form-control" id="alamat" name="alamat" rows="3" value="">{{ old('alamat') }}</textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="kkm" class="form-label">Nomor WA</label>
-                        <input required type="number" class="form-control" name="kkm" id="kkm" value="{{ old('kkm') }}" placeholder="">
+                        <label for="no_wa_pengajar" class="form-label">Nomor WA</label>
+                        <input required type="text" class="form-control" name="no_wa_pengajar" id="no_wa_pengajar" value="{{ old('no_wa_pengajar') }}" placeholder="">
                     </div>
                     <div class="mb-3">
                         <label for="nama_mata_pelajaran" class="form-label">Mapel yang Diampu</label>
-                        <input required type="text" class="form-control" name="nama_mata_pelajaran" id="nama_mata_pelajaran" value="{{ old('nama_mata_pelajaran') }}" placeholder="">
+                        <select name="mata_pelajaran_id" id="mata_pelajaran_id" class="form-select" required>
+                            <option value="" disabled selected>Mata Pelajaran</option>
+                            @foreach ($mapel as $mapel)
+                                <option value="{{ $mapel->id }}">{{ $mapel->nama_mata_pelajaran }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label for="nama_mata_pelajaran" class="form-label">Username</label>
-                        <input required type="text" class="form-control" name="nama_mata_pelajaran" id="nama_mata_pelajaran" value="{{ old('nama_mata_pelajaran') }}" placeholder="">
+                        <label for="username" class="form-label">Username</label>
+                        <input required type="text" class="form-control" name="username" id="username" value="{{ old('username') }}" placeholder="">
                     </div>
                     <div class="mb-3">
-                        <label for="nama_mata_pelajaran" class="form-label">Password</label>
-                        <input required type="text" class="form-control" name="nama_mata_pelajaran" id="nama_mata_pelajaran" value="{{ old('nama_mata_pelajaran') }}" placeholder="">
+                        <label for="password" class="form-label">Password</label>
+                        <input required type="text" class="form-control" name="password" id="password" value="{{ old('password') }}" placeholder="">
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
@@ -45,39 +50,3 @@
         </div>
     </div>
 @endsection
-
-@push('script')
-    <script>
-        function getSubKategori() {
-            var kategoriId = document.getElementById('kategori_pelajaran_id').value;
-            var subKategoriSelect = document.getElementById('sub_kategori_pelajaran_id');
-
-            //Menghapus option yang ada
-            subKategoriSelect.innerHTML = '<option value="" disabled selected>Sub Kategori</option>';
-
-            //Mengambil function select sub kategori yang terelasi dengan kategori yang dipilih
-            @foreach ($subkategori as $subkat)
-                if ({{ $subkat->kategori_id }} == kategoriId) {
-                    var option = document.createElement('option');
-                    option.value = '{{ $subkat->id }}';
-                    option.text = '{{ $subkat->nama_sub_kategori }}';
-                    subKategoriSelect.appendChild(option);
-                }
-            @endforeach
-        }
-
-        function validateKode() {
-            var kodeInput = document.getElementById('kode_mata_pelajaran').value;
-
-            // Validasi tambahan jika diperlukan
-            var regex = /^[a-zA-Z0-9]{10}$/;
-            if (!regex.test(kodeInput)) {
-                alert('Format kode mata pelajaran tidak valid. Kode mata pelajaran harus terdiri atas 10 digit.');
-                return false;
-            }
-
-            // Formulir valid, kirim ke server
-            return true;
-        }
-    </script>
-@endpush
