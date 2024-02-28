@@ -83,11 +83,11 @@
                                         @endphp
                                     </td>
                                     <td class="border-bottom-0 align-items-center">
-                                        <div class="row mt-1">
-                                            <div class="col-2 col-lg-2 d-flex justify-content-center">
+                                        <div class="row" style="width: 100px; margin: 0 auto">
+                                            <div class="col-6 d-flex justify-content-center">
                                                 <a href="{{ route('tahunajar.edit', $row->id) }}" class="text-black d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
                                             </div>
-                                            <div class="col-2 col-lg-2 d-flex justify-content-center">
+                                            <div class="col-6 d-flex justify-content-center">
                                                 <form id="deleteForm{{ $row->id }}" action="{{ route('tahunajar.delete', $row->id) }}" method="POST" style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
@@ -96,7 +96,6 @@
                                             </div>
                                         </div>
                                     </td>
- 
                                 </tr>
                                 @endforeach
                             </tbody>

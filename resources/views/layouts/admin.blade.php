@@ -13,6 +13,13 @@
     <script src="https://kit.fontawesome.com/b30b4ab1e3.js" crossorigin="anonymous"></script>
 
     @stack('style')
+<style>
+    .active{
+        background-color: #00569c;
+        color: #ffffff !important;
+        border-radius: 5px;
+    }
+</style>
 </head>
 
 <body>
@@ -24,8 +31,9 @@
             <!-- Sidebar scroll-->
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between mt-2">
-                    <a href="{{ route('dashboard') }}" class="text-nowrap logo-img">
+                    <a href="{{ route('dashboard') }}" class="text-nowrap logo-img" style="display: flex">
                         <img src="{{ asset('assets/galeri/logo_ppqita.png') }}" width="25%" alt="logo img" />
+                        <h4 style="display: inline; text-align: center; margin-top: 15px; margin-left: 10px; color: #00569c">PPQIT Al Mahir</h4>
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                         <i class="ti ti-x fs-8"></i>
@@ -122,14 +130,14 @@
                             </a>
                             <ul class="collapse list-unstyled" id="homeSubmenu">
                                 <li>
-                                    <a class="sidebar-link @if (Request::is('/data_tahun-ajar')) active @endif"
+                                    <a class="sidebar-link @if (Request::is('/dashboard/data_tahun-ajar')) active @endif"
                                         href="{{ route('tahunajar.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-calendar"></i></span>
                                         <span class="hide-menu">Tahun Ajaran</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="sidebar-link @if (Request::is('/data_kelas')) active @endif"
+                                    <a class="sidebar-link @if (Request::is('/dashboard/data_kelas')) active @endif"
                                         href="{{ route('kelas.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-chalkboard-user"></i></span>
                                         <span class="hide-menu">Kelas</span>
@@ -148,28 +156,28 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="sidebar-link @if (Request::is('/data_kategori')) active @endif"
+                                    <a class="sidebar-link @if (Request::is('/dashboard/data_kategori')) active @endif"
                                         href="{{ route('kategori.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-book"></i></span>
                                         <span class="hide-menu">Kategori Mata Pelajaran</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="sidebar-link @if (Request::is('/data_subkategori')) active @endif"
+                                    <a class="sidebar-link @if (Request::is('/dashboard/data_subkategori')) active @endif"
                                         href="{{ route('subkategori.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-book"></i></span>
                                         <span class="hide-menu">Sub Kategori Mata Pelajaran</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="sidebar-link @if (Request::is('/data_mapel')) active @endif"
+                                    <a class="sidebar-link @if (Request::is('/dashboard/data_mapel')) active @endif"
                                         href="{{ route('mapel.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-book"></i></span>
                                         <span class="hide-menu">Mata Pelajaran</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="sidebar-link @if (Request::is('/data_setupmapel')) active @endif"
+                                    <a class="sidebar-link @if (Request::is('/dashboard/data_setupmapel')) active @endif"
                                         href="{{ route('subkategori.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-chalkboard"></i></span>
                                         <span class="hide-menu">Setup Mata Pelajaran</span>

@@ -61,13 +61,13 @@
                             <tbody>
                                 @foreach ($kelas as $key => $row)
                                 <tr>
-                                    <td class="border-bottom-0">
+                                    <td class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0">{{ $key + 1 }}</h6>
                                     </td>
-                                    <td class="border-bottom-0">
+                                    <td class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0">{{ $row->kelas }}</h6>
                                     </td>
-                                    <td class="border-bottom-0 align-items-center">
+                                    <td class="border-bottom-0 align-items-center text-center">
                                         <div class="row mt-1">
                                             <div class="col-6 col-lg-5">
                                                 <a href="{{ route('kelas.edit', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>

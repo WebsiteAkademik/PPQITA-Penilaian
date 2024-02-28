@@ -31,11 +31,10 @@
             <div class="row">
                 <div class="col-3">
                     <a class="navbar-brand" href="/">
-                        <img src="{{ asset('assets/galeri/logo_ppqita.png') }}" alt="logo" width="100" />
-        
+                        <img src="{{ asset('assets/galeri/logo_ppqita.png') }}" alt="logo" width="100">
                     </a>    
                 </div>
-                <div class="col-12">
+                <div class="col-9" style="padding-top: 30px; padding-left: 30px">
                     <h2>PPQIT Al Mahir</h2>
                 </div>
             </div>
