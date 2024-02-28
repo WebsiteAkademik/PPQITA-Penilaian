@@ -37,7 +37,7 @@
                         <hr>
                         <li class="sidebar-item">
                             <a class="sidebar-link {{ Request::is('/') ? 'active' : '' }}"
-                                href="{{ route('dashboard') }}" aria-expanded="false">
+                                href="{{ route('dashboardpengajar') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-solid fa-house"></i>
                                 </span>
@@ -47,7 +47,7 @@
                         <hr>
                         <li class="sidebar-item">
                             <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
-                                href="{{ route('pendaftar.index') }}" aria-expanded="false">
+                                href="{{ route('dashboardpengajar') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-regular fa-pen-to-square"></i>
                                 </span>
@@ -56,7 +56,7 @@
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link @if (Request::is('/rekap')) active @endif"
-                                href="{{ route('rekap.index') }}" aria-expanded="false">
+                                href="{{ route('dashboardpengajar') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </span>
@@ -65,7 +65,7 @@
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link @if (Request::is('/rekap')) active @endif"
-                                href="{{ route('rekap.index') }}" aria-expanded="false">
+                                href="{{ route('dashboardpengajar') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-solid fa-calendar-check"></i>
                                 </span>
@@ -74,7 +74,7 @@
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link @if (Request::is('/rekap')) active @endif"
-                                href="{{ route('rekap.index') }}" aria-expanded="false">
+                                href="{{ route('dashboardpengajar') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-regular fa-calendar-check"></i>
                                 </span>
@@ -95,7 +95,7 @@
         <!--  Main wrapper -->
         <div class="body-wrapper">
             <!--  Header Start -->
-            <header class="app-header" style="background-color: #B90000;">
+            <header class="app-header" style="background-color: #35a4e2;">
                 <nav class="navbar navbar-expand-lg navbar-dark">
                     <ul class="navbar-nav">
                         <li class="nav-item d-block d-xl-none">

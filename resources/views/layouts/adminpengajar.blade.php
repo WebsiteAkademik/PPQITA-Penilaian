@@ -77,7 +77,7 @@
         <!--  Main wrapper -->
         <div class="body-wrapper">
             <!--  Header Start -->
-            <header class="app-header" style="background-color: #B90000;">
+            <header class="app-header" style="background-color: #35a4e2;">
                 <nav class="navbar navbar-expand-lg navbar-dark">
                     <ul class="navbar-nav">
                         <li class="nav-item d-block d-xl-none">

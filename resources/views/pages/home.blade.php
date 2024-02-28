@@ -41,9 +41,7 @@
                             <h6 class="text-muted mt-3 mt-md-0" style="font-size: 1.2rem;">PENERIMAAN PESERTA DIDIK BARU<br>2024/2025</h6>
                             <h4 style="color: var(--primary-color);font-weight:700;font-size:2.6rem;">BEBAS UANG GEDUNG</h4>
                             <a href="https://wa.me/+6281250004905?text=Assalamu'alaikum%20Saya%20ingin%20bertanya%20tentang%20PMB%20PoltekBPI" target="_blank" class="btn text-white my-4 px-4 py-2"
-                                style="background-color: var(--primary-color);font-size:1.1rem;"><i
-                                    class="fa-solid fa-phone-volume me-1"></i>
-                                Tanya Admin</a>
+                                style="background-color: var(--primary-color);font-size:1.1rem;"><i class="fa-solid fa-phone-volume me-1"></i>Tanya Admin</a>
                         </div>
                     </div>
                 </div>
