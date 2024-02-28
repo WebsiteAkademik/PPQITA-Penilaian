@@ -9,6 +9,10 @@ use App\Models\KategoriPelajaran;
 use App\Models\SubKategoriPelajaran;
 use App\Models\MataPelajaran;
 use App\Models\Kelas;
+use App\Models\SetupMataPelajaran;
+use App\Models\DetailSetupMataPelajaran;
+use App\Models\PenilaianPelajaran;
+use App\Models\PenilaianTahfidz;
 use App\Models\Pengajar;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -446,10 +450,6 @@ class AkademikController extends Controller
         return redirect()->route('mapel.index')->with('success', 'Mata Pelajaran berhasil dihapus!');
     }
 
-    //Setup mata pelajaran
-
-    //Setup mata pelajaran detail
-
     //Kelas
     public function listkelas(){
         $kelas = Kelas::all();
@@ -516,15 +516,7 @@ class AkademikController extends Controller
 
     //Pengajar
     public function listpengajar(){
-        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
-
-        if (!$tahunAjaranAktif) {
-            return view('pages.admin.akademik.pengajar.index', ['pengajar' => []]);
-        }
-
-        $pengajar = Pengajar::join('mata_pelajarans', 'pengajars.mata_pelajaran_id', '=', 'mata_pelajarans.id')
-                        ->where('mata_pelajarans.tahun_ajaran_id', $tahunAjaranAktif->id)
-                        ->get(['pengajars.*']);
+        $pengajar = Pengajar::all();
         
         return view('pages.admin.akademik.pengajar.index', ['pengajar' => $pengajar]);
     }
@@ -546,7 +538,6 @@ class AkademikController extends Controller
             'nama_pengajar' => 'required',
             'alamat' => 'required',
             'no_wa_pengajar' => 'required',
-            'mata_pelajaran_id' => 'required|unique:pengajars,mata_pelajaran_id',
             'username' => 'required|alpha_dash|unique:users,name',
             'password' => 'required'
         ];
@@ -609,7 +600,6 @@ class AkademikController extends Controller
             'nama_pengajar' => 'required',
             'alamat' => 'required',
             'no_wa_pengajar' => 'required',
-            'mata_pelajaran_id' => ['required', Rule::unique('pengajars', 'mata_pelajaran_id')->ignore($id)],
         ]);
     
         if ($validatedData->fails()) {
@@ -637,5 +627,72 @@ class AkademikController extends Controller
         $pengajar->delete();
         return redirect()->route('pengajar.index')->with('success', 'Data Pengajar berhasil dihapus!');
     }
+
+    //Setup Mata Pelajaran
+    public function listsetup(){
+        $setup = SetupMataPelajaran::all();
+        
+        return view('pages.admin.akademik.setupmapel.index', ['setup' => $setup]);
+    }
+
+    public function showFormsetup(){
+        $kelas = Kelas::all();
+
+        $pengajar = Pengajar::all();
+
+        return view('pages.admin.akademik.setupmapel.form', ['kelas' => $kelas, 'pengajar' => $pengajar,]);
+    }
+
+    public function setupPost(Request $request){
+        // Mendapatkan tahun ajaran aktif
+        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->firstOrFail();
+
+        $globalValidatorData = [
+            'tanggal_setup' => 'required',
+            'kelas_id' => 'required',
+            'pengajar_id' => 'required'
+        ];
+
+        $globalValidator = Validator::make($request->all(), $globalValidatorData);
+
+        if ($globalValidator->fails()) {
+            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada data yang sama!');
+            return redirect()->back()->withErrors($globalValidator)->withInput();
+        }
+
+        $data = $request->all();
+        
+        try{
+            // Memasukkan ID tahun ajaran aktif ke data yang akan disimpan
+            $data['tahun_ajaran_id'] = $tahunAjaranAktif->id;
+
+            // Mengecek apakah terdapat nama mata pelajaran yang sama pada tahun ajaran aktif yang sama
+            $setupSama = SetupMataPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)
+                ->where('kelas_id', $data['kelas_id'])
+                ->where('pengajar_id', $data['pengajar_id'])
+                ->first();
+
+            if ($setupSama) {
+                Alert::error('Gagal! (E002)', 'Setup dengan ketentuan yang sama sudah ada!');
+                return redirect()->back()->withInput();
+            }
+
+            $setup = SetupMataPelajaran::create($data);
+        }
+        catch(Exception $e){
+            $kelas->delete();
+            Alert::error('Gagal! (E006)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
+            return redirect()->back()->withError($e)->withInput();
+        }
+
+        Alert::success('Berhasil', 'Setup Mata Pelajaran berhasil disimpan!');
+
+        return redirect()->route('setup.index')->with('success', 'Setup Mata Pelajaran Berhasil Disimpan');
+    }
+
+    //Setup Mata Pelajaran Detail
+
+
+
 
 }
