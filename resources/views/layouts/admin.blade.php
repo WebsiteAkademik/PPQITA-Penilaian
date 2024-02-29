@@ -183,8 +183,8 @@ use App\Models\TahunAjaran;
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="sidebar-link @if (Request::is('/dashboard/data_setupmapel')) active @endif"
-                                        href="{{ route('subkategori.index') }}" aria-expanded="false">
+                                    <a class="sidebar-link @if (Request::is('/dashboard/data_setup')) active @endif"
+                                        href="{{ route('setup.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-chalkboard"></i></span>
                                         <span class="hide-menu">Setup Mata Pelajaran</span>
                                     </a>

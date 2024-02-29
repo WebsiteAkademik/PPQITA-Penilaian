@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Data Mata Pelajaran
+    Data Setup Mata Pelajaran
 @endsection
 
 @push('style')
@@ -36,28 +36,28 @@
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body">
-                    <h5 class="card-title fs-6 fw-semibold mb-4">Data Mata Pelajaran</h5>
+                    <h5 class="card-title fs-6 fw-semibold mb-4">Data Setup Mata Pelajaran</h5>
                     @if(session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
                     <div>
-                        <a href="{{ route('mapel.form') }}" class="btn btn-primary m-3" id="tambahMapel">+ Tambah Mata Pelajaran</a>
+                        <a href="{{ route('setup.form') }}" class="btn btn-primary m-3" id="tambahSetup">+ Tambah Setup Mata Pelajaran</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-nowrap mb-0 align-middle" id="table-kategori">
                             <thead class="text-dark fs-4">
                                 <tr style="background-color: #2E8CB5">
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Kode Mapel</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">No.</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Nama Mapel</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Tahun Ajaran</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Kategori</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Kelas</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Sub Kategori</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Pengajar</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Action</h6>
@@ -65,21 +65,30 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($kategori as $key => $row)
+                                @foreach ($setup as $key => $row)
                                 <tr>
                                     <td class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0">{{ $key + 1 }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->kode_kategori }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->tahunajaranID()->tahun_ajaran }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->nama_kategori }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->kelasID()->kelas }}</h6>
+                                    </td>
+                                    <td class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0">{{ $row->pengajarID()->nama_pengajar }}</h6>
                                     </td>
                                     <td class="border-bottom-0 align-items-center text-center">
                                         <div class="row" style="width: 100px; margin: 0 auto">
                                             <div class="col-6 d-flex justify-content-center">
-                                                <a href="{{ route('kategori.edit', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <a type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#detailSetup{{ $row->id }}"
+                                                    class="text-black text-center d-flex align-items-center justify-content-center"
+                                                    style="background-color: #00569C;width: 40px;height: 40px;border:none;">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                               </a>
+                                               @include('pages.admin.akademik.modal.setup', array('row' => $row))
                                             </div>
                                             <div class="col-6 d-flex justify-content-center">
                                                 <form id="deleteForm{{ $row->id }}" action="{{ route('kategori.delete', $row->id) }}" method="POST" style="display: none;">
@@ -100,3 +109,14 @@
         </div>
     </div>
 @endsection
+
+
+@push('script')
+    <script>
+        $(document).ready(function(){
+            $(document).on('click', '#select', function(){
+                
+            })
+        })
+    </script>
+@endpush

@@ -30,8 +30,4 @@ class Pengajar extends Model
     {
         return $this->belongsToMany(PenilaianPelajaran::class);
     }
-
-    public function mapelID(){
-        return MataPelajaran::where("id", $this->mata_pelajaran_id)->first();
-    }
 }

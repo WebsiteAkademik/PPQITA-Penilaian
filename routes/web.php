@@ -117,10 +117,6 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::get('/data_mapel/edit/{id}', [AkademikController::class, 'editmapel'])->name('mapel.edit');
     Route::put('/data_mapel/edit/{id}', [AkademikController::class, 'updatemapel'])->name('mapel.update');
     Route::delete('/data_mapel/{id}/delete', [AkademikController::class, 'deletemapel'])->name('mapel.delete');
-
-    //Setup Mata Pelajaran
-
-    //Setup Mata Pelajaran Detail
     
     //Kelas
     Route::get('/data_kelas', [AkademikController::class, 'listkelas'])->name('kelas.index');
@@ -144,6 +140,19 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::get('/data_pengajar/edit/{id}', [AkademikController::class, 'editpengajar'])->name('pengajar.edit');
     Route::put('/data_pengajar/edit/{id}', [AkademikController::class, 'updatepengajar'])->name('pengajar.update');
     Route::delete('/data_pengajar/{id}/delete', [AkademikController::class, 'deletepengajar'])->name('pengajar.delete');
+
+    //Setup Mata Pelajaran
+    Route::get('/data_setup', [AkademikController::class, 'listsetup'])->name('setup.index');
+    Route::get('/data_setup/form', [AkademikController::class, 'showFormsetup'])->name('setup.form');
+    Route::post('/data_setup/form', [AkademikController::class, 'setupPost'])->name('setup.formPOST');
+    Route::get('/data_setup/edit/{id}', [AkademikController::class, 'editsetup'])->name('setup.edit');
+    Route::put('/data_setup/edit/{id}', [AkademikController::class, 'updatesetup'])->name('setup.update');
+    Route::delete('/data_setup/{id}/delete', [AkademikController::class, 'deletesetup'])->name('setup.delete');
+
+    //Penilaian
+    Route::get('/data_penilaian-pelajaran', [AkademikController::class, 'listpenilaianpelajaran'])->name('penilaianpelajaran.index');
+    Route::get('/data_penilaian-tahfidz', [AkademikController::class, 'listpenilaiantahfidz'])->name('penilaiantahfidz.index');
+    
 
     // Pendaftar
     Route::get('/pendaftar-baru', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');

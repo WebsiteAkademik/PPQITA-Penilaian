@@ -20,4 +20,16 @@ class SetupMataPelajaran extends Model
     {
         return $this->hasOne(DetailSetupMataPelajaran::class);
     }
+
+    public function tahunajaranID(){
+        return TahunAjaran::where("id", $this->tahun_ajaran_id)->first();
+    }
+
+    public function pengajarID(){
+        return Pengajar::where("id", $this->pengajar_id)->first();
+    }
+
+    public function kelasID(){
+        return Kelas::where("id", $this->kelas_id)->first();
+    }
 }

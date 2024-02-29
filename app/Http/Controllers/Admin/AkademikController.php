@@ -622,15 +622,7 @@ class AkademikController extends Controller
     }
 
     public function showFormpengajar(){
-        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
-
-        if (!$tahunAjaranAktif) {
-            return view('pages.admin.akademik.pengajar.form', ['mapel' => []]);
-        }
-
-        $mapel = MataPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get();
-
-        return view('pages.admin.akademik.pengajar.form', ['mapel' => $mapel,]);
+        return view('pages.admin.akademik.pengajar.form');
     }
 
     public function pengajarPost(Request $request){
@@ -676,6 +668,7 @@ class AkademikController extends Controller
             Alert::success('Berhasil', 'Pengajar berhasil disimpan!');
             return redirect()->route('pengajar.index')->with('success', 'Pengajar berhasil disimpan!');
         } catch (\Exception $e) {
+            $user->delete();
             Alert::error('Gagal! (E006)', 'Cek kembali kesesuaian isi form dengan validasi database');
             return redirect()->back()->withInput();
         }
