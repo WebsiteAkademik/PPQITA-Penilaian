@@ -46,8 +46,8 @@
                         </li>
                         <hr>
                         <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('/pendaftar')) active @endif"
-                                href="{{ route('dashboardpengajar') }}" aria-expanded="false">
+                            <a class="sidebar-link @if (Request::is('/dashboardpengajar/data_penilaiantahfidz')) active @endif"
+                                href="{{ route('penilaiantahfidz.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-regular fa-pen-to-square"></i>
                                 </span>
@@ -55,8 +55,8 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('/rekap')) active @endif"
-                                href="{{ route('dashboardpengajar') }}" aria-expanded="false">
+                            <a class="sidebar-link @if (Request::is('/dashboardpengajar/data_penilaianpelajaran')) active @endif"
+                                href="{{ route('penilaianpelajaran.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </span>

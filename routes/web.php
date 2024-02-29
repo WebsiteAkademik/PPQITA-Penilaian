@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\PendaftaranOnlineController;
 use App\Http\Controllers\Admin\AkademikController;
 use App\Http\Controllers\JadwalTestController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PengajarController;
 use App\Models\JadwalTest;
 use Illuminate\Support\Facades\DB;
 /*
@@ -57,6 +58,22 @@ Route::middleware('auth', 'cekrole:pengajar')->prefix('dashboardpengajar')->grou
         ];
         return view('pages.admin.dashboardpengajar', $data);
     })->name('dashboardpengajar');
+
+    // Penilaian Tahfidz
+    Route::get('/data_penilaiantahfidz', [PengajarController::class, 'listpenilaiantahfidz'])->name('penilaiantahfidz.index');
+    Route::get('/data_penilaiantahfidz/form', [PengajarController::class, 'showFormpenilaiantahfidz'])->name('penilaiantahfidz.form');
+    Route::post('/data_penilaiantahfidz/form', [PengajarController::class, 'penilaiantahfidzPost'])->name('penilaiantahfidz.formPOST');
+    Route::get('/data_penilaiantahfidz/edit/{id}', [PengajarController::class, 'editpenilaiantahfidz'])->name('penilaiantahfidz.edit');
+    Route::put('/data_penilaiantahfidz/edit/{id}', [PengajarController::class, 'updatepenilaiantahfidz'])->name('penilaiantahfidz.update');
+    Route::delete('/data_penilaiantahfidz/{id}/delete', [PengajarController::class, 'deletepenilaiantahfidz'])->name('penilaiantahfidz.delete');
+
+    // Penilaian Pelajaran
+    Route::get('/data_penilaianpelajaran', [PengajarController::class, 'listpenilaianpelajaran'])->name('penilaianpelajaran.index');
+    Route::get('/data_penilaianpelajaran/form', [PengajarController::class, 'showFormpenilaianpelajaran'])->name('penilaianpelajaran.form');
+    Route::post('/data_penilaianpelajaran/form', [PengajarController::class, 'penilaianpelajaranPost'])->name('penilaianpelajaran.formPOST');
+    Route::get('/data_penilaianpelajaran/edit/{id}', [PengajarController::class, 'editpenilaianpelajaran'])->name('penilaianpelajaran.edit');
+    Route::put('/data_penilaianpelajaran/edit/{id}', [PengajarController::class, 'updatepenilaianpelajaran'])->name('penilaianpelajaran.update');
+    Route::delete('/data_penilaianpelajaran/{id}/delete', [PengajarController::class, 'deletepenilaianpelajaran'])->name('penilaianpelajaran.delete');
 });
 
 //role -> admin
@@ -148,12 +165,7 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::get('/data_setup/edit/{id}', [AkademikController::class, 'editsetup'])->name('setup.edit');
     Route::put('/data_setup/edit/{id}', [AkademikController::class, 'updatesetup'])->name('setup.update');
     Route::delete('/data_setup/{id}/delete', [AkademikController::class, 'deletesetup'])->name('setup.delete');
-
-    //Penilaian
-    Route::get('/data_penilaian-pelajaran', [AkademikController::class, 'listpenilaianpelajaran'])->name('penilaianpelajaran.index');
-    Route::get('/data_penilaian-tahfidz', [AkademikController::class, 'listpenilaiantahfidz'])->name('penilaiantahfidz.index');
     
-
     // Pendaftar
     Route::get('/pendaftar-baru', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');
     Route::post('/pendaftar-baru', [PendaftaranOnlineController::class, 'indexPOST'])->name('pendaftar.indexUpdateStatusMenunggu');
@@ -207,4 +219,6 @@ Route::middleware('auth', 'cekrole:user')->prefix('dashboarduser')->group(functi
     Route::get('/pendaftar/{no_nisn}', [PendaftaranController::class, 'detailbynisn'])->name('pendaftar.detailuser');
     // Jadwal Test User
     Route::get('/jadwaltest', [JadwalTestController::class, 'indexuser'])->name('jadwaltestuser');
+    // Cek Profile Siswa
+    // History Nilai
 });

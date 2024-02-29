@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Data Penilaian Pelajaran
+    Data Penilaian Tahfidz
 @endsection
 
 @push('style')
@@ -36,13 +36,13 @@
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body">
-                    <h5 class="card-title fs-6 fw-semibold mb-4">Data Penilaian Pelajaran</h5>
+                    <h5 class="card-title fs-6 fw-semibold mb-4">Data Penilaian Tahfidz</h5>
                     @if(session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
                     <>
                     <div>
-                        <a href="{{ route('mapel.form') }}" class="btn btn-primary m-3" id="tambahMapel">+ Tambah Penilaian Pelajaran</a>
+                        <a href="{{ route('penilaiantahfidz.form') }}" class="btn btn-primary m-3" id="tambahpenilaiantahfidz">+ Tambah Penilaian Tahfidz</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-nowrap mb-0 align-middle" id="table-kategori">
@@ -52,12 +52,6 @@
                                         <h6 class="fw-semibold mb-0 text-white">Tanggal Penilaian</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Jam</h6>
-                                    </th>
-                                    <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Pengajar</h6>
-                                    </th>
-                                    <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Siswa</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
@@ -65,6 +59,21 @@
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Mata Pelajaran</h6>
+                                    </th>
+                                    <th style="width: 100px;" class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0 text-white">Jenis</h6>
+                                    </th>
+                                    <th style="width: 100px;" class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0 text-white">Surat Awal</h6>
+                                    </th>
+                                    <th style="width: 100px;" class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0 text-white">Surat Akhir</h6>
+                                    </th>
+                                    <th style="width: 100px;" class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0 text-white">Ayat Awal</h6>
+                                    </th>
+                                    <th style="width: 100px;" class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0 text-white">Ayat Akhir</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Nilai</h6>
@@ -78,7 +87,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($mapel as $key => $row)
+                                @foreach ($penilaiantahfidz as $key => $row)
                                 <tr>
                                     <td class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0">{{ $key + 1 }}</h6>

@@ -11,8 +11,6 @@ use App\Models\MataPelajaran;
 use App\Models\Kelas;
 use App\Models\SetupMataPelajaran;
 use App\Models\DetailSetupMataPelajaran;
-use App\Models\PenilaianPelajaran;
-use App\Models\PenilaianTahfidz;
 use App\Models\Pengajar;
 use App\Http\Controllers\Controller;
 use App\Models\JadwalUjian;
@@ -622,7 +620,15 @@ class AkademikController extends Controller
     }
 
     public function showFormpengajar(){
-        return view('pages.admin.akademik.pengajar.form');
+        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
+
+        if (!$tahunAjaranAktif) {
+            return view('pages.admin.akademik.pengajar.form', ['mapel' => []]);
+        }
+
+        $mapel = MataPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get();
+
+        return view('pages.admin.akademik.pengajar.form', ['mapel' => $mapel,]);
     }
 
     public function pengajarPost(Request $request){
@@ -668,7 +674,6 @@ class AkademikController extends Controller
             Alert::success('Berhasil', 'Pengajar berhasil disimpan!');
             return redirect()->route('pengajar.index')->with('success', 'Pengajar berhasil disimpan!');
         } catch (\Exception $e) {
-            $user->delete();
             Alert::error('Gagal! (E006)', 'Cek kembali kesesuaian isi form dengan validasi database');
             return redirect()->back()->withInput();
         }
