@@ -15,6 +15,7 @@ use App\Models\PenilaianPelajaran;
 use App\Models\PenilaianTahfidz;
 use App\Models\Pengajar;
 use App\Http\Controllers\Controller;
+use App\Models\JadwalUjian;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
@@ -61,7 +62,7 @@ class AkademikController extends Controller
         try{
             $tahunajar = TahunAjaran::create($data);
         }
-        catch(Exception $e){
+        catch(\Exception $e){
             $tahunajar->delete();
             Alert::error('Gagal! (E006)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
             return redirect()->back()->withError($e)->withInput();
@@ -478,7 +479,7 @@ class AkademikController extends Controller
         try{
             $kelas = Kelas::create($data);
         }
-        catch(Exception $e){
+        catch(\Exception $e){
             $kelas->delete();
             Alert::error('Gagal! (E006)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
             return redirect()->back()->withError($e)->withInput();
@@ -513,6 +514,105 @@ class AkademikController extends Controller
         }
     }
 
+    //Jadwal Ujian
+    public function listjadwalujian(){
+        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
+
+        if (!$tahunAjaranAktif) {
+            return view('pages.admin.akademik.jadwalujian.index', ['jadwalujian' => []]);
+        }
+        
+        $jadwalujian = JadwalUjian::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get();
+    
+        return view('pages.admin.akademik.jadwalujian.index', ['jadwalujian' => $jadwalujian]);
+    }
+
+    public function showFormjadwalujian(){
+        $tahunAjaran = TahunAjaran::where('status', 'aktif')->first();
+
+        $kelas = Kelas::all();
+
+        $mapel = MataPelajaran::where('tahun_ajaran_id', $tahunAjaran->id)->get();
+        
+        return view('pages.admin.akademik.jadwalujian.form', ['tahunAjaran' => $tahunAjaran, 'kelas' => $kelas, 'mapel' => $mapel]);
+    }
+
+    public function jadwalujianPost(Request $request){
+        $globalValidatorData = [
+            'tanggal_ujian' => 'required',
+            'jam_ujian' => 'required',
+            'kelas_id' => 'required',
+            'jenis_ujian' => 'required',
+            'mata_pelajaran_id' => 'required',
+        ];
+
+        $globalValidator = Validator::make($request->all(), $globalValidatorData);
+
+        if ($globalValidator->fails()) {
+            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada data yang sama!');
+            return redirect()->back()->withErrors($globalValidator)->withInput();
+        }
+
+        $data = $request->all();
+        
+        try{
+            $jadwalujian = JadwalUjian::create($data);
+        }
+        catch(\Exception $e){
+            Alert::error('Gagal! (E006)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
+            return redirect()->back()->withError($e)->withInput();
+        }
+
+        Alert::success('Berhasil', 'Jadwal Ujian berhasil disimpan!');
+
+        return redirect()->route('jadwalujian.index')->with('success', 'Jadwal Ujian Berhasil Disimpan');
+    }
+
+    public function deletejadwalujian($id){
+        $jadwalujian = JadwalUjian::findOrFail($id);
+        
+        try {
+            $jadwalujian->delete();
+            return redirect()->route('jadwalujian.index')->with('success', 'Jadwal Ujian berhasil dihapus!');
+        } catch (\Exception $e) {
+            // Tangani jika terjadi kesalahan saat menghapus
+            return redirect()->back()->withErrors([$e->getMessage()]);
+        }
+    }    
+
+     public function editjadwalujian($id){
+        $tahunAjaran = TahunAjaran::where('status', 'aktif')->first();
+
+        $kelas = Kelas::all();
+
+        $mapel = MataPelajaran::where('tahun_ajaran_id', $tahunAjaran->id)->get();
+
+        $jadwalujian = JadwalUjian::findOrFail($id);
+        
+        return view('pages.admin.akademik.jadwalujian.edit', ['tahunAjaran' => $tahunAjaran, 'kelas' => $kelas, 'mapel' => $mapel, 'jadwalujian' => $jadwalujian]);
+     }
+
+     public function updatejadwalujian(Request $request, $id){
+         $jadwalujian = JadwalUjian::findOrFail($id);
+
+         // Validasi data yang diupdate
+        $validatedData = $request->validate([
+            'tanggal_ujian' => 'required',
+            'jam_ujian' => 'required',
+            'kelas_id' => 'required',
+            'jenis_ujian' => 'required',
+            'mata_pelajaran_id' => 'required',
+        ]);
+
+         // Update data Jadwal Ujian
+         try {
+             $jadwalujian->update($validatedData);
+             return redirect()->route('jadwalujian.index')->with('success', 'Jadwal Ujian berhasil diperbaharui!');
+         } catch (\Exception $e) {
+             // Tangani jika terjadi kesalahan saat update
+             return redirect()->back()->withErrors([$e->getMessage()])->withInput();
+         }
+     }
 
     //Pengajar
     public function listpengajar(){
@@ -563,7 +663,7 @@ class AkademikController extends Controller
         $user = NULL;
         try {
             $user = User::create($dataUser);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Alert::error('Gagal! (E005)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
             return redirect()->back()->withError($e)->withInput();
         }
@@ -679,7 +779,7 @@ class AkademikController extends Controller
 
             $setup = SetupMataPelajaran::create($data);
         }
-        catch(Exception $e){
+        catch(\Exception $e){
             $kelas->delete();
             Alert::error('Gagal! (E006)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
             return redirect()->back()->withError($e)->withInput();

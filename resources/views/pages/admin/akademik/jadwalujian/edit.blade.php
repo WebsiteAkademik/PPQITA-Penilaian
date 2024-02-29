@@ -9,7 +9,7 @@
         <div class="card w-100">
             <div class="card-body">
                 <div class="d-flex">
-                    <a href="{{ route('mapel.index') }}" class="btn btn-primary m-1">Batal</a>
+                    <a href="{{ route('jadwalujian.index') }}" class="btn btn-primary m-1">Batal</a>
                 </div><br/>
                 <h5 class="card-title fs-6 fw-semibold mb-4">Edit Jadwal Ujian</h5>
 
@@ -18,37 +18,49 @@
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
 
-                <!-- Form untuk edit Mata Pelajaran -->
-                <form method="post" action="{{ route('mapel.update', $mapel->id) }}" enctype="multipart/form-data">
+                <!-- Form untuk edit jadwal ujian -->
+                <form method="post" action="{{ route('jadwalujian.update', $jadwalujian->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('put')
                     <div class="mb-3">
-                        <label for="kode_mata_pelajaran" class="form-label">Kelas</label>
-                        <input required type="text" class="form-control" name="kode_mata_pelajaran" id="kode_mata_pelajaran" value="{{ old('kode_mata_pelajaran') }}" placeholder="Kode harus terdiri atas 10 digit">
+                        <label for="tanggal_ujian" class="form-label">Tanggal Ujian</label>
+                        <input required type="date" class="form-control" name="tanggal_ujian" id="tanggal_ujian" value="{{ $jadwalujian->tanggal_ujian }}" placeholder="">
                     </div>
                     <div class="mb-3">
-                        <label for="nama_mata_pelajaran" class="form-label">Tanggal Ujian</label>
-                        <input required type="text" class="form-control" name="nama_mata_pelajaran" id="nama_mata_pelajaran" value="{{ old('nama_mata_pelajaran') }}" placeholder="">
+                        <label for="jam_ujian" class="form-label">Waktu Ujian</label>
+                        <input required type="time" class="form-control" name="jam_ujian" id="jam_ujian" value="{{ $jadwalujian->jam_ujian }}" placeholder="">
                     </div>
                     <div class="mb-3">
-                        <label for="kkm" class="form-label">Waktu Ujian</label>
-                        <input required type="time" class="form-control" name="kkm" id="kkm" value="{{ old('kkm') }}" placeholder="">
+                        <label for="kelas_id" class="form-label">Kelas</label>
+                        <select name="kelas_id" id="kelas_id" class="form-select" required>
+                            <option value="" disabled selected>Kelas</option>
+                            @foreach ($kelas as $kelasItem)
+                                <option value="{{ $kelasItem->id }}" {{ $kelasItem->id == $jadwalujian->kelas_id ? 'selected' : '' }}>{{ $kelasItem->kelas }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label for="nama_mata_pelajaran" class="form-label">Mata Pelajaran</label>
-                        <input required type="text" class="form-control" name="nama_mata_pelajaran" id="nama_mata_pelajaran" value="{{ old('nama_mata_pelajaran') }}" placeholder="">
+                        <label for="jenis_ujian" class="form-label">Jenis Ujian</label>
+                        <select required class="form-select" id="jenis_ujian" name="jenis_ujian">
+                            <option value="" disabled>--- Pilih Jenis Ujian ---</option>
+                            <option value="Penilaian Harian" {{ $jadwalujian->jenis_ujian == 'Penilaian Harian' ? 'selected' : '' }}>Penilaian Harian</option>
+                            <option value="UTS" {{ $jadwalujian->jenis_ujian == 'UTS' ? 'selected' : '' }}>UTS</option>
+                            <option value="UAS" {{ $jadwalujian->jenis_ujian == 'UAS' ? 'selected' : '' }}>UAS</option>
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label for="nama_mata_pelajaran" class="form-label">Jenis</label>
-                        <input required type="text" class="form-control" name="nama_mata_pelajaran" id="nama_mata_pelajaran" value="{{ old('nama_mata_pelajaran') }}" placeholder="">
+                        <label for="mata_pelajaran_id" class="form-label">Mata Pelajaran</label>
+                        <select name="mata_pelajaran_id" id="mata_pelajaran_id" class="form-select" required>
+                            <option value="" disabled selected>Mata Pelajaran</option>
+                            @foreach ($mapel as $mapelItem)
+                                <option value="{{ $mapelItem->id }}" {{ $mapelItem->id == $jadwalujian->mata_pelajaran_id ? 'selected' : '' }}>{{ $mapelItem->nama_mata_pelajaran }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label for="nama_mata_pelajaran" class="form-label">Ruang Ujian</label>
-                        <input required type="text" class="form-control" name="nama_mata_pelajaran" id="nama_mata_pelajaran" value="{{ old('nama_mata_pelajaran') }}" placeholder="">
-                    </div>
-                    <div class="mb-3">
-                        <label for="nama_mata_pelajaran" class="form-label">Pengawas Ujian</label>
-                        <input required type="text" class="form-control" name="nama_mata_pelajaran" id="nama_mata_pelajaran" value="{{ old('nama_mata_pelajaran') }}" placeholder="">
+                        <label for="tahun_ajaran_id" class="form-label">Tahun Ajaran</label>
+                        <input type="hidden" name="tahun_ajaran_id" id="tahun_ajaran_id" value="{{ $jadwalujian->tahun_ajaran_id }}">
+                        <input type="text" class="form-control" id="tahun_ajaran" value="{{ $jadwalujian->tahunAjaran()->tahun_ajaran }}" disabled>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
@@ -56,32 +68,3 @@
         </div>
     </div>
 @endsection
-
-@push('script')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            getSubKategoriEdit();
-        });
-
-        function getSubKategoriEdit() {
-            var kategoriId = document.getElementById('kategori_pelajaran_id_edit').value;
-            var subKategoriSelect = document.getElementById('sub_kategori_pelajaran_id_edit');
-
-            // Menghapus option yang ada
-            subKategoriSelect.innerHTML = '';
-
-            // Menambahkan sub kategori yang terelasi dengan kategori yang dipilih
-            @foreach ($subkategori as $subkat)
-                if ({{ $subkat->kategori_id }} == kategoriId) {
-                    var option = document.createElement('option');
-                    option.value = '{{ $subkat->id }}';
-                    option.text = '{{ $subkat->nama_sub_kategori }}';
-                    if ({{ $mapel->sub_kategori_pelajaran_id }} == {{ $subkat->id }}) {
-                        option.selected = true;
-                    }
-                    subKategoriSelect.appendChild(option);
-                }
-            @endforeach
-        }
-    </script>
-@endpush

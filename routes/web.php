@@ -129,6 +129,14 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::get('/data_kelas/edit/{id}', [AkademikController::class, 'editkelas'])->name('kelas.edit');
     Route::put('/data_kelas/edit/{id}', [AkademikController::class, 'updatekelas'])->name('kelas.update');
     
+    //Jadwal Ujian
+    Route::get('/data_jadwalujian', [AkademikController::class, 'listjadwalujian'])->name('jadwalujian.index');
+    Route::get('/data_jadwalujian/form', [AkademikController::class, 'showFormjadwalujian'])->name('jadwalujian.form');
+    Route::post('/data_jadwalujian/form', [AkademikController::class, 'jadwalujianPost'])->name('jadwalujian.formPOST');
+    Route::get('/data_jadwalujian/edit/{id}', [AkademikController::class, 'editjadwalujian'])->name('jadwalujian.edit');
+    Route::put('/data_jadwalujian/edit/{id}', [AkademikController::class, 'updatejadwalujian'])->name('jadwalujian.update');
+    Route::delete('/data_jadwalujian/delete/{id}', [AkademikController::class, 'deletejadwalujian'])->name('jadwalujian.delete');
+
     //Pengajar
     Route::get('/data_pengajar', [AkademikController::class, 'listpengajar'])->name('pengajar.index');
     Route::get('/data_pengajar/form', [AkademikController::class, 'showFormpengajar'])->name('pengajar.form');

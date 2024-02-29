@@ -226,8 +226,9 @@ use App\Models\TahunAjaran;
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#homeSubmenu" class="sidebar-link">
-                                        <span><i class="fa-solid fa-pen-to-square"></i></span>
+                                    <a class="sidebar-link @if (Request::is('/dashboard/data_jadwalujian')) active @endif"
+                                        href="{{ route('jadwalujian.index') }}" aria-expanded="false">
+                                        <span><i class="fa-solid fa-book"></i></span>
                                         <span class="hide-menu">Input Jadwal Ujian</span>
                                     </a>
                                 </li>
