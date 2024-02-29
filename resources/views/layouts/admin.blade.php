@@ -1,6 +1,11 @@
 <!doctype html>
 <html lang="en">
 
+<?php
+use App\Models\TahunAjaran;
+    $tahunajaran = TahunAjaran::where ("status", "aktif")->first();
+?>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -246,14 +251,19 @@
             <!--  Header Start -->
             <header class="app-header" style="background-color: #35A4E2;">
                 <nav class="navbar navbar-expand-lg navbar-dark">
-                    <ul class="navbar-nav">
+                    <!-- <ul class="navbar-nav">
                         <li class="nav-item d-block d-xl-none">
                             <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse"
                                 href="javascript:void(0)">
                                 <i class="ti ti-menu-2"></i>
                             </a>
                         </li>
-                    </ul>
+                    </ul> -->
+                    <div class="navbar-nav">
+                        <div class="nav-item d-none d-lg-block">
+                            <p class="text-white fs-4 mt-2" style="font-weight: 500">Tahun Ajaran: {{ $tahunajaran->tahun_ajaran}}</p>
+                        </div>
+                    </div>
                     <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                         <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                             <li class="nav-item dropdown">
