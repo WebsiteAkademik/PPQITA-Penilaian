@@ -9,11 +9,8 @@ class JadwalUjian extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['siswa_id', 'tanggal_ujian', 'jam_ujian', 'ruang_ujian', 'jenis_ujian', 'mata_pelajaran_id', 'kelas_id', 'pengajar_id', 'tahun_ajaran_id'];
+    protected $fillable = ['tanggal_ujian', 'jam_ujian', 'kelas_id', 'jenis_ujian', 'mata_pelajaran_id', 'tahun_ajaran_id'];
 
-    public function siswa(){
-        return Siswa::where("id", $this->siswa_id)->first();
-    }
     
     public function mataPelajaran(){
         return MataPelajaran::where("id", $this->mata_pelajaran_id)->first();
@@ -21,10 +18,6 @@ class JadwalUjian extends Model
     
     public function kelas(){
         return Kelas::where("id", $this->kelas_id)->first();
-    }
-    
-    public function pengajar(){
-        return Pengajar::where("id", $this->pengajar_id)->first();
     }
     
     public function tahunAjaran(){
