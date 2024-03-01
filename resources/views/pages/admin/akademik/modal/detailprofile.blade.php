@@ -24,6 +24,86 @@
                                 <th>Tanggal Lahir :</th>
                                 <td>{{ $row->tanggal_lahir }}</td>
                             </tr>
+                            <tr>
+                                <th>Jenis Kelamin :</th>
+                                <td>{{ $row->jenis_kelamin }}</td>
+                            </tr>
+                            <tr>
+                                <th>No Kartu Keluarga :</th>
+                                <td>{{ $row->no_kartu_keluarga }}</td>
+                            </tr>
+                            <tr>
+                                <th>No Induk Keluarga :</th>
+                                <td>{{ $row->no_induk_keluarga }}</td>
+                            </tr>
+                            <tr>
+                                <th>Agama :</th>
+                                <td>{{ $row->agama }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tinggi Badan :</th>
+                                <td>{{ $row->tinggi_badan }}</td>
+                            </tr>
+                            <tr>
+                                <th>Berat Badan :</th>
+                                <td>{{ $row->berat_badan }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nomor WA Anak :</th>
+                                <td>{{ $row->no_wa_anak }}</td>
+                            </tr>
+                            <tr>
+                                <th>Penyakit Kronis :</th>
+                                <td>{{ $row->penyakit_kronis }}</td>
+                            </tr>
+                            <tr>
+                                <th>Alamat Rumah :</th>
+                                <td>{{ $row->alamat_rumah }}</td>
+                            </tr>
+                            <tr>
+                                <th>Dukuh :</th>
+                                <td>{{ $row->dukuh }}</td>
+                            </tr>
+                            <tr>
+                                <th>Kelurahan :</th>
+                                <td>{{ $row->kelurahan }}</td>
+                            </tr>
+                            <tr>
+                                <th>Kecamatan :</th>
+                                <td>{{ $row->kecamatan }}</td>
+                            </tr>
+                            <tr>
+                                <th>Kabupaten :</th>
+                                <td>{{ $row->kabupaten }}</td>
+                            </tr>
+                            <tr>
+                                <th>Kode Pos :</th>
+                                <td>{{ $row->kodepos }}</td>
+                            </tr>
+                            <tr>
+                                <th>Asal Sekolah :</th>
+                                <td>{{ $row->asal_sekolah }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nama Ayah :</th>
+                                <td>{{ $row->nama_ayah }}</td>
+                            </tr>
+                            <tr>
+                                <th>Pekerjaan Ayah :</th>
+                                <td>{{ $row->pekerjaan_ayah }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nama Ibu :</th>
+                                <td>{{ $row->nama_ibu }}</td>
+                            </tr>
+                            <tr>
+                                <th>Pekerjaan Ibu :</th>
+                                <td>{{ $row->pekerjaan_ibu }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nomor Telepon Ortu :</th>
+                                <td>{{ $row->no_telepon_ortu }}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
