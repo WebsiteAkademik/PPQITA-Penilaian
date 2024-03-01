@@ -780,17 +780,20 @@ class AkademikController extends Controller
 
             $setup = SetupMataPelajaran::create($data);
             Alert::success('Berhasil', 'Pengajar berhasil disimpan!');
-            return redirect()->route('setup.index')->with('success', 'Setup Mata Pelajaran berhasil disimpan!');
+            //return redirect()->route('pages.admin.akademik.setupmapel.detail.index')->with('success', 'Setup Mata Pelajaran berhasil disimpan!');
+            return redirect()->route('detail.index', $setup->id)->with('success', 'Setup Mata Pelajaran berhasil disimpan!');
+
         }
         catch(\Exception $e){
-            $kelas->delete();
             Alert::error('Gagal! (E006)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
             return redirect()->back()->withError($e)->withInput();
         }
 
         Alert::success('Berhasil', 'Setup Mata Pelajaran berhasil disimpan!');
 
-        return redirect()->route('setup.index')->with('success', 'Setup Mata Pelajaran Berhasil Disimpan');
+        //return redirect()->route('pages.admin.akademik.setupmapel.detail.index')->with('success', 'Setup Mata Pelajaran Berhasil Disimpan');
+        return redirect()->route('detail.index', $setup->id)->with('success', 'Setup Mata Pelajaran berhasil disimpan!');
+
     }
 
     public function editsetup($id){
