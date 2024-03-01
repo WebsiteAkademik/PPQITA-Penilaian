@@ -40,7 +40,6 @@
                     @if(session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
-                    <>
                     <div>
                         <a href="{{ route('penilaiantahfidz.form') }}" class="btn btn-primary m-3" id="tambahpenilaiantahfidz">+ Tambah Penilaian Tahfidz</a>
                     </div>

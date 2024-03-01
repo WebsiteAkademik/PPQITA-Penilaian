@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Pendaftar;
+use App\Models\Pengajar;
 use App\Models\Pendaftaran;
 use App\Models\TahunAjaran;
 use Illuminate\Support\Facades\Route;
@@ -49,12 +50,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 //role -> pengajar
 Route::middleware('auth', 'cekrole:pengajar')->prefix('dashboardpengajar')->group(function () {
     Route::get('/', function () {
-        $pendaftarCount = Pendaftaran::count();
-        $pendaftars = Pendaftaran::latest()->limit(5)->get();
+        $pengajar = Pengajar::where('user_id', auth()->user()->id)->first();
 
         $data = [
-            'pendaftars' => $pendaftars,
-            'pendaftarCount' => $pendaftarCount
+            'pengajar' => $pengajar,
         ];
         return view('pages.admin.dashboardpengajar', $data);
     })->name('dashboardpengajar');

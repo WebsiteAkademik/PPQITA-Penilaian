@@ -779,8 +779,7 @@ class AkademikController extends Controller
             }
 
             $setup = SetupMataPelajaran::create($data);
-            Alert::success('Berhasil', 'Pengajar berhasil disimpan!');
-            //return redirect()->route('pages.admin.akademik.setupmapel.detail.index')->with('success', 'Setup Mata Pelajaran berhasil disimpan!');
+            Alert::success('Berhasil', 'Setup Mata Pelajaran berhasil disimpan!');
             return redirect()->route('detail.index', $setup->id)->with('success', 'Setup Mata Pelajaran berhasil disimpan!');
 
         }
@@ -791,7 +790,6 @@ class AkademikController extends Controller
 
         Alert::success('Berhasil', 'Setup Mata Pelajaran berhasil disimpan!');
 
-        //return redirect()->route('pages.admin.akademik.setupmapel.detail.index')->with('success', 'Setup Mata Pelajaran Berhasil Disimpan');
         return redirect()->route('detail.index', $setup->id)->with('success', 'Setup Mata Pelajaran berhasil disimpan!');
 
     }
@@ -976,6 +974,126 @@ class AkademikController extends Controller
         $kelas = Kelas::all();
     
         return view('pages.admin.akademik.siswa.index', ['siswa' => $siswa, 'kelas' => $kelas]);
+    }
+
+    public function editsiswaprofile($id){
+        $siswa = Siswa::findOrFail($id);
+    
+        return view('pages.admin.akademik.siswa.edit', ['siswa' => $siswa]);
+    }
+
+    public function updatesiswaprofile(Request $request, $id){
+        $siswa = Siswa::findOrFail($id);
+
+        $globalValidatorData = [
+            "no_nisn" => "required",
+            "nama_siswa" => "required",
+            "tempat_lahir" => "required",
+            "tanggal_lahir" => "required",
+            "jenis_kelamin" => "required",
+            "no_kartu_keluarga" => "required",
+            "no_induk_keluarga" => "required",
+            "agama" => "required",
+            "tinggi_badan" => "required",
+            "berat_badan" => "required",
+            "no_wa_anak" => "required",
+            "penyakit_kronis" => "required",
+            "alamat_rumah" => "required",
+            "dukuh" => "required",
+            "kelurahan" => "required",
+            "kecamatan" => "required",
+            "kabupaten" => "required",
+            "kodepos" => "required",
+            "asal_sekolah" => "required",
+            "no_telepon_ortu" => "required",
+        ];
+
+        $ayahValidatorData = array_replace([], $globalValidatorData, [
+            "nama_ayah" => "required",
+            "pekerjaan_ayah" => "required",
+        ]);
+
+        $ibuValidatorData = array_replace([], $globalValidatorData, [
+            "nama_ibu" => "required",
+            "pekerjaan_ibu" => "required",
+        ]);
+
+        $bothValidatorData = array_replace([], $globalValidatorData, [
+            "nama_ayah" => "required",
+            "pekerjaan_ayah" => "required",
+            "nama_ibu" => "required",
+            "pekerjaan_ibu" => "required",
+        ]);
+
+        $globalValidator = Validator::make($request->all(), $globalValidatorData);
+        $ayahValidator = Validator::make($request->all(), $ayahValidatorData);
+        $ibuValidator = Validator::make($request->all(), $ibuValidatorData);
+        $bothValidator = Validator::make($request->all(), $bothValidatorData);
+
+        if ($globalValidator->fails()) {
+            Alert::error('Gagal! (E001)', 'Cek pada form profile apakah ada kesalahan yang terjadi');
+            return redirect()->back()->withErrors($globalValidator)->withInput();
+        }
+
+        $data = $request->all();
+        $data['ayah_hidup'] = $request->has('ayah_hidup') ? ($request->all()["ayah_hidup"] == "1") : false;
+        $data['ibu_hidup'] = $request->has('ibu_hidup') ? ($request->all()["ibu_hidup"] == "1") : false;
+        $data['nama_ayah'] = "";
+        $data['nama_ibu'] = "";
+        $data['pekerjaan_ayah'] = "";
+        $data['pekerjaan_ibu'] = "";
+
+        if($data['ayah_hidup'] && $data['ibu_hidup']){
+            if ($bothValidator->fails()) {
+                Alert::error('Gagal! (E002)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
+                return redirect()->back()->withErrors($bothValidator)->withInput();
+            } else {
+                $data['nama_ayah'] = $request->all()["nama_ayah"];
+                $data['nama_ibu'] = $request->all()["nama_ibu"];
+                $data['pekerjaan_ayah'] = $request->all()["pekerjaan_ayah"];
+                $data['pekerjaan_ibu'] = $request->all()["pekerjaan_ibu"];
+            }
+        } elseif ($data["ayah_hidup"]) {
+            if ($ayahValidator->fails()) {
+                Alert::error('Gagal! (E003)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
+                return redirect()->back()->withErrors($ayahValidator)->withInput();
+            } else {
+                $data['nama_ayah'] = $request->all()["nama_ayah"];
+                $data['pekerjaan_ayah'] = $request->all()["pekerjaan_ayah"];
+            }
+        } elseif ($data["ibu_hidup"]) {
+            if ($ibuValidator->fails()) {
+                Alert::error('Gagal! (E004)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
+                return redirect()->back()->withErrors($ibuValidator)->withInput();
+            } else {
+                $data['nama_ibu'] = $request->all()["nama_ibu"];
+                $data['pekerjaan_ibu'] = $request->all()["pekerjaan_ibu"];
+            }
+        }
+
+        $noNisnValid = Siswa::where('id', '!=', $siswa->id)->where('no_nisn', $data['no_nisn'])->count();
+        if($noNisnValid != 0){
+            Alert::error('Gagal! (E005)', 'NISN sudah terdaftar');
+            return redirect()->back()->withInput();
+        }
+
+        $newData = [];
+        foreach ($siswa->toArray() as $key => $value) {
+            if(isset($data[$key])){
+                if($value != $data[$key])
+                    $newData[$key] = $data[$key];
+            }
+        }
+        try{
+            $siswa->update($newData);
+
+            Alert::success('Berhasil', 'Data Profil Siswa berhasil diperbarui!');    
+            return redirect()->route('siswa.index');
+        }
+        catch(Exception $e){
+            Alert::error('Gagal! (E006)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
+            return redirect()->back()->withError($e)->withInput();
+        }
     }
 
     public function updatekelassiswa(Request $request, $id){
