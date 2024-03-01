@@ -3,9 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\PenilaianPelajaran;
 use App\Models\PenilaianTahfidz;
 use App\Models\TahunAjaran;
+use App\Models\KategoriPelajaran;
+use App\Models\SubKategoriPelajaran;
+use App\Models\MataPelajaran;
+use App\Models\Kelas;
+use App\Models\SetupMataPelajaran;
+use App\Models\DetailSetupMataPelajaran;
+use App\Models\Pengajar;
+use App\Models\Siswa;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PengajarController extends Controller
 {
@@ -135,12 +148,14 @@ class PengajarController extends Controller
     
     // Penilaian Pelajaran
     public function listpenilaianpelajaran(){
+        $user = Auth::user();
+        $pengajar = Pengajar::where('user_id', $user->id)->first();
         $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
-
-        if (!$tahunAjaranAktif) {
-            return view('pages.admin.pengajaradmin.penilaianpelajaran.index', ['penilaianpelajaran' => []]);
-        }
-
+        $setup = SetupMataPelajaran::where('pengajar_id', $pengajar->id)
+            ->where('tahun_ajaran_id', $tahunAjaranAktif->id)
+            ->get();
+        $kelas = Kelas::where('id', $setup->kelas_id)->first();
+        $detail = DetailSetupMataPelajaran::where('setup_mata_pelajaran_id', $setup->id)->get();
         $penilaianpelajaran = PenilaianPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get();
         
         return view('pages.admin.pengajaradmin.penilaianpelajaran.index', ['penilaianpelajaran' => $penilaianpelajaran]);

@@ -48,13 +48,7 @@
                             <thead class="text-dark fs-4">
                                 <tr style="background-color: #2E8CB5">
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Tanggal Penilaian</h6>
-                                    </th>
-                                    <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Jam</h6>
-                                    </th>
-                                    <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Pengajar</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">No.</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Siswa</h6>
@@ -83,16 +77,19 @@
                                         <h6 class="fw-semibold mb-0">{{ $key + 1 }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->kode_mata_pelajaran }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->siswaID()->nama_siswa }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->nama_mata_pelajaran }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->kelasID()->kelas }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->subkategoriID()->nama_sub_kategori }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->mapelID()->nama_mata_pelajaran }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->kategoriID()->nama_kategori }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->nilai }}</h6>
+                                    </td>
+                                    <td class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0">{{ $row->keterangan }}</h6>
                                     </td>
                                     <td class="border-bottom-0 align-items-center text-center">
                                         <div class="row" style="width: 100px; margin: 0 auto">

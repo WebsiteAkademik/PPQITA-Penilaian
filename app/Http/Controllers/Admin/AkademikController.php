@@ -767,7 +767,7 @@ class AkademikController extends Controller
             // Memasukkan ID tahun ajaran aktif ke data yang akan disimpan
             $data['tahun_ajaran_id'] = $tahunAjaranAktif->id;
 
-            // Mengecek apakah terdapat nama mata pelajaran yang sama pada tahun ajaran aktif yang sama
+            // Mengecek apakah terdapat setup mata pelajaran yang sama pada tahun ajaran aktif yang sama
             $setupSama = SetupMataPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)
                 ->where('kelas_id', $data['kelas_id'])
                 ->where('pengajar_id', $data['pengajar_id'])
@@ -881,6 +881,8 @@ class AkademikController extends Controller
     public function detailsetupPost(Request $request, $id){
         $setup = SetupMataPelajaran::findOrFail($id);
         $tahunajar = TahunAjaran::where('id', $setup->tahun_ajaran_id)->first();
+        $kelas = Kelas::where('id', $setup->kelas_id)->first();
+        $pengajar = Pengajar::where('id', $setup->pengajar_id)->first();
 
         $globalValidatorData = [
             'jam_pelajaran' => 'required',
@@ -896,12 +898,16 @@ class AkademikController extends Controller
         }
 
         $data = $request->all();
-        $Detailada = DetailSetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)
+        $Detailada = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
+                $query->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('kelas_id', $kelas->id);
+            })
             ->where('mata_pelajaran_id', $data['mata_pelajaran_id'])
             ->first();
 
+
         if($Detailada){
-            Alert::error('Gagal! (E002)', 'Mata pelajaran ini sudah ada dalam setup untuk tahun ajaran ini!');
+            Alert::error('Gagal! (E002)', 'Mata pelajaran ini sudah ada dalam setup untuk tahun ajaran dan kelas ini!');
             return redirect()->back();
         }
 
@@ -936,12 +942,11 @@ class AkademikController extends Controller
     public function updatedetailsetup(Request $request, $id, $id2){
         $setup = SetupMataPelajaran::findOrFail($id);
         $tahunajar = TahunAjaran::where('id', $setup->tahun_ajaran_id)->first();
+        $kelas = Kelas::where('id', $setup->kelas_id)->first();
         
         $validatedData = Validator::make($request->all(), [
             'jam_pelajaran' => 'required',
-            'mata_pelajaran_id' => ['required', Rule::unique('detail_setup_mata_pelajarans', 'mata_pelajaran_id')->where(function ($query) use ($tahunajar, $request) {
-                return $query->where('tahun_ajaran_id', $tahunajar->id);
-            })->ignore($id2)],
+            'mata_pelajaran_id' => 'required',
             'kkm' => 'required'
         ]);
     
@@ -950,6 +955,19 @@ class AkademikController extends Controller
             return redirect()->back()->withErrors($validatedData)->withInput();
         }
         
+        $Detailada = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
+            $query->where('tahun_ajaran_id', $tahunajar->id)
+                  ->where('kelas_id', $kelas->id);
+        })
+        ->where('mata_pelajaran_id', $request->mata_pelajaran_id)
+        ->where('id', '!=', $id2)
+        ->first();
+    
+        if ($Detailada) {
+            Alert::error('Gagal! (E002)', 'Mata pelajaran ini sudah ada dalam setup untuk tahun ajaran dan kelas yang sama!');
+            return redirect()->back();
+        }
+
         $detail = DetailSetupMataPelajaran::findOrFail($id2);
 
         $detail->fill([

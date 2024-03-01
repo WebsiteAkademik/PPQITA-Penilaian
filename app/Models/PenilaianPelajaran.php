@@ -34,4 +34,16 @@ class PenilaianPelajaran extends Model
     {
         return $this->belongsToMany(Pengajar::class);
     }
+
+    public function kelasID(){
+        return Kelas::where("id", $this->kelas_id)->first();
+    }
+
+    public function mapelID(){
+        return MataPelajaran::where("id", $this->mata_pelajaran_id)->first();
+    }
+
+    public function siswaID(){
+        return Siswa::where("id", $this->siswa_id)->first();
+    }
 }
