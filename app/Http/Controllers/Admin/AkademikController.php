@@ -975,8 +975,19 @@ class AkademikController extends Controller
         return view('pages.admin.akademik.siswa.index', ['siswa' => $siswa, 'kelas' => $kelas]);
     }
 
-    public function updatekelassiswa($id){
+    public function updatekelassiswa(Request $request, $id){
+        $validatedData = Validator::make($request->all(), [
+            'kelas_id' => 'required',
+        ]);
+
         $siswa = Siswa::findOrFail($id);
+
+        $siswa->fill([
+            'kelas_id' => $request->kelas_id,
+        ])->save();
+
+        Alert::success('Berhasil', 'Kelas Siswa berhasil diperbarui!');
+        return redirect()->back();
     }
 }
 
