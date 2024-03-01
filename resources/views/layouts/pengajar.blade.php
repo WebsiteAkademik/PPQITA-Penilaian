@@ -63,7 +63,7 @@
                                 <span class="hide-menu">Penilaian Pelajaran</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
+                        <!-- <li class="sidebar-item">
                             <a class="sidebar-link @if (Request::is('/rekap')) active @endif"
                                 href="{{ route('dashboardpengajar') }}" aria-expanded="false">
                                 <span>
@@ -80,7 +80,7 @@
                                 </span>
                                 <span class="hide-menu">Absensi Pengajar</span>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="sidebar-item d-grid" style="position: absolute;bottom: 20px;right: 0;left: 0;">
                             <button type="button" onclick="logout();"
                                 class="btn btn-outline-danger mx-3 mt-2">Logout</button>

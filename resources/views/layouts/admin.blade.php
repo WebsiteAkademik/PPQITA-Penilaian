@@ -192,18 +192,6 @@ use App\Models\TahunAjaran;
                                 </li>
                                 <li>
                                     <a href="#homeSubmenu" class="sidebar-link">
-                                        <span><i class="fa-solid fa-circle-check"></i></span>
-                                        <span class="hide-menu">Penilaian Tahfidz</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#homeSubmenu" class="sidebar-link">
-                                        <span><i class="fa-solid fa-circle-check"></i></span>
-                                        <span class="hide-menu">Penilaian Pelajaran</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#homeSubmenu" class="sidebar-link">
                                         <span><i class="fas fa-file-alt"></i></span>
                                         <span class="hide-menu">Rapor UTS</span>
                                     </a>
