@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.pengajar')
 
 @section('title')
     Data Penilaian Tahfidz
