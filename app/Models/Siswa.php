@@ -59,4 +59,8 @@ class Siswa extends Model
     {
         return $this->belongsTo(PenilaianPelajaran::class);
     }
+
+    public function kelasID(){
+        return Kelas::where("id", $this->kelas_id)->first();
+    }
 }

@@ -156,7 +156,8 @@ use App\Models\TahunAjaran;
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#homeSubmenu" class="sidebar-link">
+                                    <a class="sidebar-link @if (Request::is('/dashboard/data_siswa')) active @endif"
+                                        href="{{ route('siswa.index') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-user"></i></span>
                                         <span class="hide-menu">Siswa</span>
                                     </a>

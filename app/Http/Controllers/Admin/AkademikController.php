@@ -12,6 +12,9 @@ use App\Models\Kelas;
 use App\Models\SetupMataPelajaran;
 use App\Models\DetailSetupMataPelajaran;
 use App\Models\Pengajar;
+use App\Models\Siswa;
+use App\Models\PenilaianPelajaran;
+use App\Models\PenilaianTahfidz;
 use App\Http\Controllers\Controller;
 use App\Models\JadwalUjian;
 use Illuminate\Support\Facades\Validator;
@@ -963,6 +966,17 @@ class AkademikController extends Controller
         $detail = DetailSetupMataPelajaran::findOrFail($id2);
         $detail->delete();
         return redirect()->route('detail.index', $setup->id)->with('success', 'Detail Setup Mata Pelajaran berhasil dihapus!');
+    }
+
+    public function listsiswa(){
+        $siswa = Siswa::all();
+        $kelas = Kelas::all();
+    
+        return view('pages.admin.akademik.siswa.index', ['siswa' => $siswa, 'kelas' => $kelas]);
+    }
+
+    public function updatekelassiswa($id){
+        $siswa = Siswa::findOrFail($id);
     }
 }
 

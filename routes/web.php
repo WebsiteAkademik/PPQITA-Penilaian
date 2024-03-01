@@ -135,6 +135,12 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::put('/data_mapel/edit/{id}', [AkademikController::class, 'updatemapel'])->name('mapel.update');
     Route::delete('/data_mapel/{id}/delete', [AkademikController::class, 'deletemapel'])->name('mapel.delete');
     
+    //Siswa
+    Route::get('/data_siswa', [AkademikController::class, 'listsiswa'])->name('siswa.index');
+    Route::get('/data_siswa/edit/{id}', [AkademikController::class, 'editsiswaprofile'])->name('siswa.edit');
+    Route::put('/data_siswa/edit/{id}', [AkademikController::class, 'updatesiswaprofile'])->name('siswa.update');
+    Route::put('/data_siswa/update/{id}', [AkademikController::class, 'updatekelas'])->name('siswa.updatekelas');
+
     //Kelas
     Route::get('/data_kelas', [AkademikController::class, 'listkelas'])->name('kelas.index');
     Route::get('/data_kelas/form', [AkademikController::class, 'showFormkelas'])->name('kelas.form');
