@@ -26,6 +26,7 @@
                 <div class="brand-logo d-flex align-items-center justify-content-between mt-2">
                     <a href="{{ route('dashboardpengajar') }}" class="text-nowrap logo-img">
                         <img src="{{ asset('assets/galeri/logo_ppqita.png') }}" width="25%" alt="logo img" />
+                        <h4 style="display: inline; text-align: center; margin-top: 15px; margin-left: 10px; color: #00569c">PPQIT Al Mahir</h4>
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                         <i class="ti ti-x fs-8"></i>

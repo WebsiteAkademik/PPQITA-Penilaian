@@ -68,10 +68,8 @@
                                         <h6 class="fw-semibold mb-0">{{ $row->kelas }}</h6>
                                     </td>
                                     <td class="border-bottom-0 align-items-center text-center">
-                                        <div class="row mt-1">
-                                            <div class="col-6 col-lg-5">
-                                                <a href="{{ route('kelas.edit', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
-                                            </div>
+                                        <div class="row col-6 d-flex justify-content-center" style="width: 100px; margin: 0 auto">
+                                            <a href="{{ route('kelas.edit', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
                                         </div>
                                     </td> 
                                 </tr>

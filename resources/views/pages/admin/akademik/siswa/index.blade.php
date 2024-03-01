@@ -77,12 +77,12 @@
                                         <h6 class="fw-semibold mb-0">Kelas</h6>
                                     </td>
                                     <td class="border-bottom-0 align-items-center text-center">
-                                        <div class="row mt-1">
+                                        <div class="row" style="width: 100px; margin: 0 auto">
                                             <div class="col-6 d-flex justify-content-center">
                                                 <a type="button" data-bs-toggle="modal"
                                                     data-bs-target="#detailprofile{{ $row->id }}"
                                                     class="text-black text-center d-flex align-items-center justify-content-center"
-                                                    style="width: 40px;height: 40px;border:none;">
+                                                    style="width: 40px;height: 40px;">
                                                     <i class="fa-solid fa-eye"></i>
                                                 </a>
                                                 @include('pages.admin.akademik.modal.detailprofile', array('row' => $row))
@@ -91,7 +91,7 @@
                                                 <a type="button" data-bs-toggle="modal"
                                                     data-bs-target="#updatekelas{{ $row->id }}"
                                                     class="text-black text-center d-flex align-items-center justify-content-center"
-                                                    style="width: 40px;height: 40px;border:none;">
+                                                    style="width: 40px;height: 40px;">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
                                                 @include('pages.admin.akademik.modal.updatekelas', array('row' => $row))
