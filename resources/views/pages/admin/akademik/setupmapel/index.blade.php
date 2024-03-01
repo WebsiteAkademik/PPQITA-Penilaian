@@ -44,7 +44,7 @@
                         <a href="{{ route('setup.form') }}" class="btn btn-primary m-3" id="tambahSetup">+ Tambah Setup Mata Pelajaran</a>
                     </div>
                     <div class="table-responsive">
-                        <table class="table text-nowrap mb-0 align-middle" id="table-kategori">
+                        <table class="table text-nowrap mb-0 align-middle" id="table-setup">
                             <thead class="text-dark fs-4">
                                 <tr style="background-color: #2E8CB5">
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
@@ -85,17 +85,17 @@
                                                 <a type="button" data-bs-toggle="modal"
                                                     data-bs-target="#detailSetup{{ $row->id }}"
                                                     class="text-black text-center d-flex align-items-center justify-content-center"
-                                                    style="background-color: #00569C;width: 40px;height: 40px;border:none;">
+                                                    style="width: 40px;height: 40px;border:none;">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                </a>
                                                @include('pages.admin.akademik.modal.setup', array('row' => $row))
                                             </div>
                                             <div class="col-6 d-flex justify-content-center">
-                                                <form id="deleteForm{{ $row->id }}" action="{{ route('kategori.delete', $row->id) }}" method="POST" style="display: none;">
+                                                <form id="deleteForm{{ $row->id }}" action="{{ route('setup.delete', $row->id) }}" method="POST" style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>
-                                                <a href="#" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus kategori pelajaran ini?')) document.getElementById('deleteForm{{ $row->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
+                                                <a href="#" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus setup mata pelajaran ini?')) document.getElementById('deleteForm{{ $row->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
                                             </div>
                                         </div>
                                     </td> 
@@ -109,14 +109,3 @@
         </div>
     </div>
 @endsection
-
-
-@push('script')
-    <script>
-        $(document).ready(function(){
-            $(document).on('click', '#select', function(){
-                
-            })
-        })
-    </script>
-@endpush

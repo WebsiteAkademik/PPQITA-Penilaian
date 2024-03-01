@@ -22,17 +22,14 @@
                             </tr>
                             <tr>
                                 <th>Detail:</th>
-                                <td></td>
+                                <td><a href ="{{ route('detail.index', $row->id) }}" class="btn text-white" id="listdetailSetup" style="background-color: #00569C;">Tambah Detail</a></td>
                             </tr>
                         </tbody>
                     </table>
-                    <div>
-                        <!-- <a href="" class="btn btn-primary m-3" id="editSetup">Edit</a> -->
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <a href ="" class="btn text-white" style="background-color: #00569C;">Edit</button>
+                    <a href ="{{ route('setup.edit', $row->id) }}" class="btn text-white" id="editSetup" style="background-color: #00569C;">Edit</a>
                 </div>
             </div>
         </div>

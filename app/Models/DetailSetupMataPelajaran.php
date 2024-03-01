@@ -20,4 +20,9 @@ class DetailSetupMataPelajaran extends Model
     {
         return $this->belongsTo(SetupMataPelajaran::class);
     }
+
+    public function mapelID(){
+        return MataPelajaran::where("id", $this->mata_pelajaran_id)->first();
+    }
+
 }

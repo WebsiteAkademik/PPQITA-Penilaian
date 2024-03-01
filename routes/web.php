@@ -165,6 +165,13 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::get('/data_setup/edit/{id}', [AkademikController::class, 'editsetup'])->name('setup.edit');
     Route::put('/data_setup/edit/{id}', [AkademikController::class, 'updatesetup'])->name('setup.update');
     Route::delete('/data_setup/{id}/delete', [AkademikController::class, 'deletesetup'])->name('setup.delete');
+
+    Route::get('/data_setup/{id}/detail', [AkademikController::class, 'listdetailsetup'])->name('detail.index');
+    Route::get('/data_setup/{id}/detail/form', [AkademikController::class, 'showFormdetailsetup'])->name('detail.form');
+    Route::post('/data_setup/{id}/detail/form', [AkademikController::class, 'detailsetupPost'])->name('detail.formPOST');
+    Route::get('/data_setup/{id}/detail/edit/{id2}', [AkademikController::class, 'editdetailsetup'])->name('detail.edit');
+    Route::put('/data_setup/{id}/detail/edit/{id2}', [AkademikController::class, 'updatedetailsetup'])->name('detail.update');
+    Route::delete('/data_setup/{id}/detail/{id2}/delete', [AkademikController::class, 'deletedetailsetup'])->name('detail.delete');
     
     // Pendaftar
     Route::get('/pendaftar-baru', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');

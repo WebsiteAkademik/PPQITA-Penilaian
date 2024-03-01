@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Data Setup Mata Pelajaran
+    Form Setup Mata Pelajaran
 @endsection
 
 @section('content')

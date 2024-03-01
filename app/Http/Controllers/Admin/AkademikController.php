@@ -650,7 +650,7 @@ class AkademikController extends Controller
         $data = $request->all();
 
         $dataUser = [
-            "name" => $data['username'],
+            "name" => $data['nama_pengajar'],
             "email" => $data['username'],
             "role" => "pengajar",
             "password" => Hash::make($data['password']),
@@ -776,6 +776,8 @@ class AkademikController extends Controller
             }
 
             $setup = SetupMataPelajaran::create($data);
+            Alert::success('Berhasil', 'Pengajar berhasil disimpan!');
+            return redirect()->route('setup.index')->with('success', 'Setup Mata Pelajaran berhasil disimpan!');
         }
         catch(\Exception $e){
             $kelas->delete();
@@ -788,9 +790,185 @@ class AkademikController extends Controller
         return redirect()->route('setup.index')->with('success', 'Setup Mata Pelajaran Berhasil Disimpan');
     }
 
+    public function editsetup($id){
+        $setup = SetupMataPelajaran::findOrFail($id);
+
+        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
+
+        if (!$tahunAjaranAktif) {
+            return view('pages.admin.akademik.pengajar.edit', ['pengajar' => []]);
+        }
+
+        $kelas = Kelas::all();
+
+        $pengajar = Pengajar::all();
+
+        $mapel = MataPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get();
+
+        return view('pages.admin.akademik.setupmapel.edit', ['pengajar' => $pengajar, 'mapel' => $mapel, 'kelas' => $kelas, 'setup' => $setup]);
+    }
+
+    public function updatesetup(Request $request, $id){
+        $validatedData = Validator::make($request->all(), [
+            'tanggal_setup' => 'required',
+            'kelas_id' => 'required',
+            'pengajar_id' => 'required'
+        ]);
+    
+        if ($validatedData->fails()) {
+            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada kode sub kategori yang sama atau nama sub kategori pada kategori pelajaran yang sama!');
+            return redirect()->back()->withErrors($validatedData)->withInput();
+        }
+
+        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
+    
+        $setup = SetupMataPelajaran::findOrFail($id);
+
+        $setupSama = SetupMataPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)
+            ->where('kelas_id', $request->kelas_id)
+            ->where('pengajar_id', $request->pengajar_id)
+            ->first();
+
+        if ($setupSama) {
+            Alert::error('Gagal! (E002)', 'Setup dengan ketentuan yang sama sudah ada!');
+            return redirect()->back()->withInput();
+        }
+    
+        $setup->fill([
+            'tanggal_setup' => $request->tanggal_setup,
+            'kelas_id' => $request->kelas_id,
+            'pengajar_id' => $request->pengajar_id,
+        ])->save();
+    
+        Alert::success('Berhasil', 'Setup Mata Pelajaran berhasil diperbarui!');
+        return redirect()->route('setup.index')->with('success', 'Setup Mata Pelajaran berhasil diperbarui!');
+    }
+
+    public function deletesetup($id){
+        $setup = SetupMataPelajaran::findOrFail($id);
+        $setup->delete();
+        return redirect()->route('setup.index')->with('success', 'Setup Mata Pelajaran berhasil dihapus!');
+    }
+
     //Setup Mata Pelajaran Detail
+    public function listdetailsetup($id){
+        $setup = SetupMataPelajaran::findOrFail($id);
+        $detail = DetailSetupMataPelajaran::where('setup_mata_pelajaran_id', $setup->id)->get();
 
+        $tahunajar = TahunAjaran::where('id', $setup->tahun_ajaran_id)->first();
 
+        $pengajar = Pengajar::where('id', $setup->pengajar_id)->first();
 
+        $kelas = Kelas::where('id', $setup->kelas_id)->first();
 
+        return view('pages.admin.akademik.setupmapel.detail.index', ['setup' => $setup, 'detail' => $detail, 'tahunajar' => $tahunajar, 'pengajar' => $pengajar, 'kelas' => $kelas]);
+    }
+
+    public function showFormdetailsetup($id){
+        $setup = SetupMataPelajaran::findOrFail($id);
+
+        $tahunajar = TahunAjaran::where('id', $setup->tahun_ajaran_id)->first();
+
+        $mapel = MataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->get();
+
+        return view('pages.admin.akademik.setupmapel.detail.form', ['setup' => $setup, 'mapel' => $mapel, 'tahunajar' => $tahunajar]);
+    }
+
+    public function detailsetupPost(Request $request, $id){
+        $setup = SetupMataPelajaran::findOrFail($id);
+        $tahunajar = TahunAjaran::where('id', $setup->tahun_ajaran_id)->first();
+
+        $globalValidatorData = [
+            'jam_pelajaran' => 'required',
+            'mata_pelajaran_id' => 'required',
+            'kkm' => 'required'
+        ];
+
+        $globalValidator = Validator::make($request->all(), $globalValidatorData);
+
+        if ($globalValidator->fails()) {
+            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada data yang sama!');
+            return redirect()->back()->withErrors($globalValidator)->withInput();
+        }
+
+        $data = $request->all();
+        $Detailada = DetailSetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)
+            ->where('mata_pelajaran_id', $data['mata_pelajaran_id'])
+            ->first();
+
+        if($Detailada){
+            Alert::error('Gagal! (E002)', 'Mata pelajaran ini sudah ada dalam setup untuk tahun ajaran ini!');
+            return redirect()->back();
+        }
+
+        try{
+            // Memasukkan ID tahun ajaran aktif ke data yang akan disimpan
+            $data['tahun_ajaran_id'] = $tahunajar->id;
+            $data['setup_mata_pelajaran_id'] = $setup->id;
+
+            $detail = DetailSetupMataPelajaran::create($data);
+        }
+        catch(Exception $e){
+            Alert::error('Gagal! (E006)', 'Cek pada form daftar apakah ada kesalahan yang terjadi');
+            return redirect()->back()->withError($e)->withInput();
+        }
+
+        Alert::success('Berhasil', 'Detail Setup Mata Pelajaran berhasil disimpan!');
+
+        return redirect()->route('detail.index', $setup->id)->with('success', 'Detail Setup Mata Pelajaran Berhasil Disimpan');
+    }
+
+    public function editdetailsetup($id, $id2){
+        $setup = SetupMataPelajaran::findOrFail($id);
+        $detail = DetailSetupMataPelajaran::findOrFail($id2);
+
+        $tahunajar = TahunAjaran::where('id', $setup->tahun_ajaran_id)->first();
+
+        $mapel = MataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->get();
+
+        return view('pages.admin.akademik.setupmapel.detail.edit', ['setup' => $setup, 'detail' => $detail, 'mapel' => $mapel,]);
+    }
+
+    public function updatedetailsetup(Request $request, $id, $id2){
+        $setup = SetupMataPelajaran::findOrFail($id);
+        $tahunajar = TahunAjaran::where('id', $setup->tahun_ajaran_id)->first();
+        
+        $validatedData = Validator::make($request->all(), [
+            'jam_pelajaran' => 'required',
+            'mata_pelajaran_id' => ['required', Rule::unique('detail_setup_mata_pelajarans', 'mata_pelajaran_id')->where(function ($query) use ($tahunajar, $request) {
+                return $query->where('tahun_ajaran_id', $tahunajar->id);
+            })->ignore($id2)],
+            'kkm' => 'required'
+        ]);
+    
+        if ($validatedData->fails()) {
+            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada kode sub kategori yang sama atau nama sub kategori pada kategori pelajaran yang sama!');
+            return redirect()->back()->withErrors($validatedData)->withInput();
+        }
+        
+        $detail = DetailSetupMataPelajaran::findOrFail($id2);
+
+        $detail->fill([
+            'jam_pelajaran' => $request->jam_pelajaran,
+            'mata_pelajaran_id' => $request->mata_pelajaran_id,
+            'kkm' => $request->kkm,
+        ])->save();
+    
+        Alert::success('Berhasil', 'Detail Setup Mata Pelajaran berhasil diperbarui!');
+        return redirect()->route('detail.index', $setup->id)->with('success', 'Detail Setup Mata Pelajaran berhasil diperbarui!');
+    }
+
+    public function deletedetailsetup($id, $id2){
+        $setup = SetupMataPelajaran::findOrFail($id);
+        $detail = DetailSetupMataPelajaran::findOrFail($id2);
+        $detail->delete();
+        return redirect()->route('detail.index', $setup->id)->with('success', 'Detail Setup Mata Pelajaran berhasil dihapus!');
+    }
 }
+
+
+
+
+
+
+
