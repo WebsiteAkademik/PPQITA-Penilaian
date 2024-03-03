@@ -45,70 +45,79 @@
                         <table class="table mb-0 align-middle" id="table-pendaftaran">
                             <thead class="text-dark">
                                 <tr style="background-color: #2E8CB5">
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">No.</h6>
+                                    <th style="text-align: center; width: 20px" class="border-bottom-0">
+                                        <h6 style="color: white" class="fw-semibold mb-0">No.</h6>
                                     </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Nama</h6>
+                                    <th style="text-align: center" class="border-bottom-0">
+                                        <h6 style="color: white" class="fw-semibold mb-0">Nama</h6>
                                     </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Aqidah</h6>
+                                    <th style="text-align: center; width: 200px" class="border-bottom-0">
+                                        <h6 style="color: white" class="fw-semibold mb-0">Aqidah</h6>
                                     </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Fiqh</h6>
+                                    <th style="text-align: center; width: 200px" class="border-bottom-0">
+                                        <h6 style="color: white" class="fw-semibold mb-0">Fiqh</h6>
                                     </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Adab</h6>
+                                    <th style="text-align: center; width: 200px" class="border-bottom-0">
+                                        <h6 style="color: white" class="fw-semibold mb-0">Adab</h6>
                                     </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Prestasi
+                                    <th style="text-align: center; width: 200px" class="border-bottom-0">
+                                        <h6 style="color: white" class="fw-semibold mb-0">Prestasi</h6>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- @foreach ($pendaftars as $key => $pendaftar)
                                 <tr>
                                     <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">{{ $pendaftar->no_pendaftaran }}</h6>
+                                        <h5 class="fw-normal mb-1">asdf</h6>
                                     </td>
                                     <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">{{ $pendaftar->nama_calon_siswa }}</h5>           
+                                        <h5 class="fw-normal mb-1">asdf</h5>           
                                     </td>
                                     <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">{{ $pendaftar->kabupaten }}</h5>
+                                        <h5 class="fw-normal mb-1">asdf</h5>
                                     </td>
                                     <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">{{ $pendaftar->asal_sekolah }}</h5>
+                                        <h5 class="fw-normal mb-1">asdf</h5>
                                     </td>
                                     <td class="border-bottom-0">
-                                        <p class="mb-0 fw-normal"><a href="https://wa.me/{{ $pendaftar->no_telepon }}">{{ $pendaftar->no_wa_anak }}</a></p>
+                                        <h5 class="fw-normal mb-1">asdf</h5>
                                     </td>
                                     <td class="border-bottom-0">
-                                        @php
-                                            switch ($pendaftar->status) {
-                                                case 'BARU':
-                                                    echo "<div class='badge text-capitalize' style='background-color: #00569C;'>$pendaftar->status</div>";
-                                                    break;
-                                                case 'TEST':
-                                                    echo "<div class='badge text-capitalize bg-info'>$pendaftar->status</div>";
-                                                    break;
-                                                case 'MENUNGGU':
-                                                    echo "<div class='badge text-capitalize bg-secondary'>$pendaftar->status</div>";
-                                                    break;
-                                                case 'DITERIMA':
-                                                    echo "<div class='badge text-capitalize bg-success'>$pendaftar->status</div>";
-                                                    break;
-                                                case 'DITOLAK':
-                                                    echo "<div class='badge text-capitalize bg-danger'>TIDAK DITERIMA</div>";
-                                                    break;
-                                            }
-                                        @endphp
-                                    </td>
-                                    <td class="border-bottom-0 d-none">
-                                        <h5 class="fw-normal mb-1">{{ $pendaftar->created_at->format('Y-m-d') }}</h5>
+                                        <h5 class="fw-normal mb-1">asdf</h5>
                                     </td>
                                 </tr>
-                                @endforeach -->
+                                <tr>
+                                    <td class="border-bottom-0">
+                                        <h5 class="fw-normal mb-1">asdf</h6>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <h5 class="fw-normal mb-1">asdf</h5>           
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <h5 class="fw-normal mb-1">asdf</h5>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <h5 class="fw-normal mb-1">asdf</h5>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <h5 class="fw-normal mb-1">asdf</h5>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <h5 class="fw-normal mb-1">asdf</h5>
+                                    </td>
+                                </tr>
                             </tbody>
+                            <thead>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td style="background-color: #2E8CB5">
+                                        <h6 class="fw-semibold mb-0" style="color: white">Rata-Rata Kelas</h6>
+                                    </td>
+                                    <td>
+                                        <h6 class="fw-semibold mb-0">asdf</h6>
+                                    </td>
+                                </tr>    
+                            </thead>
                         </table><br/>
                     </div>
                 </div>
