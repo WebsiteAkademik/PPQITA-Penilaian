@@ -73,6 +73,8 @@ Route::middleware('auth', 'cekrole:pengajar')->prefix('dashboardpengajar')->grou
     Route::get('/data_penilaianpelajaran/edit/{id}', [PengajarController::class, 'editpenilaianpelajaran'])->name('penilaianpelajaran.edit');
     Route::put('/data_penilaianpelajaran/edit/{id}', [PengajarController::class, 'updatepenilaianpelajaran'])->name('penilaianpelajaran.update');
     Route::delete('/data_penilaianpelajaran/{id}/delete', [PengajarController::class, 'deletepenilaianpelajaran'])->name('penilaianpelajaran.delete');
+
+    Route::get("/events", [PengajarController::class, 'getEvents'])->name('getEvents');
 });
 
 //role -> admin
@@ -231,6 +233,8 @@ Route::middleware('auth', 'cekrole:user')->prefix('dashboarduser')->group(functi
     Route::get('/pendaftar/{no_nisn}', [PendaftaranController::class, 'detailbynisn'])->name('pendaftar.detailuser');
     // Jadwal Test User
     Route::get('/jadwaltest', [JadwalTestController::class, 'indexuser'])->name('jadwaltestuser');
+    // Kalender Ujian
+    Route::get("/events", [PengajarController::class, 'getEvents'])->name('getEvents');
     // Cek Profile Siswa
     // History Nilai
 });

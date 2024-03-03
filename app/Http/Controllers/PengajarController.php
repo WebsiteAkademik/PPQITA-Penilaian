@@ -13,8 +13,10 @@ use App\Models\MataPelajaran;
 use App\Models\Kelas;
 use App\Models\SetupMataPelajaran;
 use App\Models\DetailSetupMataPelajaran;
+use App\Models\JadwalUjian;
 use App\Models\Pengajar;
 use App\Models\Siswa;
+use DateTime;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -308,5 +310,63 @@ class PengajarController extends Controller
         $nilai = PenilaianPelajaran::findOrFail($id);
         $nilai->delete();
         return redirect()->route('penilaianpelajaran.index')->with('success', 'Nilai pelajaran berhasil dihapus!');
+    }
+
+    public function getEvents(Request $request){
+        $start = $request->input("start", (new DateTime())->modify("-1 month")->format(DateTime::ATOM));
+        $end = $request->input("end", (new DateTime())->modify("+1 month")->format(DateTime::ATOM));
+
+        $d_start = strtotime($start);
+        $d_end = strtotime($end);
+
+        $jadwal_ujian = JadwalUjian::whereDate('tanggal_ujian', '>=', date('Y-m-d', $d_start))->whereDate('tanggal_ujian', '<=', date('Y-m-d', $d_end))->get();
+        $ret = array();
+
+        /*
+         * [
+         *     {
+         *         "resourceId": "d",
+         *         "title": "event 1",
+         *         "start": "2024-03-02",
+         *         "end": "2024-03-04"
+         *     }
+         * ]
+        */
+        foreach($jadwal_ujian as $jadwal){
+            $d_s = DateTime::createFromFormat("Y-m-d H:i:s", $jadwal->tanggal_ujian . " " . $jadwal->jam_ujian);
+            $d_e = DateTime::createFromFormat("Y-m-d H:i:s", $jadwal->tanggal_ujian . " " . $jadwal->jam_ujian);
+
+            $s = $d_s->format(DateTime::ATOM);
+            $e = $d_e->format(DateTime::ATOM);
+
+            // Tentukan warna background berdasarkan jenis ujian
+            $backgroundColor = '';
+            switch ($jadwal->jenis_ujian) {
+                case 'Penilaian Harian':
+                    $backgroundColor = 'blue';
+                    break;
+                case 'UTS':
+                    $backgroundColor = 'green';
+                    break;
+                case 'UAS':
+                    $backgroundColor = 'red';
+                    break;
+                default:
+                    $backgroundColor = ''; // Atur warna default jika jenis ujian tidak cocok dengan kriteria di atas
+            }
+
+            $j = array(
+                "resourceId" => $jadwal->id,
+                "title" => "",
+                "description" => "(Mulai: " . substr($jadwal->jam_ujian, 0, 5) . ")\n" . $jadwal->jenis_ujian . "\n" . $jadwal->mataPelajaran()->nama_mata_pelajaran . "\n" . $jadwal->kelas()->kelas,
+                "start" => $s,
+                "end" => $e,
+                "backgroundColor" => $backgroundColor,
+            );
+
+            $ret[] = $j;
+        }
+
+        return response()->json($ret);
     }
  }
