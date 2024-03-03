@@ -955,7 +955,7 @@ class AkademikController extends Controller
             return redirect()->back()->withErrors($validatedData)->withInput();
         }
         
-        $Detailada = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
+        $Detailada = DetailSetupMataPelajaran::whereHas('setupMataPelajaran', function($query) use ($tahunajar, $kelas) {
             $query->where('tahun_ajaran_id', $tahunajar->id)
                   ->where('kelas_id', $kelas->id);
         })

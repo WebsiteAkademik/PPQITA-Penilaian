@@ -18,6 +18,7 @@ use App\Models\Siswa;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PengajarController extends Controller
@@ -151,75 +152,103 @@ class PengajarController extends Controller
         $user = Auth::user();
         $pengajar = Pengajar::where('user_id', $user->id)->first();
         $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
+        
+        $penilaianpelajaran = PenilaianPelajaran::where('pengajar_id', $pengajar->id)
+            ->where('tahun_ajaran_id', $tahunAjaranAktif->id)
+            ->get();
+        
+        return view('pages.admin.pengajaradmin.penilaianpelajaran.index', [
+            'penilaianpelajaran' => $penilaianpelajaran,
+        ]);
+    }
+    
+
+    public function showFormpenilaianpelajaran(){
+        $user = Auth::user();
+        $pengajar = Pengajar::where('user_id', $user->id)->first();
+        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
+    
         $setup = SetupMataPelajaran::where('pengajar_id', $pengajar->id)
             ->where('tahun_ajaran_id', $tahunAjaranAktif->id)
             ->get();
-        $kelas = Kelas::where('id', $setup->kelas_id)->first();
-        $detail = DetailSetupMataPelajaran::where('setup_mata_pelajaran_id', $setup->id)->get();
-        $penilaianpelajaran = PenilaianPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get();
+    
+        $kelas = collect();
         
-        return view('pages.admin.pengajaradmin.penilaianpelajaran.index', ['penilaianpelajaran' => $penilaianpelajaran]);
+        foreach ($setup as $setup) {
+            $kelas->push(Kelas::where('id', $setup->kelas_id)->first());
+        }
+
+        $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunAjaranAktif, $pengajar) {
+            $query->where('tahun_ajaran_id', $tahunAjaranAktif->id)
+            ->where('pengajar_id', $pengajar->id);
+        })->get();
+
+        $mapel = collect();
+        foreach ($detail as $detail) {
+            $mapel->push(MataPelajaran::where('id', $detail->mata_pelajaran_id)->first());
+        }
+
+        $siswa = Siswa::all();
+
+        return view('pages.admin.pengajaradmin.penilaianpelajaran.form', [
+            'siswa' => $siswa,
+            'mapel' => $mapel,
+            'kelas' => $kelas,
+            'pengajar' => $pengajar,
+            'tahunAjaranAktif' => $tahunAjaranAktif
+        ]);
     }
 
-//     public function showFormmapel(){
-//         $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
+    public function penilaianpelajaranPost(Request $request){
+        $user = Auth::user();
+        $pengajar = Pengajar::where('user_id', $user->id)->first();
+        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
 
-//         if (!$tahunAjaranAktif) {
-//             return view('pages.admin.akademik.mapel.form', ['mapel' => []]);
-//         }
+        $globalValidatorData = [
+            'tanggal_penilaian' => 'required|unique:mata_pelajarans,kode_mata_pelajaran',
+            'kelas_id' => 'required',
+            'siswa_id' => 'required',
+            'mata_pelajaran_id' => 'required',
+            'nilai' => 'required',
+        ];
 
-//         $kategori = KategoriPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get();
-//         $subkategori = SubKategoriPelajaran::all();
+        $globalValidator = Validator::make($request->all(), $globalValidatorData);
 
-//         return view('pages.admin.akademik.mapel.form', ['kategori' => $kategori, 'subkategori' => $subkategori,]);
-//     }
+        if ($globalValidator->fails()) {
+            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan validasi data dengan database sudah benar!');
+            return redirect()->back()->withErrors($globalValidator)->withInput();
+        }
 
-//     public function mapelPost(Request $request){
-//         $globalValidatorData = [
-//             'kode_mata_pelajaran' => 'required|unique:mata_pelajarans,kode_mata_pelajaran',
-//             'nama_mata_pelajaran' => 'required',
-//             'kkm' => 'required',
-//             'kategori_pelajaran_id' => 'required',
-//             'sub_kategori_pelajaran_id' => 'required',
-//         ];
+        $data = $request->all();
 
-//         $globalValidator = Validator::make($request->all(), $globalValidatorData);
-
-//         if ($globalValidator->fails()) {
-//             Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan validasi data dengan database sudah benar!');
-//             return redirect()->back()->withErrors($globalValidator)->withInput();
-//         }
-
-//         $data = $request->all();
-
-//         try {
-//             // Mendapatkan tahun ajaran aktif
-//             $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->firstOrFail();
+        try {
+            $data['tahun_ajaran_id'] = $tahunAjaranAktif->id;
+            $data['pengajar_id'] = $pengajar->id;
+            $data['keterangan'] = "";
+            $kelas = $request->kelas_id;
+            $siswa = $request->siswa_id;
+            $mapel = $request->mata_pelajaran_id;
+    
+            // Mengecek apakah terdapat nama mata pelajaran yang sama pada tahun ajaran aktif yang sama
+            $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunAjaranAktif, $pengajar, $kelas) {
+                $query->where('tahun_ajaran_id', $tahunAjaranAktif->id)->where('pengajar_id', $pengajar->id)->where('kelas_id', $kelas);})
+                ->where('mata_pelajaran_id', $mapel)->exists();
             
-//             // Memasukkan ID tahun ajaran aktif ke data yang akan disimpan
-//             $data['tahun_ajaran_id'] = $tahunAjaranAktif->id;
+            if (!$detail) {
+                Alert::error('Gagal! (E003)', 'Anda tidak mengampu mata pelajaran ini pada kelas ini!');
+                return redirect()->back()->withInput();
+            }
+                
+            // Membuat Sub kategori pelajaran
+            $nilai = PenilaianPelajaran::create($data);
     
-//             // Mengecek apakah terdapat nama mata pelajaran yang sama pada tahun ajaran aktif yang sama
-//             $subkategoriSama = MataPelajaran::where('tahun_ajaran_id', $tahunAjaranAktif->id)
-//                 ->where('sub_kategori_pelajaran_id', $data['sub_kategori_pelajaran_id'])
-//                 ->where('nama_mata_pelajaran', $data['nama_mata_pelajaran'])
-//                 ->first();
-
-//             if ($subkategoriSama) {
-//                 Alert::error('Gagal! (E002)', 'Nama Mata Pelajaran yang sama sudah ada pada sub kategori ini!');
-//                 return redirect()->back()->withInput();
-//             }
-
-//             // Membuat Sub kategori pelajaran
-//             $mapel = MataPelajaran::create($data);
-    
-//             Alert::success('Berhasil', 'Mata Pelajaran berhasil disimpan!');
-//             return redirect()->route('mapel.index')->with('success', 'Mata Pelajaran berhasil disimpan!');
-//         } catch (\Exception $e) {
-//             Alert::error('Gagal! (E006)', 'Cek kembali kesesuaian isi form dengan validasi database');
-//             return redirect()->back()->withInput();
-//         }
-//     }
+            Alert::success('Berhasil', 'Nilai Siswa berhasil disimpan!');
+            return redirect()->route('penilaianpelajaran.index')->with('success', 'Nilai siswa berhasil disimpan!');
+        } catch (\Exception $e) {
+            Alert::error('Gagal! (E006)', 'Cek kembali kesesuaian isi form dengan validasi database'.$e->getMessage());
+            return redirect()->back()->withInput();
+        }
+    }
 
 //     public function editmapel($id){
 //         $mapel = MataPelajaran::findOrFail($id);

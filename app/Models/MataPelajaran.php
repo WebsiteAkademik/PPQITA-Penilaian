@@ -43,6 +43,11 @@ class MataPelajaran extends Model
     {
         return $this->hasMany(SetupMataPelajaran::class);
     }
+
+    public function detailSetupMataPelajaran()
+    {
+        return $this->hasMany(DetailSetupMataPelajaran::class);
+    }
     
     public function kelas()
     {

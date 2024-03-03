@@ -35,6 +35,16 @@ class PenilaianPelajaran extends Model
         return $this->belongsToMany(Pengajar::class);
     }
 
+    public function detailSetupMataPelajaran()
+    {
+        return $this->belongsTo(DetailSetupMataPelajaran::class);
+    }
+
+    public function setupMataPelajaran()
+    {
+        return $this->belongsTo(SetupMataPelajaran::class, 'setup_mata_pelajaran_id');
+    }
+
     public function kelasID(){
         return Kelas::where("id", $this->kelas_id)->first();
     }
