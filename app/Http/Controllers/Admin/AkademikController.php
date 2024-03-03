@@ -887,7 +887,6 @@ class AkademikController extends Controller
         $globalValidatorData = [
             'jam_pelajaran' => 'required',
             'mata_pelajaran_id' => 'required',
-            'kkm' => 'required'
         ];
 
         $globalValidator = Validator::make($request->all(), $globalValidatorData);
@@ -904,7 +903,8 @@ class AkademikController extends Controller
             })
             ->where('mata_pelajaran_id', $data['mata_pelajaran_id'])
             ->first();
-
+        
+        $mapel = MataPelajaran::where('id', $data['mata_pelajaran_id'])->first();
 
         if($Detailada){
             Alert::error('Gagal! (E002)', 'Mata pelajaran ini sudah ada dalam setup untuk tahun ajaran dan kelas ini!');
@@ -915,6 +915,7 @@ class AkademikController extends Controller
             // Memasukkan ID tahun ajaran aktif ke data yang akan disimpan
             $data['tahun_ajaran_id'] = $tahunajar->id;
             $data['setup_mata_pelajaran_id'] = $setup->id;
+            $data['kkm'] = $mapel->kkm;
 
             $detail = DetailSetupMataPelajaran::create($data);
         }

@@ -205,7 +205,7 @@ class PengajarController extends Controller
         $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
 
         $globalValidatorData = [
-            'tanggal_penilaian' => 'required|unique:mata_pelajarans,kode_mata_pelajaran',
+            'tanggal_penilaian' => 'required',
             'kelas_id' => 'required',
             'siswa_id' => 'required',
             'mata_pelajaran_id' => 'required',

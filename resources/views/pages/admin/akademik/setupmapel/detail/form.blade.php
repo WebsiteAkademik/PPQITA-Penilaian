@@ -28,10 +28,6 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="kkm" class="form-label">KKM</label>
-                        <input required type="number" class="form-control" name="kkm" id="kkm" value="{{ old('kkm') }}" placeholder="">
-                    </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
             </div>
