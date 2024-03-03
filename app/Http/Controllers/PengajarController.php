@@ -224,7 +224,6 @@ class PengajarController extends Controller
         try {
             $data['tahun_ajaran_id'] = $tahunAjaranAktif->id;
             $data['pengajar_id'] = $pengajar->id;
-            $data['keterangan'] = "";
             $kelas = $request->kelas_id;
             $siswa = $request->siswa_id;
             $mapel = $request->mata_pelajaran_id;
@@ -238,9 +237,19 @@ class PengajarController extends Controller
                 Alert::error('Gagal! (E003)', 'Anda tidak mengampu mata pelajaran ini pada kelas ini!');
                 return redirect()->back()->withInput();
             }
+
+            $nilai = $request->nilai;
+            $kkmMapel = MataPelajaran::where('id', $mapel)->first();
+            $kkm = $kkmMapel->kkm;
+
+            if($nilai < $kkm){
+                $data['keterangan'] = "Belum Tercapai";
+            } elseif ($nilai >= $kkm){
+                $data['keterangan'] = "Tercapai";
+            }
                 
             // Membuat Sub kategori pelajaran
-            $nilai = PenilaianPelajaran::create($data);
+            $penilaian = PenilaianPelajaran::create($data);
     
             Alert::success('Berhasil', 'Nilai Siswa berhasil disimpan!');
             return redirect()->route('penilaianpelajaran.index')->with('success', 'Nilai siswa berhasil disimpan!');
@@ -295,9 +304,9 @@ class PengajarController extends Controller
 //         return redirect()->route('mapel.index')->with('success', 'Mata Pelajaran berhasil diperbarui!');
 //     }
 
-//     public function deletemapel($id){
-//         $mapel = MataPelajaran::findOrFail($id);
-//         $mapel->delete();
-//         return redirect()->route('mapel.index')->with('success', 'Mata Pelajaran berhasil dihapus!');
-//     }
+    public function deletepenilaianpelajaran($id){
+        $nilai = PenilaianPelajaran::findOrFail($id);
+        $nilai->delete();
+        return redirect()->route('penilaianpelajaran.index')->with('success', 'Nilai pelajaran berhasil dihapus!');
+    }
  }

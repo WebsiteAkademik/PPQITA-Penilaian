@@ -101,7 +101,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>
-                                                <a href="#" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus mata pelajaran ini?')) document.getElementById('deleteForm{{ $row->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
+                                                <a href="#" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus nilai ini?')) document.getElementById('deleteForm{{ $row->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
                                             </div>
                                         </div>
                                     </td> 
