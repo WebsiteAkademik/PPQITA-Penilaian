@@ -109,6 +109,17 @@ class AkademikController extends Controller
 
     public function deletetahunajar($id){
         $tahunajar = TahunAjaran::findOrFail($id);
+        $idtahun = TahunAjaran::where('id', $id)->first();
+        //Periksa apakah data tahun ajaran digunakan dalam tabel lain
+        $tahundipakai = TahunAjaran::withWhereHas('kategoriPelajaran', function ($query) use ($idtahun){
+            $query->where('tahun_ajaran_id', $idtahun->id);
+        })->exists();
+        
+        if($tahundipakai){
+            Alert::warning('Peringatan!!!', 'Data tahun ajaran tidak dapat dihapus karena telah digunakan pada data lain!');
+            return redirect()->back();
+        }
+
         $tahunajar->delete();
         return redirect()->route('tahunajar.index')->with('success', 'Tahun Ajaran berhasil dihapus!');
     }
@@ -208,6 +219,16 @@ class AkademikController extends Controller
 
     public function deletekategori($id){
         $kategori = KategoriPelajaran::findOrFail($id);
+
+        $kategoridipakai = KategoriPelajaran::withWhereHas('mataPelajaran', function ($query) use ($kategori) {
+            $query->where('kategori_pelajaran_id', $kategori->id);
+        })->exists();
+
+        if($kategoridipakai){
+            Alert::warning('Peringatan!!!', 'Data kategori pelajaran tidak dapat dihapus karena telah digunakan pada data lain');
+            return redirect()->back();
+        }
+
         $kategori->delete();
         return redirect()->route('kategori.index')->with('success', 'Kategori Pelajaran berhasil dihapus!');
     }
@@ -324,6 +345,16 @@ class AkademikController extends Controller
 
     public function deletesubkategori($id){
         $subkategori = SubKategoriPelajaran::findOrFail($id);
+
+        $subkategoridipakai = SubKategoriPelajaran::withWhereHas('mataPelajaran', function ($query) use ($subkategori) {
+            $query->where('sub_kategori_pelajaran_id', $subkategori->id);
+        })->exists();
+
+        if($subkategoridipakai){
+            Alert::warning('Peringatan!!!', 'Data sub kategori pelajaran tidak dapat dihapus karena telah digunakan pada data lain');
+            return redirect()->back();
+        }
+
         $subkategori->delete();
         return redirect()->route('subkategori.index')->with('success', 'Sub Kategori Pelajaran berhasil dihapus!');
     }
@@ -448,6 +479,16 @@ class AkademikController extends Controller
 
     public function deletemapel($id){
         $mapel = MataPelajaran::findOrFail($id);
+
+        $mapeldipakai = MataPelajaran::whereHas('detailSetupMataPelajaran', function($query) use ($mapel) {
+            $query->where('mata_pelajaran_id', $mapel->id);
+        })->exists();
+        
+        if($mapeldipakai){
+            Alert::warning('Peringatan!!!', 'Data Mata pelajaran ini tidak dapat dihapus karena telah digunakan pada data lain!');
+            return redirect()->back();
+        }
+
         $mapel->delete();
         return redirect()->route('mapel.index')->with('success', 'Mata Pelajaran berhasil dihapus!');
     }
@@ -724,6 +765,16 @@ class AkademikController extends Controller
     public function deletepengajar($id){
         $pengajar = Pengajar::findOrFail($id);
         $user = User::where('id', $pengajar->user_id);
+
+        $pengajardipakai = Pengajar::withWhereHas('setupMataPelajaran', function ($query) use ($pengajar) {
+            $query->where('pengajar_id', $pengajar->id);
+        })->exists();
+
+        if($pengajardipakai){
+            Alert::warning('Peringatan!!!', 'Data pengajar tidak dapat dihapus karena telah digunakan pada data lain!');
+            return redirect()->back();
+        }
+        
         $user->delete();
         $pengajar->delete();
         return redirect()->route('pengajar.index')->with('success', 'Data Pengajar berhasil dihapus!');

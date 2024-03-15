@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Laporan Rekap Penilaian Tahfidz
+    Laporan Rekap Penilaian Pelajaran
 @endsection
 
 @push('style')
@@ -52,16 +52,16 @@
                                         <h6 style="color: white" class="fw-semibold mb-0">Nama</h6>
                                     </th>
                                     <th style="text-align: center; width: 200px" class="border-bottom-0">
-                                        <h6 style="color: white" class="fw-semibold mb-0">UI/UX</h6>
+                                        <h6 style="color: white" class="fw-semibold mb-0">Aqidah</h6>
                                     </th>
                                     <th style="text-align: center; width: 200px" class="border-bottom-0">
-                                        <h6 style="color: white" class="fw-semibold mb-0">Web Development</h6>
+                                        <h6 style="color: white" class="fw-semibold mb-0">Fiqh</h6>
                                     </th>
                                     <th style="text-align: center; width: 200px" class="border-bottom-0">
-                                        <h6 style="color: white" class="fw-semibold mb-0">Mobile Development</h6>
+                                        <h6 style="color: white" class="fw-semibold mb-0">Adab</h6>
                                     </th>
                                     <th style="text-align: center; width: 200px" class="border-bottom-0">
-                                        <h6 style="color: white" class="fw-semibold mb-0">Rata-Rata</h6>
+                                        <h6 style="color: white" class="fw-semibold mb-0">Prestasi</h6>
                                     </th>
                                 </tr>
                             </thead>

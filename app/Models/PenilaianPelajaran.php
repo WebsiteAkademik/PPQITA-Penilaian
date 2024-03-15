@@ -45,6 +45,10 @@ class PenilaianPelajaran extends Model
         return $this->belongsTo(SetupMataPelajaran::class, 'setup_mata_pelajaran_id');
     }
 
+    public function tahunID(){
+        return TahunAjaran::where("id", $this->tahun_ajaran_id)->first();
+    }
+
     public function kelasID(){
         return Kelas::where("id", $this->kelas_id)->first();
     }

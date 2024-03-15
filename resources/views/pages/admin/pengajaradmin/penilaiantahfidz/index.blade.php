@@ -48,31 +48,16 @@
                             <thead class="text-dark fs-4">
                                 <tr style="background-color: #2E8CB5">
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Tanggal Penilaian</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">No.</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Siswa</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Nama Siswa</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Kelas</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Mata Pelajaran</h6>
-                                    </th>
-                                    <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Jenis</h6>
-                                    </th>
-                                    <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Surat Awal</h6>
-                                    </th>
-                                    <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Surat Akhir</h6>
-                                    </th>
-                                    <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Ayat Awal</h6>
-                                    </th>
-                                    <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Ayat Akhir</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Nilai</h6>
@@ -92,24 +77,33 @@
                                         <h6 class="fw-semibold mb-0">{{ $key + 1 }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->kode_mata_pelajaran }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->siswaID()->nama_siswa }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->nama_mata_pelajaran }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->kelasID()->kelas }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->subkategoriID()->nama_sub_kategori }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->jenis_penilaian }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->kategoriID()->nama_kategori }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->nilai }}</h6>
+                                    </td>
+                                    <td class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0">{{ $row->keterangan }}</h6>
                                     </td>
                                     <td class="border-bottom-0 align-items-center text-center">
                                         <div class="row" style="width: 100px; margin: 0 auto">
                                             <div class="col-6 d-flex justify-content-center">
-                                                <a href="{{ route('mapel.edit', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <a type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#detailnilaiTahfidz{{ $row->id }}"
+                                                    class="text-black text-center d-flex align-items-center justify-content-center"
+                                                    style="width: 40px;height: 40px;">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                </a>
+                                                @include('pages.admin.pengajaradmin.modal.detailnilaitahfidz', array('row' => $row))
                                             </div>
                                             <div class="col-6 d-flex justify-content-center">
-                                                <form id="deleteForm{{ $row->id }}" action="{{ route('mapel.delete', $row->id) }}" method="POST" style="display: none;">
+                                                <form id="deleteForm{{ $row->id }}" action="{{ route('penilaiantahfidz.delete', $row->id) }}" method="POST" style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>

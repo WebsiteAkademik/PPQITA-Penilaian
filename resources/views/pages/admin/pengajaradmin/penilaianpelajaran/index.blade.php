@@ -94,7 +94,13 @@
                                     <td class="border-bottom-0 align-items-center text-center">
                                         <div class="row" style="width: 100px; margin: 0 auto">
                                             <div class="col-6 d-flex justify-content-center">
-                                                <a href="{{ route('penilaianpelajaran.edit', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <a type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#detailnilaiPelajaran{{ $row->id }}"
+                                                    class="text-black text-center d-flex align-items-center justify-content-center"
+                                                    style="width: 40px;height: 40px;">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                </a>
+                                                @include('pages.admin.pengajaradmin.modal.detailnilaipelajaran', array('row' => $row))
                                             </div>
                                             <div class="col-6 d-flex justify-content-center">
                                                 <form id="deleteForm{{ $row->id }}" action="{{ route('penilaianpelajaran.delete', $row->id) }}" method="POST" style="display: none;">

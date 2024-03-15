@@ -54,6 +54,15 @@
                         </select>
                     </div>
                     <div class="mb-3">
+                        <label for="jenis_ujian" class="form-label">Jenis Ujian</label>
+                        <select required class="form-select" id="jenis_ujian" name="jenis_ujian" value="{{ old('jenis_ujian') }}">
+                            <option {{ old('jenis_ujian') == '' ? 'selected' : '' }} disabled>--- Pilih Jenis Ujian ---</option>
+                            <option {{ old('jenis_ujian') == 'Penilaian Harian' ? 'selected' : '' }} value="Penilaian Harian">Penilaian Harian</option>
+                            <option {{ old('jenis_ujian') == 'UTS' ? 'selected' : '' }} value="UTS">UTS</option>
+                            <option {{ old('jenis_ujian') == 'UAS' ? 'selected' : '' }} value="UAS">UAS</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="nilai" class="form-label">Nilai</label>
                         <input required type="number" class="form-control" name="nilai" id="nilai" value="{{ old('nilai') }}" placeholder="">
                     </div>

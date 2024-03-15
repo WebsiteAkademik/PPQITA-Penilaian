@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Laporan Rekap Penilaian Pelajaran
+    Laporan Rekap Penilaian Tahfidz
 @endsection
 
 @push('style')
@@ -36,7 +36,7 @@
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body p-4">
-                    <h3 class="fw-bold">Rekap Penilaian Pelajaran</h3>
+                    <h3 class="fw-bold">Rekap Penilaian Tahfidz</h3>
                     <div class="d-flex">
                         <a href="{{ route('cetak_laporan', ['min_date' => request('min_date'), 'max_date' => request('max_date')]) }}" target="_blank" class="btn btn-primary m-1">Cetak PDF</a>
                         <a href="{{ route('export-pendaftar', ['min_date' => request('min_date'), 'max_date' => request('max_date')]) }}" class="btn btn-success m-1">Export Excel</a>
@@ -52,16 +52,16 @@
                                         <h6 style="color: white" class="fw-semibold mb-0">Nama</h6>
                                     </th>
                                     <th style="text-align: center; width: 200px" class="border-bottom-0">
-                                        <h6 style="color: white" class="fw-semibold mb-0">Aqidah</h6>
+                                        <h6 style="color: white" class="fw-semibold mb-0">UI/UX</h6>
                                     </th>
                                     <th style="text-align: center; width: 200px" class="border-bottom-0">
-                                        <h6 style="color: white" class="fw-semibold mb-0">Fiqh</h6>
+                                        <h6 style="color: white" class="fw-semibold mb-0">Web Development</h6>
                                     </th>
                                     <th style="text-align: center; width: 200px" class="border-bottom-0">
-                                        <h6 style="color: white" class="fw-semibold mb-0">Adab</h6>
+                                        <h6 style="color: white" class="fw-semibold mb-0">Mobile Development</h6>
                                     </th>
                                     <th style="text-align: center; width: 200px" class="border-bottom-0">
-                                        <h6 style="color: white" class="fw-semibold mb-0">Prestasi</h6>
+                                        <h6 style="color: white" class="fw-semibold mb-0">Rata-Rata</h6>
                                     </th>
                                 </tr>
                             </thead>

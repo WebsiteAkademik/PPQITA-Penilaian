@@ -21,6 +21,11 @@ class Pengajar extends Model
         return $this->hasMany(MataPelajaran::class);
     }
 
+    public function setupMataPelajaran()
+    {
+        return $this->hasMany(SetupMataPelajaran::class);
+    }
+
     public function penilaianTahfidz()
     {
         return $this->belongsToMany(PenilaianTahfidz::class);
