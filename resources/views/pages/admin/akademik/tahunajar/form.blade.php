@@ -20,6 +20,14 @@
                         <input required type="text" class="form-control" name="tahun_ajaran" id="tahun_ajaran" value="{{ old('tahun_ajaran') }}" placeholder="Contoh: 2019/2020">
                     </div>
                     <div class="mb-3">
+                        <label for="semester" class="form-label">Semester</label>
+                        <select required class="form-select" id="semester" name="semester" value="{{ old('semester') }}">
+                            <option {{ old('semester') == '' ? 'selected' : '' }} disabled>--- Pilih Semester ---</option>
+                            <option {{ old('semester') == 'Ganjil' ? 'selected' : '' }} value="Ganjil">Ganjil</option>
+                            <option {{ old('semester') == 'Genap' ? 'selected' : '' }} value="Genap">Genap</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label">Status</label><br/>
                         <input required type="radio" name="status" id="aktif" value="aktif" {{ old('status') == 'aktif' ? 'checked' : '' }}>
                         <label for="aktif" class="form-label">AKTIF</label><br/>

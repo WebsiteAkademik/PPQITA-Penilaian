@@ -27,6 +27,14 @@
                         <input required type="text" class="form-control" name="tahun_ajaran" id="tahun_ajaran" value="{{ $tahunajar->tahun_ajaran }}">
                     </div>
                     <div class="mb-3">
+                        <label for="semester" class="form-label">Semester</label>
+                        <select required class="form-select" id="semester" name="semester">
+                            <option value="" disabled>--- Pilih Semester ---</option>
+                            <option value="Ganjil" {{ $tahunajar->semester == 'Ganjil' ? 'selected' : '' }}>Ganjil</option>
+                            <option value="Genap" {{ $tahunajar->semester == 'Genap' ? 'selected' : '' }}>Genap</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label">Status</label><br/>
                         <input required type="radio" name="status" id="aktif" value="aktif" {{ $tahunajar->status == 'aktif' ? 'checked' : '' }}>
                         <label for="aktif" class="form-label">AKTIF</label><br/>

@@ -191,25 +191,29 @@ use App\Models\TahunAjaran;
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#homeSubmenu" class="sidebar-link">
+                                    <a class="sidebar-link @if (Request::is('/dashboard/rekap_rapor-uts')) active @endif"
+                                        href="{{ route('rekapraporuts.list') }}" aria-expanded="false">
                                         <span><i class="fas fa-file-alt"></i></span>
                                         <span class="hide-menu">Rapor UTS</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#homeSubmenu" class="sidebar-link">
+                                    <a class="sidebar-link @if (Request::is('/dashboard/rekap_rapor-uas')) active @endif"
+                                        href="{{ route('rekapraporuas.list') }}" aria-expanded="false">
                                         <span><i class="fa-regular fa-file-lines"></i></span>
                                         <span class="hide-menu">Rapor UAS</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#homeSubmenu" class="sidebar-link">
+                                    <a class="sidebar-link @if (Request::is('/dashboard/rekap_penilaian-pelajaran')) active @endif"
+                                        href="{{ route('rekappenilaianpelajaran.list') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-print"></i></span>
                                         <span class="hide-menu">Laporan Rekap Penilaian Pelajaran</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#homeSubmenu" class="sidebar-link">
+                                    <a class="sidebar-link @if (Request::is('/dashboard/rekap_penilaian-tahfidz')) active @endif"
+                                        href="{{ route('rekappenilaiantahfidz.list') }}" aria-expanded="false">
                                         <span><i class="fa-solid fa-print"></i></span>
                                         <span class="hide-menu">Laporan Rekap Penilaian Tahfidz</span>
                                     </a>
@@ -252,6 +256,9 @@ use App\Models\TahunAjaran;
                     <div class="navbar-nav">
                         <div class="nav-item d-none d-lg-block">
                             <p class="text-white fs-4 mt-2" style="font-weight: 500">Tahun Ajaran: {{ $tahunajaran->tahun_ajaran}}</p>
+                        </div>
+                        <div class="nav-item d-none d-lg-block ms-3">
+                            <p class="text-white fs-4 mt-2" style="font-weight: 500">Semester: {{ $tahunajaran->semester}}</p>
                         </div>
                     </div>
                     <div class="navbar-collapse justify-content-end px-0" id="navbarNav">

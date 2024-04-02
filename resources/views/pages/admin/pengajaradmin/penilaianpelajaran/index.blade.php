@@ -60,10 +60,10 @@
                                         <h6 class="fw-semibold mb-0 text-white">Mata Pelajaran</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Nilai</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Jenis Ujian</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Keterangan</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Nilai</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Action</h6>
@@ -86,10 +86,10 @@
                                         <h6 class="fw-semibold mb-0">{{ $row->mapelID()->nama_mata_pelajaran }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->nilai }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->jenis_ujian }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->keterangan }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->nilai }}</h6>
                                     </td>
                                     <td class="border-bottom-0 align-items-center text-center">
                                         <div class="row" style="width: 100px; margin: 0 auto">

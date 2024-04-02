@@ -7,6 +7,8 @@
 <body>
 	<?php
     date_default_timezone_set('Asia/Jakarta'); //Sesuai zona waktu
+    $tanggal_hari_ini = date('d F Y');
+    $nomorurut = 1;
 	?>
     
 	<style type="text/css">
@@ -43,7 +45,7 @@
 	@php $i=1 @endphp
 	<center>
 		<h6>LAPORAN PENILAIAN HASIL UAS SANTRI</h6>
-		<h6>TAHUN PELAJARAN 2023/2024</h6>
+		<h6>TAHUN PELAJARAN {{ $tahunajar->tahun_ajaran }}</h6>
 	</center>
     <div class="content">
         <table class="noborder">
@@ -51,18 +53,18 @@
                 <tr>
                     <th style="width: 100px;">Nama</th>
                     <th style="width: 10px;">:</th>
-                    <th style="width: 300px;">asdf</th>
+                    <th style="width: 300px;">{{ $siswa->nama_siswa }}</th>
                     <th style="width: 100px;">Kelas</th>
                     <th style="width: 10px;">:</th>
-                    <th>asdf</th>
+                    <th>{{ $kelas->kelas}}</th>
                 </tr>
                 <tr>
                     <th>Nomor Induk</th>
                     <th>:</th>
-                    <th>asdf</th>
+                    <th>{{ $siswa->no_nisn}}</th>
                     <th>Semester</th>
                     <th>:</th>
-                    <th>asdf</th>
+                    <th>{{ $tahunajar->semester }}</th>
                 </tr>
             </tbody>
         </table>
@@ -91,203 +93,97 @@
             </thead>
             <thead>
                 <tr>
-                    <th colspan="6">0. ASDF</th>
+                    <th colspan="6">A. Mata Pelajaran Umum</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach ($penilaianumum as $key => $rowumum)
                 <tr>
                     <td>
-                        1
+                        {{ $nomorurut++ }}
                     </td>
                     <td>
-                        asdf
+                        {{ $rowumum['mapel']->nama_mata_pelajaran }}
                     </td>
                     <td>
-                        asdf
+                        {{ number_format($rowumum['mapel']->kkm, 2) }}
                     </td>
                     <td>
-                        asdf
+                        {{ $rowumum['nilai'] }}
                     </td>
                     <td>
-                        asdf
+                        {{ number_format($nilaiumum_kelas[$rowumum['mapel']->id], 2) ?? '-' }}
                     </td>
                     <td>
-                        asdf
+                        {{ $rowumum['keterangan'] }}
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        2
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        3
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                </tr>
+                @endforeach
             </tbody>
             <thead>
                 <tr>
-                    <th colspan="6">0. ASDF</th>
+                    <th colspan="6">B. Program Tahfidz</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach ($penilaiantahfidz as $key => $rowtahfidz)
                 <tr>
                     <td>
-                        1
+                        {{ $nomorurut++ }}
                     </td>
                     <td>
-                        asdf
+                        {{ $rowtahfidz['mapel']->nama_mata_pelajaran }}
                     </td>
                     <td>
-                        asdf
+                        {{ number_format($rowtahfidz['mapel']->kkm, 2) }}
                     </td>
                     <td>
-                        asdf
+                        {{ $rowtahfidz['nilai'] }}
                     </td>
                     <td>
-                        asdf
+                        {{ number_format($nilaitahfidz_kelas[$rowtahfidz['mapel']->id], 2) ?? '-' }}
                     </td>
                     <td>
-                        asdf
+                        {{ $rowtahfidz['keterangan'] }}
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        2
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        3
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                </tr>
+                @endforeach
             </tbody>
             <thead>
                 <tr>
-                    <th colspan="6">0. ASDF</th>
+                    <th colspan="6">C. Mata Pelajaran Dinniyah</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach ($penilaiandinniyah as $key => $rowdinniyah)
                 <tr>
                     <td>
-                        1
+                        {{ $nomorurut++ }}
                     </td>
                     <td>
-                        asdf
+                        {{ $rowdinniyah['mapel']->nama_mata_pelajaran }}
                     </td>
                     <td>
-                        asdf
+                        {{ number_format($rowdinniyah['mapel']->kkm, 2) }}
                     </td>
                     <td>
-                        asdf
+                        {{ $rowdinniyah['nilai'] }}
                     </td>
                     <td>
-                        asdf
+                        {{ number_format($nilaidinniyah_kelas[$rowdinniyah['mapel']->id], 2) ?? '-' }}
                     </td>
                     <td>
-                        asdf
+                        {{ $rowdinniyah['keterangan'] }}
                     </td>
                 </tr>
+                @endforeach
                 <tr>
-                    <td>
-                        2
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        3
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
-                    <td>
-                        asdf
-                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </tbody>
             <tbody>
@@ -296,13 +192,13 @@
                         
                     </td>
                     <td colspan="2">
-                        asdf
+                        Total Nilai
                     </td>
                     <td>
-                        asdf
+                        {{ number_format($nilaitotal_umum, 2) }}
                     </td>
                     <td colspan="2" rowspan="2">
-                        asdf
+                        
                     </td>
                 </tr>
                 <tr>
@@ -310,10 +206,10 @@
                         
                     </td>
                     <td colspan="2">
-                        asdf
+                        Total Nilai Rata-Rata
                     </td>
                     <td>
-                        asdf
+                        {{ number_format($nilai_rata_rata_total, 2) }}
                     </td>
                 </tr>
             </tbody>
@@ -393,7 +289,7 @@
         <table class="noborder">
             <tbody>
                 <tr>
-                    <td colspan="5" style="text-align: right;">Jakarta, 03 Maret 2024</td>
+                    <td colspan="5" style="text-align: right;">Karanganyar, {{ $tanggal_hari_ini }}</td>
                 </tr>
                 <tr>
                     <td style="text-align: center;">Orang Tua / Wali</td>
@@ -410,7 +306,7 @@
                     <td style="width: 10%;"></td>
                     <td style="text-align: center;">Siapa ya</td>
                     <td style="width: 10%;"></td>
-                    <td style="text-align: center;">Siapa ya</td>
+                    <td style="text-align: center;">{{ $kelas->pengajarID()->nama_pengajar}}</td>
                 </tr>
             </tbody>
         </table>

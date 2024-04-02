@@ -54,6 +54,9 @@
                                         <h6 class="fw-semibold mb-0 text-white">Kelas</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0 text-white">Wali Kelas</h6>
+                                    </th>
+                                    <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Action</h6>
                                     </th>
                                 </tr>
@@ -66,6 +69,9 @@
                                     </td>
                                     <td class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0">{{ $row->kelas }}</h6>
+                                    </td>
+                                    <td class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0">{{ $row->pengajarID()->nama_pengajar }}</h6>
                                     </td>
                                     <td class="border-bottom-0 align-items-center text-center">
                                         <div class="row col-6 d-flex justify-content-center" style="width: 100px; margin: 0 auto">

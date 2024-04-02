@@ -30,11 +30,9 @@ class PengajarController extends Controller
         $user = Auth::user();
         $pengajar = Pengajar::where('user_id', $user->id)->first();
         $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
-        $mapelTahfidz = MataPelajaran::where('nama_mata_pelajaran', 'Tahfidz')->first();
         
         $penilaiantahfidz = PenilaianTahfidz::where('pengajar_id', $pengajar->id)
             ->where('tahun_ajaran_id', $tahunAjaranAktif->id)
-            ->where('mata_pelajaran_id', $mapelTahfidz->id)
             ->get();
         
         return view('pages.admin.pengajaradmin.penilaiantahfidz.index', [
@@ -46,11 +44,9 @@ class PengajarController extends Controller
         $user = Auth::user();
         $pengajar = Pengajar::where('user_id', $user->id)->first();
         $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
-        $mapelTahfidz = MataPelajaran::where('nama_mata_pelajaran', 'Tahfidz')->first();
-    
-        $setupTahfidz = SetupMataPelajaran::withWhereHas('detailSetupMataPelajaran', function ($query) use ($mapelTahfidz){
-            $query->where('mata_pelajaran_id', $mapelTahfidz->id);
-        })->where('pengajar_id', $pengajar->id)
+        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')->first();
+        
+        $setupTahfidz = SetupMataPelajaran::where('pengajar_id', $pengajar->id)
         ->where('tahun_ajaran_id', $tahunAjaranAktif->id)
         ->get();
 
@@ -60,6 +56,21 @@ class PengajarController extends Controller
             $kelasTahfidz->push(Kelas::where('id', $setup->kelas_id)->first());
         }
 
+        $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunAjaranAktif, $pengajar) {
+            $query->where('tahun_ajaran_id', $tahunAjaranAktif->id)
+            ->where('pengajar_id', $pengajar->id);
+        })->get();
+
+        $mapelTahfidz = collect();
+        foreach ($detail as $detailItem) {
+            $mapel = MataPelajaran::where('id', $detailItem->mata_pelajaran_id)
+                ->where('sub_kategori_pelajaran_id', $subTahfidz->id)
+                ->first();
+            if ($mapel) {
+                $mapelTahfidz->push($mapel);
+            }
+        }
+        
         $siswa = Siswa::all();
 
         return view('pages.admin.pengajaradmin.penilaiantahfidz.form', [
@@ -75,14 +86,14 @@ class PengajarController extends Controller
         $user = Auth::user();
         $pengajar = Pengajar::where('user_id', $user->id)->first();
         $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
-        $mapelTahfidz = MataPelajaran::where('nama_mata_pelajaran', 'Tahfidz')->first();
-
+        
         $globalValidatorData = [
             'tanggal_penilaian' => 'required',
             'kelas_id' => 'required',
             'siswa_id' => 'required',
             'jenis_penilaian' => 'required',
             'nilai' => 'required',
+            'mata_pelajaran_id' => 'required',
             'surat_awal' => 'required',
             'surat_akhir' => 'required',
             'ayat_awal' => 'required',
@@ -101,14 +112,13 @@ class PengajarController extends Controller
         try {
             $data['tahun_ajaran_id'] = $tahunAjaranAktif->id;
             $data['pengajar_id'] = $pengajar->id;
-            $data['mata_pelajaran_id'] = $mapelTahfidz->id;
             $kelas = $request->kelas_id;
             $siswa = $request->siswa_id;
+            $mapel = MataPelajaran::where('id', $request->mata_pelajaran_id)->first();
     
-            // Mengecek apakah terdapat nama mata pelajaran yang sama pada tahun ajaran aktif yang sama
             $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunAjaranAktif, $pengajar, $kelas) {
                 $query->where('tahun_ajaran_id', $tahunAjaranAktif->id)->where('pengajar_id', $pengajar->id)->where('kelas_id', $kelas);})
-                ->where('mata_pelajaran_id', $mapelTahfidz->id)->exists();
+                ->where('mata_pelajaran_id', $request->mata_pelajaran_id)->exists();
             
             if (!$detail) {
                 Alert::error('Gagal! (E003)', 'Anda tidak mengampu mata pelajaran ini pada kelas ini!');
@@ -116,7 +126,7 @@ class PengajarController extends Controller
             }
 
             $nilai = $request->nilai;
-            $kkm = $mapelTahfidz->kkm;
+            $kkm = $mapel->kkm;
 
             if($nilai < $kkm){
                 $data['keterangan'] = "Belum Tercapai";
@@ -162,14 +172,13 @@ class PengajarController extends Controller
             Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada data yang kosong!');
             return redirect()->back()->withErrors($validatedData)->withInput();
         }
-    
-        $mapelTahfidz = MataPelajaran::where('nama_mata_pelajaran', 'Tahfidz')->first();
+
+        $penilaian = PenilaianTahfidz::findOrFail($id);
+        $mapelTahfidz = MataPelajaran::where('id', $penilaian->mata_pelajaran_id)->first();
         $nilai = $request->nilai;
         $kkm = $mapelTahfidz->kkm;
 
         $keterangan = ($nilai < $kkm) ? "Belum Tercapai" : "Tercapai";
-
-        $penilaian = PenilaianTahfidz::findOrFail($id);
     
         $penilaian->fill([
             'tanggal_penilaian' => $request->tanggal_penilaian,
@@ -185,6 +194,12 @@ class PengajarController extends Controller
         Alert::success('Berhasil', 'Nilai siswa berhasil diperbarui!');
         return redirect()->route('penilaiantahfidz.index')->with('success', 'Nilai siswa berhasil diperbarui!');
         
+    }
+
+    public function deletepenilaiantahfidz($id){
+        $nilai = PenilaianTahfidz::findOrFail($id);
+        $nilai->delete();
+        return redirect()->route('penilaiantahfidz.index')->with('success', 'Nilai tahfidz siswa berhasil dihapus!');
     }
     
     // Penilaian Pelajaran
@@ -207,6 +222,7 @@ class PengajarController extends Controller
         $user = Auth::user();
         $pengajar = Pengajar::where('user_id', $user->id)->first();
         $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
+        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')->first();
     
         $setup = SetupMataPelajaran::where('pengajar_id', $pengajar->id)
             ->where('tahun_ajaran_id', $tahunAjaranAktif->id)
@@ -224,8 +240,13 @@ class PengajarController extends Controller
         })->get();
 
         $mapel = collect();
-        foreach ($detail as $detail) {
-            $mapel->push(MataPelajaran::where('id', $detail->mata_pelajaran_id)->first());
+        foreach ($detail as $detailItem) {
+            $mapelTahfidz = MataPelajaran::where('id', $detailItem->mata_pelajaran_id)
+                ->where('sub_kategori_pelajaran_id', $subTahfidz->id)
+                ->first();
+            if (!$mapelTahfidz) {
+                $mapel->push(MataPelajaran::where('id', $detailItem->mata_pelajaran_id)->first());
+            }
         }
 
         $siswa = Siswa::all();
@@ -268,6 +289,19 @@ class PengajarController extends Controller
             $kelas = $request->kelas_id;
             $siswa = $request->siswa_id;
             $mapel = $request->mata_pelajaran_id;
+            $jenisUjian = $request->jenis_ujian;
+
+            // Mengecek apakah sudah terdapat nilai ujian yang sama pada siswa tersebut
+            $ujianAda = PenilaianPelajaran::where('siswa_id', $siswa)
+                ->where('tahun_ajaran_id', $tahunAjaranAktif->id)
+                ->where('mata_pelajaran_id', $mapel)
+                ->where('jenis_ujian', $jenisUjian)
+                ->exists();
+    
+            if ($jenisUjian !== 'Penilaian Harian' && $ujianAda) {
+                Alert::error('Gagal! (E006)', 'Nilai ' . $jenisUjian . ' untuk siswa ini pada semester ini sudah ada!');
+                return redirect()->back()->withInput();
+            }
     
             // Mengecek apakah terdapat nama mata pelajaran yang sama pada tahun ajaran aktif yang sama
             $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunAjaranAktif, $pengajar, $kelas) {
@@ -329,10 +363,23 @@ class PengajarController extends Controller
         $nilai = $request->nilai;
         $kkmMapel = MataPelajaran::where('id', $mapel)->first();
         $kkm = $kkmMapel->kkm;
+        $jenisUjian = $request->jenis_ujian;
+        $penilaian = PenilaianPelajaran::findOrFail($id);
+
+        // Mengecek apakah sudah terdapat nilai ujian yang sama pada siswa tersebut
+        $ujianAda = PenilaianPelajaran::where('id', '!=', $id)
+                ->where('siswa_id', $penilaian->siswa_id)
+                ->where('tahun_ajaran_id', $penilaian->tahun_ajaran_id)
+                ->where('mata_pelajaran_id', $mapel)
+                ->where('jenis_ujian', $jenisUjian)
+                ->exists();
+    
+        if ($jenisUjian !== 'Penilaian Harian' && $ujianAda) {
+            Alert::error('Gagal! (E006)', 'Nilai ' . $jenisUjian . ' untuk siswa ini pada semester ini sudah ada!');
+            return redirect()->back()->withInput();
+        }
 
         $keterangan = ($nilai < $kkm) ? "Belum Tercapai" : "Tercapai";
-
-        $penilaian = PenilaianPelajaran::findOrFail($id);
     
         $penilaian->fill([
             'tanggal_penilaian' => $request->tanggal_penilaian,

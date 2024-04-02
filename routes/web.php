@@ -179,6 +179,20 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     Route::get('/data_setup/{id}/detail/edit/{id2}', [AkademikController::class, 'editdetailsetup'])->name('detail.edit');
     Route::put('/data_setup/{id}/detail/edit/{id2}', [AkademikController::class, 'updatedetailsetup'])->name('detail.update');
     Route::delete('/data_setup/{id}/detail/{id2}/delete', [AkademikController::class, 'deletedetailsetup'])->name('detail.delete');
+
+    //Rapor
+    Route::get('/rekap_rapor-uas', [AkademikController::class, 'listrekapraporuas'])->name('rekapraporuas.list');
+    Route::get('/rekap_rapor-uas/{id}', [AkademikController::class, 'indexrekapraporuas'])->name('rekapraporuas.index');
+    Route::get('/rekap_rapor-uas/cetak-rapor/{id}', [AkademikController::class, 'cetak_raporuas'])->name('raporuas.cetak');
+
+    Route::get('/rekap_rapor-uts', [AkademikController::class, 'listrekapraporuts'])->name('rekapraporuts.list');
+    Route::get('/rekap_rapor-uts/{id}', [AkademikController::class, 'indexrekapraporuts'])->name('rekapraporuts.index');
+    Route::get('/rekap_rapor-uts/cetak-rapor/{id}', [AkademikController::class, 'cetak_raporuts'])->name('raporuts.cetak');
+
+    //Rekap Penilaian
+    Route::get('/rekap_penilaian-pelajaran', [AkademikController::class, 'listrekappenilaianpelajaran'])->name('rekappenilaianpelajaran.list');
+
+    Route::get('/rekap_penilaian-tahfidz', [AkademikController::class, 'listrekappenilaiantahfidz'])->name('rekappenilaiantahfidz.list');
     
     // Pendaftar
     Route::get('/pendaftar-baru', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');

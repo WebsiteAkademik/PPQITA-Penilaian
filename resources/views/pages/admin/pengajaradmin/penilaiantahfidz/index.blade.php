@@ -57,13 +57,13 @@
                                         <h6 class="fw-semibold mb-0 text-white">Kelas</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0 text-white">Mata Pelajaran</h6>
+                                    </th>
+                                    <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Jenis</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Nilai</h6>
-                                    </th>
-                                    <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Keterangan</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Action</h6>
@@ -83,13 +83,13 @@
                                         <h6 class="fw-semibold mb-0">{{ $row->kelasID()->kelas }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0">{{ $row->mapelID()->nama_mata_pelajaran }}</h6>
+                                    </td>
+                                    <td class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0">{{ $row->jenis_penilaian }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0">{{ $row->nilai }}</h6>
-                                    </td>
-                                    <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->keterangan }}</h6>
                                     </td>
                                     <td class="border-bottom-0 align-items-center text-center">
                                         <div class="row" style="width: 100px; margin: 0 auto">
@@ -107,7 +107,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>
-                                                <a href="#" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus mata pelajaran ini?')) document.getElementById('deleteForm{{ $row->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
+                                                <a href="#" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus nilai ini?')) document.getElementById('deleteForm{{ $row->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
                                             </div>
                                         </div>
                                     </td> 

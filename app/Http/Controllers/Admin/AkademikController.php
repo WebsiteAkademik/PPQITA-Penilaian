@@ -41,7 +41,8 @@ class AkademikController extends Controller
 
     public function tahunajarPost(Request $request){
         $globalValidatorData = [
-            'tahun_ajaran' => 'required|unique:tahun_ajarans,tahun_ajaran',
+            'tahun_ajaran' => 'required',
+            'semester' => 'required',
             'status' => 'required',
         ];
 
@@ -56,6 +57,15 @@ class AkademikController extends Controller
 
         if ($data['status'] === 'aktif') {
             TahunAjaran::where('status', 'aktif')->update(['status' => 'tidak aktif']);
+        }
+
+        $semesterada = TahunAjaran::where('tahun_ajaran', $request->tahun_ajaran)
+                    ->where('semester', $request->semester)
+                    ->exists();
+        
+        if($semesterada){
+            Alert::error('Gagal! (E008)', 'Tahun Ajaran dengan semester ini sudah ada!');
+            return redirect()->back()->withInput();
         }
         
         $tahunajar = NULL;
@@ -87,9 +97,21 @@ class AkademikController extends Controller
 
         // Validasi data yang diupdate
         $validatedData = $request->validate([
-            'tahun_ajaran' => 'required|unique:tahun_ajarans,tahun_ajaran,'.$id,
+            'tahun_ajaran' => 'required',
+            'semester' => 'required',
             'status' => 'required|in:aktif,tidak aktif',
         ]);
+
+        // Periksa apakah ada tahun ajaran dan semester yang sama
+        $semesterada = TahunAjaran::where('id', '!=', $id)
+            ->where('tahun_ajaran', $validatedData['tahun_ajaran'])
+            ->where('semester', $validatedData['semester'])
+            ->exists();
+
+        if($semesterada){
+            Alert::error('Gagal! (E008)', 'Tahun Ajaran dengan semester ini sudah ada!');
+            return redirect()->back()->withInput();
+        }
 
         // Periksa apakah status diubah menjadi 'aktif'
         if ($validatedData['status'] === 'aktif') {
@@ -501,12 +523,15 @@ class AkademikController extends Controller
     }
 
     public function showFormkelas(){
-        return view('pages.admin.akademik.kelas.form');
+        $pengajar = Pengajar::all();
+
+        return view('pages.admin.akademik.kelas.form', ['pengajar' => $pengajar]);
     }
 
     public function kelasPost(Request $request){
         $globalValidatorData = [
             'kelas' => 'required|unique:kelas,kelas',
+            'pengajar_id' => 'required',
         ];
 
         $globalValidator = Validator::make($request->all(), $globalValidatorData);
@@ -514,6 +539,14 @@ class AkademikController extends Controller
         if ($globalValidator->fails()) {
             Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada data yang sama!');
             return redirect()->back()->withErrors($globalValidator)->withInput();
+        }
+
+        $pengajarada = Kelas::where('pengajar_id', $request->pengajar_id)
+                    ->exists();
+        
+        if($pengajarada){
+            Alert::error('Gagal! (E010)', 'Pengajar telah menjadi wali kelas dari kelas lain!');
+            return redirect()->back()->withInput();
         }
 
         $data = $request->all();
@@ -534,8 +567,10 @@ class AkademikController extends Controller
 
     public function editkelas($id){
         $kelas = Kelas::findOrFail($id);
+
+        $pengajar = Pengajar::all();
     
-        return view('pages.admin.akademik.kelas.edit', compact('kelas'));
+        return view('pages.admin.akademik.kelas.edit', ['pengajar' => $pengajar, 'kelas' => $kelas]);
     }
 
     public function updatekelas(Request $request, $id){
@@ -543,16 +578,26 @@ class AkademikController extends Controller
 
         // Validasi data yang diupdate
         $validatedData = $request->validate([
-            'kelas' => 'required|unique:kelas,kelas',
+            'kelas' => ['required', Rule::unique('kelas', 'kelas')->ignore($id)],
+            'pengajar_id' => 'required',
         ]);
+
+        $pengajarada = Kelas::where('id', '!=', $id)
+                    ->where('pengajar_id', $validatedData['pengajar_id'])
+                    ->exists();
+        
+        if($pengajarada){
+            Alert::error('Gagal! (E010)', 'Pengajar telah menjadi wali kelas dari kelas lain!');
+            return redirect()->back()->withInput();
+        }
 
         // Update data Kelas
         try {
             $kelas->update($validatedData);
             return redirect()->route('kelas.index')->with('success', 'Kelas berhasil diperbaharui!');
         } catch (\Exception $e) {
-            // Tangani jika terjadi kesalahan saat update
-            return redirect()->back()->withErrors([$e->getMessage()])->withInput();
+            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan validasi data benar!');
+            return redirect()->back()->withInput();
         }
     }
 
@@ -680,14 +725,14 @@ class AkademikController extends Controller
             'nama_pengajar' => 'required',
             'alamat' => 'required',
             'no_wa_pengajar' => 'required',
-            'username' => 'required|alpha_dash|unique:users,name',
+            'username' => 'required|alpha_dash|unique:users,email',
             'password' => 'required'
         ];
 
         $globalValidator = Validator::make($request->all(), $globalValidatorData);
 
         if ($globalValidator->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan validasi data dengan database sudah benar!');
+            Alert::error('Gagal! (E001)', 'Terdapat username yang sama dalam database, ganti username lain!');
             return redirect()->back()->withErrors($globalValidator)->withInput();
         }
 
@@ -1180,11 +1225,364 @@ class AkademikController extends Controller
         Alert::success('Berhasil', 'Kelas Siswa berhasil diperbarui!');
         return redirect()->back();
     }
+
+    //Rekap Penilaian
+    public function listrekappenilaianpelajaran(){
+        $kelas = Kelas::all();
+    
+        return view('pages.admin.akademik.rekappenilaian.listrekappenilaianpelajaran', ['kelas' => $kelas]);
+    }
+
+    public function listrekappenilaiantahfidz(){
+        $kelas = Kelas::all();
+    
+        return view('pages.admin.akademik.rekappenilaian.listrekappenilaiantahfidz', ['kelas' => $kelas]);
+    }
+
+    //Rekap Rapor
+    public function listrekapraporuas(){
+        $kelas = Kelas::all();
+    
+        return view('pages.admin.akademik.rapor.rekapraporuas', ['kelas' => $kelas]);
+    }
+
+    public function indexrekapraporuas($id){
+        $tahunajar = TahunAjaran::where('status', 'aktif')->first();
+        $kelas = Kelas::findOrFail($id);
+
+        $siswa = Siswa::where('kelas_id', $kelas->id)->get();
+    
+        return view('pages.admin.akademik.rapor.raporuas', ['kelas' => $kelas, 'siswa' => $siswa, 'tahunajar' => $tahunajar]);
+    }
+
+    public function cetak_raporuas($id){
+        $siswa = Siswa::findorfail($id);
+        $tahunajar = TahunAjaran::where('status', 'aktif')->first();
+        $kelas = Kelas::where('id', $siswa->kelas_id)->first();
+
+        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->where('kelas_id', $kelas->id)->get();
+        $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
+            $query->where('tahun_ajaran_id', $tahunajar->id)
+            ->where('kelas_id', $kelas->id);
+        })->get();
+
+        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')->first();
+        $subDinniyah = SubKategoriPelajaran::where('nama_sub_kategori', 'Dinniyah')->first();
+
+        $mapelumum = collect();
+        $mapeltahfidz = collect();
+        $mapeldinniyah = collect();
+
+        foreach ($detail as $detail) {
+            $mapelTahfidz = MataPelajaran::where('id', $detail->mata_pelajaran_id)
+                ->where('sub_kategori_pelajaran_id', $subTahfidz->id)
+                ->first();
+            $mapelDinniyah = MataPelajaran::where('id', $detail->mata_pelajaran_id)
+                ->where('sub_kategori_pelajaran_id', $subDinniyah->id)
+                ->first();
+            if(!$mapelTahfidz && !$mapelDinniyah){
+                $mapelumum->push(MataPelajaran::where('id', $detail->mata_pelajaran_id)->first());
+            }
+            if ($mapelDinniyah) {
+                $mapeldinniyah->push(MataPelajaran::where('id', $detail->mata_pelajaran_id)->first());
+            }
+            if ($mapelTahfidz) {
+                $mapeltahfidz->push(MataPelajaran::where('id', $detail->mata_pelajaran_id)->first());
+            }
+        }
+
+        $penilaianumum = [];
+        $nilaiumum_kelas = [];
+
+        foreach ($mapelumum as $mapel) {
+            $nilaiumum_kelas[$mapel->id] = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->avg('nilai');
+        }
+
+        foreach ($mapelumum as $mapel) {
+            $penilaian = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+                ->where('siswa_id', $siswa->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->get();
+            
+            // Hitung rata-rata nilai jika ada penilaian
+            $nilai_rata_rata = number_format($penilaian->avg('nilai'), 2);
+
+            $keterangan = $penilaian->isEmpty() ? '' : $penilaian->first()->keterangan;
+        
+            // Tentukan deskripsi berdasarkan kondisi nilai
+            if ($nilai_rata_rata >= $mapel->kkm && $nilai_rata_rata > ($nilaiumum_kelas[$mapel->id] ?? 0)) {
+                $keterangan = 'Terlampaui';
+            }
+
+            // Tambahkan data penilaian ke array penilaian umum
+            $penilaianumum[] = [
+                'mapel' => $mapel,
+                'nilai' => $nilai_rata_rata,
+                'keterangan' => $keterangan,
+            ];
+        }
+
+        $penilaiandinniyah = [];
+        $nilaidinniyah_kelas = [];
+
+        foreach ($mapeldinniyah as $mapel) {
+            $nilaidinniyah_kelas[$mapel->id] = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->avg('nilai');
+        }
+
+        foreach ($mapeldinniyah as $mapel) {
+            $penilaian = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+                ->where('siswa_id', $siswa->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->get();
+            
+            // Hitung rata-rata nilai jika ada penilaian
+            $nilai_rata_rata = number_format($penilaian->avg('nilai'), 2);
+
+            $keterangan = $penilaian->isEmpty() ? '' : $penilaian->first()->keterangan;
+        
+            // Tentukan deskripsi berdasarkan kondisi nilai
+            if ($nilai_rata_rata >= $mapel->kkm && $nilai_rata_rata > ($nilaidinniyah_kelas[$mapel->id] ?? 0)) {
+                $keterangan = 'Terlampaui';
+            }
+
+            // Tambahkan data penilaian ke array penilaian umum
+            $penilaiandinniyah[] = [
+                'mapel' => $mapel,
+                'nilai' => $nilai_rata_rata,
+                'keterangan' => $keterangan,
+            ];
+        }
+
+        $penilaiantahfidz = [];
+        $nilaitahfidz_kelas = [];
+
+        foreach ($mapeltahfidz as $mapel) {
+            $nilaitahfidz_kelas[$mapel->id] = PenilaianTahfidz::where('mata_pelajaran_id', $mapel->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->avg('nilai');
+        }
+
+        foreach ($mapeltahfidz as $mapel) {
+            $penilaian = PenilaianTahfidz::where('mata_pelajaran_id', $mapel->id)
+                ->where('siswa_id', $siswa->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->get();
+            
+            // Hitung rata-rata nilai jika ada penilaian
+            $nilai_rata_rata = number_format($penilaian->avg('nilai'), 2);
+
+            $keterangan = $penilaian->isEmpty() ? '' : $penilaian->first()->keterangan;
+        
+            // Tentukan deskripsi berdasarkan kondisi nilai
+            if ($nilai_rata_rata >= $mapel->kkm && $nilai_rata_rata > ($nilaitahfidz_kelas[$mapel->id] ?? 0)) {
+                $keterangan = 'Terlampaui';
+            }
+
+            // Tambahkan data penilaian ke array penilaian umum
+            $penilaiantahfidz[] = [
+                'mapel' => $mapel,
+                'nilai' => $nilai_rata_rata,
+                'keterangan' => $keterangan,
+            ];
+        }
+
+        // Menggabungkan semua penilaian menjadi satu array
+        $semuaPenilaian = array_merge($penilaianumum, $penilaiantahfidz, $penilaiandinniyah);
+
+        $nilaitotal_umum = 0;
+        $count_nilaitotal_umum = 0;
+
+        foreach ($semuaPenilaian as $penilaian) {
+            $nilaitotal_umum += $penilaian['nilai'];
+            $count_nilaitotal_umum++;
+        }
+
+        if ($count_nilaitotal_umum > 0) {
+            $nilai_rata_rata_total = number_format($nilaitotal_umum / $count_nilaitotal_umum, 2);
+        } else {
+            $nilai_rata_rata_total = 0; // Ini opsional, sesuai kebutuhan aplikasi Anda
+        }
+
+        $rapor = PDF::loadView  ('pages.admin.akademik.rapor.cetakraporuas', ['siswa' => $siswa, 'kelas' => $kelas, 'tahunajar' => $tahunajar, 'nilaitotal_umum' => $nilaitotal_umum, 'nilai_rata_rata_total' => $nilai_rata_rata_total, 'nilaiumum_kelas' => $nilaiumum_kelas, 'nilaitahfidz_kelas' => $nilaitahfidz_kelas, 'nilaidinniyah_kelas' => $nilaidinniyah_kelas, 'penilaiantahfidz' => $penilaiantahfidz, 'penilaiandinniyah' => $penilaiandinniyah, 'penilaianumum' => $penilaianumum])->setPaper('A4', 'portrait');
+        return $rapor->stream('rapor_{{ $siswa->no_nisn }}.pdf');
+    }
+
+    public function listrekapraporuts(){
+        $kelas = Kelas::all();
+    
+        return view('pages.admin.akademik.rapor.rekapraporuts', ['kelas' => $kelas]);
+    }
+
+    public function indexrekapraporuts($id){
+        $tahunajar = TahunAjaran::where('status', 'aktif')->first();
+        $kelas = Kelas::findOrFail($id);
+
+        $siswa = Siswa::where('kelas_id', $kelas->id)->get();
+    
+        return view('pages.admin.akademik.rapor.raporuts', ['kelas' => $kelas, 'siswa' => $siswa, 'tahunajar' => $tahunajar]);
+    }
+
+    public function cetak_raporuts($id){
+        $siswa = Siswa::findorfail($id);
+        $tahunajar = TahunAjaran::where('status', 'aktif')->first();
+        $kelas = Kelas::where('id', $siswa->kelas_id)->first();
+
+        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->where('kelas_id', $kelas->id)->get();
+        $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
+            $query->where('tahun_ajaran_id', $tahunajar->id)
+            ->where('kelas_id', $kelas->id);
+        })->get();
+
+        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')->first();
+        $subDinniyah = SubKategoriPelajaran::where('nama_sub_kategori', 'Dinniyah')->first();
+
+        $mapelumum = collect();
+        $mapeltahfidz = collect();
+        $mapeldinniyah = collect();
+
+        foreach ($detail as $detail) {
+            $mapelTahfidz = MataPelajaran::where('id', $detail->mata_pelajaran_id)
+                ->where('sub_kategori_pelajaran_id', $subTahfidz->id)
+                ->first();
+            $mapelDinniyah = MataPelajaran::where('id', $detail->mata_pelajaran_id)
+                ->where('sub_kategori_pelajaran_id', $subDinniyah->id)
+                ->first();
+            if(!$mapelTahfidz && !$mapelDinniyah){
+                $mapelumum->push(MataPelajaran::where('id', $detail->mata_pelajaran_id)->first());
+            }
+            if ($mapelDinniyah) {
+                $mapeldinniyah->push(MataPelajaran::where('id', $detail->mata_pelajaran_id)->first());
+            }
+            if ($mapelTahfidz) {
+                $mapeltahfidz->push(MataPelajaran::where('id', $detail->mata_pelajaran_id)->first());
+            }
+        }
+
+        $penilaianumum = [];
+        $nilaiumum_kelas = [];
+
+        foreach ($mapelumum as $mapel) {
+            $nilaiumum_kelas[$mapel->id] = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->where('jenis_ujian', 'UTS')
+                ->avg('nilai');
+        }
+
+        foreach ($mapelumum as $mapel) {
+            $penilaian = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+                ->where('siswa_id', $siswa->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->where('jenis_ujian', 'UTS')
+                ->get();
+            
+            // Hitung rata-rata nilai jika ada penilaian
+            $nilai_rata_rata = number_format($penilaian->avg('nilai'), 2);
+
+            $keterangan = $penilaian->isEmpty() ? '' : $penilaian->first()->keterangan;
+        
+            // Tentukan deskripsi berdasarkan kondisi nilai
+            if ($nilai_rata_rata >= $mapel->kkm && $nilai_rata_rata > ($nilaiumum_kelas[$mapel->id] ?? 0)) {
+                $keterangan = 'Terlampaui';
+            }
+
+            // Tambahkan data penilaian ke array penilaian umum
+            $penilaianumum[] = [
+                'mapel' => $mapel,
+                'nilai' => $nilai_rata_rata,
+                'keterangan' => $keterangan,
+            ];
+        }
+
+        $penilaiandinniyah = [];
+        $nilaidinniyah_kelas = [];
+
+        foreach ($mapeldinniyah as $mapel) {
+            $nilaidinniyah_kelas[$mapel->id] = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->where('jenis_ujian', 'UTS')
+                ->avg('nilai');
+        }
+
+        foreach ($mapeldinniyah as $mapel) {
+            $penilaian = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+                ->where('siswa_id', $siswa->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->where('jenis_ujian', 'UTS')
+                ->get();
+            
+            // Hitung rata-rata nilai jika ada penilaian
+            $nilai_rata_rata = number_format($penilaian->avg('nilai'), 2);
+
+            $keterangan = $penilaian->isEmpty() ? '' : $penilaian->first()->keterangan;
+        
+            // Tentukan deskripsi berdasarkan kondisi nilai
+            if ($nilai_rata_rata >= $mapel->kkm && $nilai_rata_rata > ($nilaidinniyah_kelas[$mapel->id] ?? 0)) {
+                $keterangan = 'Terlampaui';
+            }
+
+            // Tambahkan data penilaian ke array penilaian umum
+            $penilaiandinniyah[] = [
+                'mapel' => $mapel,
+                'nilai' => $nilai_rata_rata,
+                'keterangan' => $keterangan,
+            ];
+        }
+
+        $penilaiantahfidz = [];
+        $nilaitahfidz_kelas = [];
+
+        foreach ($mapeltahfidz as $mapel) {
+            $nilaitahfidz_kelas[$mapel->id] = PenilaianTahfidz::where('mata_pelajaran_id', $mapel->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->avg('nilai');
+        }
+
+        foreach ($mapeltahfidz as $mapel) {
+            $penilaian = PenilaianTahfidz::where('mata_pelajaran_id', $mapel->id)
+                ->where('siswa_id', $siswa->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->get();
+            
+            // Hitung rata-rata nilai jika ada penilaian
+            $nilai_rata_rata = number_format($penilaian->avg('nilai'), 2);
+
+            $keterangan = $penilaian->isEmpty() ? '' : $penilaian->first()->keterangan;
+        
+            // Tentukan deskripsi berdasarkan kondisi nilai
+            if ($nilai_rata_rata >= $mapel->kkm && $nilai_rata_rata > ($nilaitahfidz_kelas[$mapel->id] ?? 0)) {
+                $keterangan = 'Terlampaui';
+            }
+
+            // Tambahkan data penilaian ke array penilaian umum
+            $penilaiantahfidz[] = [
+                'mapel' => $mapel,
+                'nilai' => $nilai_rata_rata,
+                'keterangan' => $keterangan,
+            ];
+        }
+
+        // Menggabungkan semua penilaian menjadi satu array
+        $semuaPenilaian = array_merge($penilaianumum, $penilaiantahfidz, $penilaiandinniyah);
+
+        $nilaitotal_umum = 0;
+        $count_nilaitotal_umum = 0;
+
+        foreach ($semuaPenilaian as $penilaian) {
+            $nilaitotal_umum += $penilaian['nilai'];
+            $count_nilaitotal_umum++;
+        }
+
+        if ($count_nilaitotal_umum > 0) {
+            $nilai_rata_rata_total = number_format($nilaitotal_umum / $count_nilaitotal_umum, 2);
+        } else {
+            $nilai_rata_rata_total = 0; // Ini opsional, sesuai kebutuhan aplikasi Anda
+        }
+
+        $rapor = PDF::loadView  ('pages.admin.akademik.rapor.cetakraporuts', ['siswa' => $siswa, 'kelas' => $kelas, 'tahunajar' => $tahunajar, 'nilaitotal_umum' => $nilaitotal_umum, 'nilai_rata_rata_total' => $nilai_rata_rata_total, 'nilaiumum_kelas' => $nilaiumum_kelas, 'nilaitahfidz_kelas' => $nilaitahfidz_kelas, 'nilaidinniyah_kelas' => $nilaidinniyah_kelas, 'penilaiantahfidz' => $penilaiantahfidz, 'penilaiandinniyah' => $penilaiandinniyah, 'penilaianumum' => $penilaianumum])->setPaper('A4', 'portrait');
+        return $rapor->stream('rapor-uts_{{ $siswa->no_nisn }}.pdf');
+    }
 }
-
-
-
-
-
-
-

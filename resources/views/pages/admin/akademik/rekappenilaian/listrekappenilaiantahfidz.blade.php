@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Rapor UTS
+    Rekap Penilaian Tahfidz
 @endsection
 
 @push('style')
@@ -19,7 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
-            new DataTable('#table-kategori', {
+            new DataTable('#table-rekapnilai', {
                 "oLanguage": {
                     "sLengthMenu": "Tampilkan _MENU_ data per halaman",
                     "sZeroRecords": "Data tidak ditemukan",
@@ -29,22 +29,6 @@
             });
         });
     </script>
-    <style>
-        .table-h {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        .table-h td, .table-h th {
-            padding: 8px;
-            text-align: left;
-        }
-
-        .table-bordered, .table-bordered thead, .table-bordered tbody, .table-bordered th, .table-bordered td, .table-bordered tr {
-            border-collapse: collapse;
-            border: 1px solid #666;
-        }
-    </style>
 @endpush
 
 @section('content')
@@ -52,45 +36,16 @@
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body">
-                    <h5 class="card-title fs-6 fw-semibold mb-4">Rapor UTS</h5>
-                    @if(session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
-                    <div class="card">
-                        <div class="card-body">
-                            <table class="table-h">
-                                <tr>
-                                    <th style="width: 150px">Wali Kelas</th>
-                                    <td style="width: 10px;">:</td>
-                                    <td>{{ $kelas->pengajarID()->nama_pengajar }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Tahun Ajaran</th>
-                                    <td>:</td>
-                                    <td>{{ $tahunajar->tahun_ajaran }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Kelas</th>
-                                    <td>:</td>
-                                    <td>{{ $kelas->kelas }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Semester</th>
-                                    <td>:</td>
-                                    <td>{{ $tahunajar->semester }}</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
+                    <h5 class="card-title fs-6 fw-semibold mb-4">Rekap Penilaian Tahfidz</h5>
                     <div class="table-responsive">
-                        <table class="table table-bordered text-nowrap mb-0 align-middle" id="table-kategori">
+                        <table class="table text-nowrap mb-0 align-middle" id="table-rekapnilai">
                             <thead class="text-dark fs-4">
                                 <tr style="background-color: #2E8CB5">
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">No.</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Nama Siswa</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Kelas</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Action</h6>
@@ -98,17 +53,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($siswa as $key => $row)
+                                @foreach ($kelas as $key => $row)
                                 <tr>
                                     <td class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0">{{ $key + 1 }}</h6>
                                     </td>
                                     <td class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0">{{ $row->nama_siswa }}</h6>
+                                        <h6 class="fw-semibold mb-0">{{ $row->kelas }}</h6>
                                     </td>
                                     <td class="border-bottom-0 align-items-center text-center">
                                         <div class="row col-6 d-flex justify-content-center" style="width: 100px; margin: 0 auto">
-                                            <a href="{{ route('raporuts.cetak', $row->id) }}" target="_blank" class="btn btn-success m-3" id="cetakRapor">Cetak Rapor</a>
+                                            <a href="" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
                                         </div>
                                     </td> 
                                 </tr>

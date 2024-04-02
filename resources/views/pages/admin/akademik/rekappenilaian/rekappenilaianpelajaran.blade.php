@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Laporan Rekap Penilaian Tahfidz
+    Laporan Rekap Penilaian Pelajaran
 @endsection
 
 @push('style')
@@ -125,4 +125,3 @@
         </div>
     </div>
 @endsection
-

@@ -48,10 +48,13 @@
                             <thead class="text-dark fs-4">
                                 <tr style="background-color: #2E8CB5">
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">ID</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">No.</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Tahun Ajaran</h6>
+                                    </th>
+                                    <th style="width: 100px;" class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0 text-white">Semester</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Status</h6>
@@ -69,6 +72,9 @@
                                     </td>
                                     <td class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0">{{ $row->tahun_ajaran }}</h6>
+                                    </td>
+                                    <td class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0">{{ $row->semester }}</h6>
                                     </td>
                                     <td class="border-bottom-0 align-items-center text-center">
                                         @php

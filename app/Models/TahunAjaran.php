@@ -9,7 +9,7 @@ class TahunAjaran extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tahun_ajaran', 'status'];
+    protected $fillable = ['tahun_ajaran', 'status', 'semester'];
 
     public function user(){
         return $this->belongsTo(User::class);

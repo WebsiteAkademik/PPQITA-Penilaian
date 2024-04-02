@@ -9,7 +9,7 @@ class Kelas extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['kelas'];
+    protected $fillable = ['kelas', 'pengajar_id'];
 
     public function matapelajaran()
     {
@@ -29,5 +29,9 @@ class Kelas extends Model
     public function penilaianPelajaran()
     {
         return $this->belongsToMany(PenilaianPelajaran::class);
+    }
+
+    public function pengajarID(){
+        return Pengajar::where("id", $this->pengajar_id)->first();
     }
 }

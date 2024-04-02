@@ -19,6 +19,15 @@
                         <label for="kelas" class="form-label">Kelas</label>
                         <input required type="text" class="form-control" name="kelas" id="kelas" value="{{ old('kelas') }}" placeholder="Contoh: XA">
                     </div>
+                    <div class="mb-3">
+                        <label for="nama_pengajar" class="form-label">Wali Kelas</label>
+                        <select name="pengajar_id" id="pengajar_id" class="form-select" required>
+                            <option value="" disabled selected>Pengajar</option>
+                            @foreach ($pengajar as $pengajar)
+                                <option value="{{ $pengajar->id }}">{{ $pengajar->nama_pengajar }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
             </div>

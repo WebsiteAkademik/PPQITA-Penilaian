@@ -31,6 +31,11 @@
                         <input disabled type="text" class="form-control" name="kelas" id="kelas" value="{{ $penilaian->kelasID()->kelas }}" placeholder="">
                     </div>
                     <div class="mb-3">
+                        <label for="nama_mata_pelajaran" class="form-label">Mata Pelajaran</label>
+                        <input type="hidden" name="mata_pelajaran_id" id="mata_pelajaran_id" value="{{ $penilaian->mata_pelajaran_id }}">
+                        <input disabled type="text" class="form-control" name="nama_mata_pelajaran" id="nama_mata_pelajaran" value="{{ $penilaian->mapelID()->nama_mata_pelajaran }}" placeholder="">
+                    </div>
+                    <div class="mb-3">
                         <label for="jenis_penilaian" class="form-label">Jenis Penilaian</label>
                         <select required class="form-select" id="jenis_penilaian" name="jenis_penilaian">
                             <option value="" disabled>--- Pilih Jenis Penilaian ---</option>

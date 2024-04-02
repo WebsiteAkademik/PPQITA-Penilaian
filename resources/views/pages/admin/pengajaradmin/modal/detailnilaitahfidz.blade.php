@@ -21,6 +21,10 @@
                                 <td>{{ $row->kelasId()->kelas }}</td>
                             </tr>
                             <tr>
+                                <th>Mata Pelajaran :</th>
+                                <td>{{ $row->mapelId()->nama_mata_pelajaran }}</td>
+                            </tr>
+                            <tr>
                                 <th>Jenis Penilaian :</th>
                                 <td>{{ $row->jenis_penilaian }}</td>
                             </tr>
