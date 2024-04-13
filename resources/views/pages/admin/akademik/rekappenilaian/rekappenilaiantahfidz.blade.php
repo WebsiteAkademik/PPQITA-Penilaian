@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Laporan Rekap Penilaian Pelajaran
+    Laporan Rekap Penilaian Tahfidz
 @endsection
 
 @push('style')
@@ -36,85 +36,75 @@
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body p-4">
-                    <h3 class="fw-bold">Rekap Penilaian Tahfidz</h3>
+                    <h3 class="fw-bold">Rekap Penilaian Tahfidz {{ $kelas->kelas }}</h3><br/>
                     <div class="d-flex">
-                        <a href="{{ route('cetak_laporan', ['min_date' => request('min_date'), 'max_date' => request('max_date')]) }}" target="_blank" class="btn btn-primary m-1">Cetak PDF</a>
-                        <a href="{{ route('export-pendaftar', ['min_date' => request('min_date'), 'max_date' => request('max_date')]) }}" class="btn btn-success m-1">Export Excel</a>
+                        <a href="{{ route('rekappenilaiantahfidz.cetak', $kelas->id) }}" target="_blank" class="btn btn-primary m-1">Cetak Rekap</a>
+                        <a href="{{ route('rekappenilaiantahfidz.export', $kelas->id) }}" class="btn btn-success m-1">Export Rekap</a>
                     </div><br/>
                     <div class="table">
                         <table class="table mb-0 align-middle" id="table-pendaftaran">
                             <thead class="text-dark">
                                 <tr style="background-color: #2E8CB5">
-                                    <th style="text-align: center; width: 20px" class="border-bottom-0">
+                                    <th style="text-align: center; vertical-align: middle;" class="border-bottom-0" rowspan="2">
                                         <h6 style="color: white" class="fw-semibold mb-0">No.</h6>
                                     </th>
-                                    <th style="text-align: center" class="border-bottom-0">
+                                    <th style="text-align: center; vertical-align: middle;" class="border-bottom-0" rowspan="2">
                                         <h6 style="color: white" class="fw-semibold mb-0">Nama</h6>
                                     </th>
-                                    <th style="text-align: center; width: 200px" class="border-bottom-0">
-                                        <h6 style="color: white" class="fw-semibold mb-0">Aqidah</h6>
+                                    <th style="text-align: center" class="border-bottom-0" colspan="{{ count($mapel) }}">
+                                        <h6 style="color: white" class="fw-semibold mb-0">Nilai</h6>
                                     </th>
-                                    <th style="text-align: center; width: 200px" class="border-bottom-0">
-                                        <h6 style="color: white" class="fw-semibold mb-0">Fiqh</h6>
+                                    <th style="text-align: center; vertical-align: middle;" class="border-bottom-0" rowspan="2">
+                                        <h6 style="color: white" class="fw-semibold mb-0">Rata-Rata</h6>
                                     </th>
-                                    <th style="text-align: center; width: 200px" class="border-bottom-0">
-                                        <h6 style="color: white" class="fw-semibold mb-0">Adab</h6>
+                                </tr>
+                                <tr style="background-color: #2E8CB5">
+                                    @foreach($mapel as $m)
+                                    <th style="text-align: center" class="border-bottom-0">
+                                        <h6 style="color: white" class="fw-semibold mb-0">{{ $m->nama_mata_pelajaran }}</h6>
                                     </th>
-                                    <th style="text-align: center; width: 200px" class="border-bottom-0">
-                                        <h6 style="color: white" class="fw-semibold mb-0">Prestasi</h6>
-                                    </th>
+                                    @endforeach
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($rekapNilai as $index => $rekap)
                                 <tr>
-                                    <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">asdf</h6>
-                                    </td>
-                                    <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">asdf</h5>           
-                                    </td>
-                                    <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">asdf</h5>
-                                    </td>
-                                    <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">asdf</h5>
-                                    </td>
-                                    <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">asdf</h5>
-                                    </td>
-                                    <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">asdf</h5>
+                                    <td style="text-align: center;" class="border-bottom-0">{{ $index + 1 }}</td>
+                                    <td class="border-bottom-0">{{ $rekap['siswa']->nama_siswa }}</td>
+                                    @foreach ($rekap['nilai'] as $nilai)
+                                    <td style="text-align: center;" class="border-bottom-0">{{ $nilai['nilai'] }}</td>
+                                    @endforeach
+                                    <td style="text-align: center;" class="border-bottom-0">{{-- Rata-rata --}}
+                                        @php
+                                            $totalNilai = 0;
+                                            foreach($rekap['nilai'] as $n){
+                                                $totalNilai += $n['nilai'];
+                                            }
+                                            $rataRata = count($rekap['nilai']) > 0 ? $totalNilai / count($rekap['nilai']) : 0;
+                                        @endphp
+                                        {{ number_format($rataRata, 2) }}
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">asdf</h6>
-                                    </td>
-                                    <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">asdf</h5>           
-                                    </td>
-                                    <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">asdf</h5>
-                                    </td>
-                                    <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">asdf</h5>
-                                    </td>
-                                    <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">asdf</h5>
-                                    </td>
-                                    <td class="border-bottom-0">
-                                        <h5 class="fw-normal mb-1">asdf</h5>
-                                    </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                             <thead>
                                 <tr>
-                                    <td colspan="4"></td>
-                                    <td style="background-color: #2E8CB5">
+                                    <td colspan="{{ count($mapel) + 1 }}"></td>
+                                    <td style="background-color: #2E8CB5" colspan="1">
                                         <h6 class="fw-semibold mb-0" style="color: white">Rata-Rata Kelas</h6>
                                     </td>
-                                    <td>
-                                        <h6 class="fw-semibold mb-0">asdf</h6>
+                                    <td style="text-align: center; vertical-align: middle">
+                                        @php
+                                            $totalRataRataKelas = 0;
+                                            $totalSiswa = count($rekapNilai);
+                                            foreach($rekapNilai as $rekap){
+                                                foreach($rekap['nilai'] as $nilai){
+                                                    $totalRataRataKelas += $nilai['nilai'];
+                                                }
+                                            }
+                                            $rataRataKelas = $totalSiswa > 0 ? $totalRataRataKelas / ($totalSiswa * count($mapel)) : 0;
+                                        @endphp
+                                        {{ number_format($rataRataKelas, 2) }}
                                     </td>
                                 </tr>    
                             </thead>
@@ -125,4 +115,3 @@
         </div>
     </div>
 @endsection
-

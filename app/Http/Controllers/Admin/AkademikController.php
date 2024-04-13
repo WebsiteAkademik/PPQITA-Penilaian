@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\exportRekapNilai;
 
 class AkademikController extends Controller
 {
@@ -1233,10 +1234,344 @@ class AkademikController extends Controller
         return view('pages.admin.akademik.rekappenilaian.listrekappenilaianpelajaran', ['kelas' => $kelas]);
     }
 
+    public function indexrekappenilaianpelajaran($id){
+        $tahunajar = TahunAjaran::where('status', 'aktif')->first();
+        $kelas = Kelas::findOrFail($id);
+
+        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->where('kelas_id', $kelas->id)->get();
+        $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
+            $query->where('tahun_ajaran_id', $tahunajar->id)
+            ->where('kelas_id', $kelas->id);
+        })->get();
+
+        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')->first();
+
+        $mapel = collect();
+
+        foreach($detail as $d){
+            $mapelTahfidz = MataPelajaran::where('id', $d->mata_pelajaran_id)
+                ->where('sub_kategori_pelajaran_id', $subTahfidz->id)
+                ->first();
+            if(!$mapelTahfidz){
+                $mapel->push(MataPelajaran::where('id', $d->mata_pelajaran_id)->first());
+            }
+        }
+
+        // Ambil siswa sesuai kelas dan nilai sesuai dengan mata pelajaran yang ada
+        $siswa = Siswa::where('kelas_id', $kelas->id)->get();
+        $rekapNilai = [];
+
+        foreach ($siswa as $s) {
+            $nilaiSiswa = [];
+
+            foreach ($mapel as $mapelItem) {
+                // Penilaian pelajaran umum, bukan tahfidz atau dinniyah
+                $nilai = PenilaianPelajaran::where('siswa_id', $s->id)
+                    ->where('mata_pelajaran_id', $mapelItem->id)
+                    ->avg('nilai');
+
+                $nilaiSiswa[] = [
+                    'mapel' => $mapelItem,
+                    'nilai' => number_format($nilai, 2),
+                ];
+            }
+
+            $rekapNilai[] = [
+                'siswa' => $s,
+                'nilai' => $nilaiSiswa,
+            ];
+        }
+
+        return view('pages.admin.akademik.rekappenilaian.rekappenilaianpelajaran', ['kelas' => $kelas, 'tahunajar' => $tahunajar, 'mapel' => $mapel, 'rekapNilai' => $rekapNilai]);
+    }
+
+    public function export_rekappenilaianpelajaran($id){
+        $kelas = Kelas::findOrFail($id);
+        $tahunajar = TahunAjaran::where('status', 'aktif')->first();
+
+        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->where('kelas_id', $kelas->id)->get();
+        $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
+            $query->where('tahun_ajaran_id', $tahunajar->id)
+            ->where('kelas_id', $kelas->id);
+        })->get();
+
+        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')->first();
+
+        $mapel = collect();
+
+        foreach($detail as $d){
+            $mapelTahfidz = MataPelajaran::where('id', $d->mata_pelajaran_id)
+                ->where('sub_kategori_pelajaran_id', $subTahfidz->id)
+                ->first();
+            if(!$mapelTahfidz){
+                $mapel->push(MataPelajaran::where('id', $d->mata_pelajaran_id)->first());
+            }
+        }
+
+        // Ambil siswa sesuai kelas dan nilai sesuai dengan mata pelajaran yang ada
+        $siswa = Siswa::where('kelas_id', $kelas->id)->get();
+        $rekapNilai = [];
+
+        foreach ($siswa as $s) {
+            $nilaiSiswa = [];
+
+            foreach ($mapel as $mapelItem) {
+                // Penilaian pelajaran umum, bukan tahfidz atau dinniyah
+                $nilai = PenilaianPelajaran::where('siswa_id', $s->id)
+                    ->where('mata_pelajaran_id', $mapelItem->id)
+                    ->avg('nilai');
+
+                $nilaiSiswa[] = [
+                    'mapel' => $mapelItem,
+                    'nilai' => number_format($nilai, 2),
+                ];
+            }
+
+            $rekapNilai[] = [
+                'siswa' => $s,
+                'nilai' => $nilaiSiswa,
+            ];
+        }
+
+        $totalRataRataKelas = 0;
+		$totalSiswa = count($rekapNilai);
+		foreach($rekapNilai as $rekap){
+			foreach($rekap['nilai'] as $nilai){
+				$totalRataRataKelas += $nilai['nilai'];
+			}
+		}
+		$rataRataKelas = $totalSiswa > 0 ? $totalRataRataKelas / ($totalSiswa * count($mapel)) : 0;
+
+        $rekapNilai = collect($rekapNilai);
+
+        $export = new ExportRekapNilai($rekapNilai, $mapel, $rataRataKelas);
+
+        return Excel::download($export, 'Rekap_Penilaian_Pelajaran_Kelas_'.$kelas->kelas.'.xlsx');
+    }
+
+    public function cetak_rekappenilaianpelajaran($id){
+        $kelas = Kelas::findOrFail($id);
+        $tahunajar = TahunAjaran::where('status', 'aktif')->first();
+
+        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->where('kelas_id', $kelas->id)->get();
+        $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
+            $query->where('tahun_ajaran_id', $tahunajar->id)
+            ->where('kelas_id', $kelas->id);
+        })->get();
+
+        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')->first();
+
+        $mapel = collect();
+
+        foreach($detail as $d){
+            $mapelTahfidz = MataPelajaran::where('id', $d->mata_pelajaran_id)
+                ->where('sub_kategori_pelajaran_id', $subTahfidz->id)
+                ->first();
+            if(!$mapelTahfidz){
+                $mapel->push(MataPelajaran::where('id', $d->mata_pelajaran_id)->first());
+            }
+        }
+
+        // Ambil siswa sesuai kelas dan nilai sesuai dengan mata pelajaran yang ada
+        $siswa = Siswa::where('kelas_id', $kelas->id)->get();
+        $rekapNilai = [];
+
+        foreach ($siswa as $s) {
+            $nilaiSiswa = [];
+
+            foreach ($mapel as $mapelItem) {
+                // Penilaian pelajaran umum, bukan tahfidz atau dinniyah
+                $nilai = PenilaianPelajaran::where('siswa_id', $s->id)
+                    ->where('mata_pelajaran_id', $mapelItem->id)
+                    ->avg('nilai');
+
+                $nilaiSiswa[] = [
+                    'mapel' => $mapelItem,
+                    'nilai' => number_format($nilai, 2),
+                ];
+            }
+
+            $rekapNilai[] = [
+                'siswa' => $s,
+                'nilai' => $nilaiSiswa,
+            ];
+        }
+
+        $pdf = PDF::loadView('pages.admin.akademik.rekappenilaian.cetakpenilaianpelajaran', ['kelas' => $kelas, 'tahunajar' => $tahunajar, 'mapel' => $mapel, 'rekapNilai' => $rekapNilai]);
+        return $pdf->stream('Rekap Penilaian Pelajaran Kelas '.$kelas->kelas.'.pdf');
+    }
+
     public function listrekappenilaiantahfidz(){
         $kelas = Kelas::all();
     
         return view('pages.admin.akademik.rekappenilaian.listrekappenilaiantahfidz', ['kelas' => $kelas]);
+    }
+
+    public function indexrekappenilaiantahfidz($id){
+        $tahunajar = TahunAjaran::where('status', 'aktif')->first();
+        $kelas = Kelas::findOrFail($id);
+
+        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->where('kelas_id', $kelas->id)->get();
+        $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
+            $query->where('tahun_ajaran_id', $tahunajar->id)
+            ->where('kelas_id', $kelas->id);
+        })->get();
+
+        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')->first();
+
+        $mapel = collect();
+
+        foreach($detail as $d){
+            $mapelTahfidz = MataPelajaran::where('id', $d->mata_pelajaran_id)
+                ->where('sub_kategori_pelajaran_id', $subTahfidz->id)
+                ->first();
+            if($mapelTahfidz){
+                $mapel->push(MataPelajaran::where('id', $d->mata_pelajaran_id)->first());
+            }
+        }
+
+        // Ambil siswa sesuai kelas dan nilai sesuai dengan mata pelajaran yang ada
+        $siswa = Siswa::where('kelas_id', $kelas->id)->get();
+        $rekapNilai = [];
+
+        foreach ($siswa as $s) {
+            $nilaiSiswa = [];
+
+            foreach ($mapel as $mapelItem) {
+                // Penilaian pelajaran umum, bukan tahfidz atau dinniyah
+                $nilai = PenilaianTahfidz::where('siswa_id', $s->id)
+                    ->where('mata_pelajaran_id', $mapelItem->id)
+                    ->avg('nilai');
+
+                $nilaiSiswa[] = [
+                    'mapel' => $mapelItem,
+                    'nilai' => number_format($nilai, 2),
+                ];
+            }
+
+            $rekapNilai[] = [
+                'siswa' => $s,
+                'nilai' => $nilaiSiswa,
+            ];
+        }
+
+        return view('pages.admin.akademik.rekappenilaian.rekappenilaiantahfidz', ['kelas' => $kelas, 'tahunajar' => $tahunajar, 'mapel' => $mapel, 'rekapNilai' => $rekapNilai]);
+    }
+
+    public function export_rekappenilaiantahfidz($id){
+        $kelas = Kelas::findOrFail($id);
+        $tahunajar = TahunAjaran::where('status', 'aktif')->first();
+
+        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->where('kelas_id', $kelas->id)->get();
+        $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
+            $query->where('tahun_ajaran_id', $tahunajar->id)
+            ->where('kelas_id', $kelas->id);
+        })->get();
+
+        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')->first();
+
+        $mapel = collect();
+
+        foreach($detail as $d){
+            $mapelTahfidz = MataPelajaran::where('id', $d->mata_pelajaran_id)
+                ->where('sub_kategori_pelajaran_id', $subTahfidz->id)
+                ->first();
+            if($mapelTahfidz){
+                $mapel->push(MataPelajaran::where('id', $d->mata_pelajaran_id)->first());
+            }
+        }
+
+        // Ambil siswa sesuai kelas dan nilai sesuai dengan mata pelajaran yang ada
+        $siswa = Siswa::where('kelas_id', $kelas->id)->get();
+        $rekapNilai = [];
+
+        foreach ($siswa as $s) {
+            $nilaiSiswa = [];
+
+            foreach ($mapel as $mapelItem) {
+                // Penilaian pelajaran umum, bukan tahfidz atau dinniyah
+                $nilai = PenilaianTahfidz::where('siswa_id', $s->id)
+                    ->where('mata_pelajaran_id', $mapelItem->id)
+                    ->avg('nilai');
+
+                $nilaiSiswa[] = [
+                    'mapel' => $mapelItem,
+                    'nilai' => number_format($nilai, 2),
+                ];
+            }
+
+            $rekapNilai[] = [
+                'siswa' => $s,
+                'nilai' => $nilaiSiswa,
+            ];
+        }
+
+        $totalRataRataKelas = 0;
+		$totalSiswa = count($rekapNilai);
+		foreach($rekapNilai as $rekap){
+			foreach($rekap['nilai'] as $nilai){
+				$totalRataRataKelas += $nilai['nilai'];
+			}
+		}
+		$rataRataKelas = $totalSiswa > 0 ? $totalRataRataKelas / ($totalSiswa * count($mapel)) : 0;
+
+        $rekapNilai = collect($rekapNilai);
+
+        $export = new ExportRekapNilai($rekapNilai, $mapel, $rataRataKelas);
+
+        return Excel::download($export, 'Rekap_Penilaian_Tahfidz_Kelas_'.$kelas->kelas.'.xlsx');
+    }
+
+    public function cetak_rekappenilaiantahfidz($id){
+        $kelas = Kelas::findOrFail($id);
+        $tahunajar = TahunAjaran::where('status', 'aktif')->first();
+
+        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->where('kelas_id', $kelas->id)->get();
+        $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
+            $query->where('tahun_ajaran_id', $tahunajar->id)
+            ->where('kelas_id', $kelas->id);
+        })->get();
+
+        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')->first();
+
+        $mapel = collect();
+
+        foreach($detail as $d){
+            $mapelTahfidz = MataPelajaran::where('id', $d->mata_pelajaran_id)
+                ->where('sub_kategori_pelajaran_id', $subTahfidz->id)
+                ->first();
+            if($mapelTahfidz){
+                $mapel->push(MataPelajaran::where('id', $d->mata_pelajaran_id)->first());
+            }
+        }
+
+        // Ambil siswa sesuai kelas dan nilai sesuai dengan mata pelajaran yang ada
+        $siswa = Siswa::where('kelas_id', $kelas->id)->get();
+        $rekapNilai = [];
+
+        foreach ($siswa as $s) {
+            $nilaiSiswa = [];
+
+            foreach ($mapel as $mapelItem) {
+                // Penilaian pelajaran umum, bukan tahfidz atau dinniyah
+                $nilai = PenilaianTahfidz::where('siswa_id', $s->id)
+                    ->where('mata_pelajaran_id', $mapelItem->id)
+                    ->avg('nilai');
+
+                $nilaiSiswa[] = [
+                    'mapel' => $mapelItem,
+                    'nilai' => number_format($nilai, 2),
+                ];
+            }
+
+            $rekapNilai[] = [
+                'siswa' => $s,
+                'nilai' => $nilaiSiswa,
+            ];
+        }
+
+        $pdf = PDF::loadView('pages.admin.akademik.rekappenilaian.cetakpenilaiantahfidz', ['kelas' => $kelas, 'tahunajar' => $tahunajar, 'mapel' => $mapel, 'rekapNilai' => $rekapNilai]);
+        return $pdf->stream('Rekap Penilaian Tahfidz Kelas'. $kelas->kelas .'.pdf');
     }
 
     //Rekap Rapor

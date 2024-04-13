@@ -191,9 +191,15 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
 
     //Rekap Penilaian
     Route::get('/rekap_penilaian-pelajaran', [AkademikController::class, 'listrekappenilaianpelajaran'])->name('rekappenilaianpelajaran.list');
+    Route::get('/rekap_penilaian-pelajaran/{id}', [AkademikController::class, 'indexrekappenilaianpelajaran'])->name('rekappenilaianpelajaran.index');
+    Route::get('/rekap_penilaian-pelajaran/{id}/cetak_rekapnilaipelajaran', [AkademikController::class, 'cetak_rekappenilaianpelajaran'])->name('rekappenilaianpelajaran.cetak');
+    Route::get('/rekap_penilaian-pelajaran/{id}/export_rekapnilaipelajaran', [AkademikController::class, 'export_rekappenilaianpelajaran'])->name('rekappenilaianpelajaran.export');
 
     Route::get('/rekap_penilaian-tahfidz', [AkademikController::class, 'listrekappenilaiantahfidz'])->name('rekappenilaiantahfidz.list');
-    
+    Route::get('/rekap_penilaian-tahfidz/{id}', [AkademikController::class, 'indexrekappenilaiantahfidz'])->name('rekappenilaiantahfidz.index');
+    Route::get('/rekap_penilaian-tahfidz/{id}/cetak_rekapnilaitahfidz', [AkademikController::class, 'cetak_rekappenilaiantahfidz'])->name('rekappenilaiantahfidz.cetak');
+    Route::get('/rekap_penilaian-tahfidz/{id}/export_rekapnilaitahfidz', [AkademikController::class, 'export_rekappenilaiantahfidz'])->name('rekappenilaiantahfidz.export');
+
     // Pendaftar
     Route::get('/pendaftar-baru', [PendaftaranOnlineController::class, 'index'])->name('pendaftar.index');
     Route::post('/pendaftar-baru', [PendaftaranOnlineController::class, 'indexPOST'])->name('pendaftar.indexUpdateStatusMenunggu');
