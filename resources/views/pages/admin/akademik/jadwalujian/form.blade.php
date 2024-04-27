@@ -25,7 +25,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="kelas" class="form-label">Kelas</label>
-                        <select name="kelas_id" id="kelas_id" class="form-select" required>
+                        <select name="kelas_id" id="kelas_id" class="form-select" onchange="getMapel()" required>
                             <option value="" disabled selected>Kelas</option>
                             @foreach ($kelas as $kelas)
                                 <option value="{{ $kelas->id }}">{{ $kelas->kelas }}</option>
@@ -44,10 +44,7 @@
                     <div class="mb-3">
                         <label for="nama_mata_pelajaran" class="form-label">Mata Pelajaran</label>
                         <select name="mata_pelajaran_id" id="mata_pelajaran_id" class="form-select" required>
-                            <option value="" disabled selected>Mata Pelajaran</option>
-                            @foreach ($mapel as $mapel)
-                                <option value="{{ $mapel->id }}">{{ $mapel->nama_mata_pelajaran }}</option>
-                            @endforeach
+                            <option value="" disabled selected>--- Pilih Mata Pelajaran ---</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -62,3 +59,34 @@
     </div>
 @endsection
 
+@push('script')
+    <script>
+        function getMapel() {
+            var kelasId = document.getElementById('kelas_id').value;
+            var tahunAjaranId = document.getElementById('tahun_ajaran_id').value;
+            var mapelSelect = document.getElementById('mata_pelajaran_id');
+
+            mapelSelect.innerHTML = '<option value="" disabled selected>--- Pilih Mata Pelajaran ---</option>';
+
+            fetch(`{{ route('fetchMapel', ['kelasId' => ':kelasId', 'tahunAjaranId' => ':tahunAjaranId']) }}`.replace(':kelasId', kelasId).replace(':tahunAjaranId', tahunAjaranId))
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('HTTP error ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Populate select options with fetched data
+                    data.forEach(mapels => {
+                        var option = document.createElement('option');
+                        option.value = mapels.id;
+                        option.text = mapels.nama_mata_pelajaran;
+                        mapelSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+    </script>
+@endpush

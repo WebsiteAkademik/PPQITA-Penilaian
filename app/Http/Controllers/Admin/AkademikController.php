@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use App\Models\TahunAjaran;
 use App\Models\KategoriPelajaran;
@@ -25,10 +27,11 @@ use Illuminate\Validation\Rule;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\exportRekapNilai;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AkademikController extends Controller
 {
-    
+    //Admin//**
     //Tahun Ajar
     public function listtahunajar(){
         $tahunajar = TahunAjaran::all();
@@ -86,10 +89,8 @@ class AkademikController extends Controller
     }
 
     public function edittahunajar($id){
-        // Retrieve the jadwal test based on the $id
         $tahunajar = TahunAjaran::findOrFail($id);
     
-        // Return the view for editing the jadwal test
         return view('pages.admin.akademik.tahunajar.edit', compact('tahunajar'));
     }
 
@@ -619,11 +620,24 @@ class AkademikController extends Controller
         $tahunAjaran = TahunAjaran::where('status', 'aktif')->first();
 
         $kelas = Kelas::all();
-
-        $mapel = MataPelajaran::where('tahun_ajaran_id', $tahunAjaran->id)->get();
         
-        return view('pages.admin.akademik.jadwalujian.form', ['tahunAjaran' => $tahunAjaran, 'kelas' => $kelas, 'mapel' => $mapel]);
+        return view('pages.admin.akademik.jadwalujian.form', ['tahunAjaran' => $tahunAjaran, 'kelas' => $kelas]);
     }
+
+    public function fetchMapel($kelasId, $tahunAjaranId) {
+        // Fetch mapel data based on $kelasId and $tahunAjaranId
+        $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($kelasId, $tahunAjaranId) {
+            $query->where('tahun_ajaran_id', $tahunAjaranId)
+                ->where('kelas_id', $kelasId);
+        })->get();
+    
+        $mapels = $detail->map(function ($item) {
+            return MataPelajaran::find($item->mata_pelajaran_id);
+        });
+    
+        return response()->json($mapels);
+    }
+        
 
     public function jadwalujianPost(Request $request){
         $globalValidatorData = [
@@ -1920,4 +1934,7 @@ class AkademikController extends Controller
         $rapor = PDF::loadView  ('pages.admin.akademik.rapor.cetakraporuts', ['siswa' => $siswa, 'kelas' => $kelas, 'tahunajar' => $tahunajar, 'nilaitotal_umum' => $nilaitotal_umum, 'nilai_rata_rata_total' => $nilai_rata_rata_total, 'nilaiumum_kelas' => $nilaiumum_kelas, 'nilaitahfidz_kelas' => $nilaitahfidz_kelas, 'nilaidinniyah_kelas' => $nilaidinniyah_kelas, 'penilaiantahfidz' => $penilaiantahfidz, 'penilaiandinniyah' => $penilaiandinniyah, 'penilaianumum' => $penilaianumum])->setPaper('A4', 'portrait');
         return $rapor->stream('rapor-uts_{{ $siswa->no_nisn }}.pdf');
     }
+
+    //Siswa//**
+    //
 }

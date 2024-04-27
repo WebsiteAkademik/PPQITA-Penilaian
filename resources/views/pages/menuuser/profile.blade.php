@@ -1,7 +1,7 @@
 @extends('layouts.adminuser')
 
 @section('title')
-    Dashboard USER
+    Profile Siswa
 @endsection
 
 @push('script')

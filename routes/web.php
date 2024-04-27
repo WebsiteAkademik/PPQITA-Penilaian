@@ -15,6 +15,9 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PengajarController;
 use App\Models\JadwalTest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -152,6 +155,7 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
     //Jadwal Ujian
     Route::get('/data_jadwalujian', [AkademikController::class, 'listjadwalujian'])->name('jadwalujian.index');
     Route::get('/data_jadwalujian/form', [AkademikController::class, 'showFormjadwalujian'])->name('jadwalujian.form');
+    Route::get('/fetch-mapel/{kelasId}/{tahunAjaranId}', [AkademikController::class, 'fetchMapel'])->name('fetchMapel');
     Route::post('/data_jadwalujian/form', [AkademikController::class, 'jadwalujianPost'])->name('jadwalujian.formPOST');
     Route::get('/data_jadwalujian/edit/{id}', [AkademikController::class, 'editjadwalujian'])->name('jadwalujian.edit');
     Route::put('/data_jadwalujian/edit/{id}', [AkademikController::class, 'updatejadwalujian'])->name('jadwalujian.update');

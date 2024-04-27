@@ -16,7 +16,8 @@ use App\Models\TahunAjaran;
 
     {{-- FontAwesome Icon --}}
     <script src="https://kit.fontawesome.com/b30b4ab1e3.js" crossorigin="anonymous"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
     @stack('style')
 <style>
     .active{
