@@ -21,7 +21,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="nama_mata_pelajaran" class="form-label">Nama Mata Pelajaran</label>
-                        <input required type="text" class="form-control" name="nama_mata_pelajaran" id="nama_mata_pelajaran" value="{{ old('nama_mata_pelajaran') }}" placeholder="">
+                        <input required type="text" class="form-control" name="nama_mata_pelajaran" id="nama_mata_pelajaran" value="{{ old('nama_mata_pelajaran') }}" placeholder="Tulis Nama Mata Pelajaran">
                     </div>
                     <div class="mb-3">
                         <label for="kkm" class="form-label">KKM</label>
@@ -30,7 +30,7 @@
                     <div class="mb-3">
                         <label for="nama_kategori" class="form-label">Kategori Pelajaran</label>
                         <select name="kategori_pelajaran_id" id="kategori_pelajaran_id" class="form-select" onchange="getSubKategori()" required>
-                            <option value="" disabled selected>Kategori</option>
+                            <option value="" disabled selected>--- Pilih Kategori Pelajaran ---</option>
                             @foreach ($kategori as $kategori)
                                 <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
                             @endforeach
@@ -39,7 +39,7 @@
                     <div class="mb-3">
                         <label for="nama_sub_kategori" class="form-label">Sub Kategori Pelajaran</label>
                         <select name="sub_kategori_pelajaran_id" id="sub_kategori_pelajaran_id" class="form-select" required>
-                            <option value="" disabled selected>Sub Kategori</option>
+                            <option value="" disabled selected>--- Pilih Sub Kategori Pelajaran ---</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -56,7 +56,7 @@
             var subKategoriSelect = document.getElementById('sub_kategori_pelajaran_id');
 
             //Menghapus option yang ada
-            subKategoriSelect.innerHTML = '<option value="" disabled selected>Sub Kategori</option>';
+            subKategoriSelect.innerHTML = '<option value="" disabled selected>--- Pilih Sub Kategori Pelajaran ---</option>';
 
             //Mengambil function select sub kategori yang terelasi dengan kategori yang dipilih
             @foreach ($subkategori as $subkat)

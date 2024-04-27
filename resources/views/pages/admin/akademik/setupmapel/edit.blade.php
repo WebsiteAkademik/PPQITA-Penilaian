@@ -29,7 +29,7 @@
                     <div class="mb-3">
                         <label for="nama_kelas" class="form-label">Kelas</label>
                         <select name="kelas_id" id="kelas_id" class="form-select" required>
-                            <option value="" disabled selected>Kelas</option>
+                            <option value="" disabled selected>--- Pilih Kelas ---</option>
                             @foreach ($kelas as $kelas)
                                 <option value="{{ $kelas->id }}" {{ $setup->kelas_id == $kelas->id ? 'selected' : '' }}>{{ $kelas->kelas }}</option>
                             @endforeach
@@ -38,7 +38,7 @@
                     <div class="mb-3">
                         <label for="nama_pengajar" class="form-label">Pengajar</label>
                         <select name="pengajar_id" id="pengajar_id" class="form-select" required>
-                            <option value="" disabled selected>Pengajar</option>
+                            <option value="" disabled selected>--- Pilih Nama Pengajar ---</option>
                             @foreach ($pengajar as $pengajar)
                                 <option value="{{ $pengajar->id }}" {{ $setup->pengajar_id == $pengajar->id ? 'selected' : '' }}>{{ $pengajar->nama_pengajar }}</option>
                             @endforeach

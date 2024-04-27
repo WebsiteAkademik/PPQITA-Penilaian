@@ -21,12 +21,12 @@
                     </div>
                     <div class="mb-3">
                         <label for="nama_sub_kategori" class="form-label">Sub Kategori Pelajaran</label>
-                        <input required type="text" class="form-control" name="nama_sub_kategori" id="nama_sub_kategori" value="{{ old('nama_sub_kategori') }}" placeholder="">
+                        <input required type="text" class="form-control" name="nama_sub_kategori" id="nama_sub_kategori" value="{{ old('nama_sub_kategori') }}" placeholder="Tulis Nama Sub Kategori Pelajaran">
                     </div>
                     <div class="mb-3">
                         <label for="nama_kategori" class="form-label">Kategori Pelajaran</label>
                         <select name="kategori_id" id="kategori_id" class="form-select" required>
-                            <option value="" disabled selected>Kategori</option>
+                            <option value="" disabled selected>--- Pilih Kategori Pelajaran ---</option>
                             @foreach ($kategori as $kategori)
                                 <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
                             @endforeach

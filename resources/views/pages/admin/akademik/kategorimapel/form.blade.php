@@ -21,7 +21,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="nama_kategori" class="form-label">Kategori Pelajaran</label>
-                        <input required type="text" class="form-control" name="nama_kategori" id="nama_kategori" value="{{ old('nama_kategori') }}" placeholder="">
+                        <input required type="text" class="form-control" name="nama_kategori" id="nama_kategori" value="{{ old('nama_kategori') }}" placeholder="Tulis Nama Kategori Pelajaran">
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>

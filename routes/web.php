@@ -64,6 +64,7 @@ Route::middleware('auth', 'cekrole:pengajar')->prefix('dashboardpengajar')->grou
     // Penilaian Tahfidz
     Route::get('/data_penilaiantahfidz', [PengajarController::class, 'listpenilaiantahfidz'])->name('penilaiantahfidz.index');
     Route::get('/data_penilaiantahfidz/form', [PengajarController::class, 'showFormpenilaiantahfidz'])->name('penilaiantahfidz.form');
+    Route::get('/fetch-mapeltahfidz/{kelasId}/{tahunajarId}/{pengajarId}', [PengajarController::class, 'fetchMapelTahfidz'])->name('fetchMapelTahfidz');
     Route::post('/data_penilaiantahfidz/form', [PengajarController::class, 'penilaiantahfidzPost'])->name('penilaiantahfidz.formPOST');
     Route::get('/data_penilaiantahfidz/edit/{id}', [PengajarController::class, 'editpenilaiantahfidz'])->name('penilaiantahfidz.edit');
     Route::put('/data_penilaiantahfidz/edit/{id}', [PengajarController::class, 'updatepenilaiantahfidz'])->name('penilaiantahfidz.update');
@@ -72,6 +73,7 @@ Route::middleware('auth', 'cekrole:pengajar')->prefix('dashboardpengajar')->grou
     // Penilaian Pelajaran
     Route::get('/data_penilaianpelajaran', [PengajarController::class, 'listpenilaianpelajaran'])->name('penilaianpelajaran.index');
     Route::get('/data_penilaianpelajaran/form', [PengajarController::class, 'showFormpenilaianpelajaran'])->name('penilaianpelajaran.form');
+    Route::get('/fetch-mapelumum/{kelasId}/{tahunajarId}/{pengajarId}', [PengajarController::class, 'fetchMapelUmum'])->name('fetchMapelUmum');
     Route::post('/data_penilaianpelajaran/form', [PengajarController::class, 'penilaianpelajaranPost'])->name('penilaianpelajaran.formPOST');
     Route::get('/data_penilaianpelajaran/edit/{id}', [PengajarController::class, 'editpenilaianpelajaran'])->name('penilaianpelajaran.edit');
     Route::put('/data_penilaianpelajaran/edit/{id}', [PengajarController::class, 'updatepenilaianpelajaran'])->name('penilaianpelajaran.update');

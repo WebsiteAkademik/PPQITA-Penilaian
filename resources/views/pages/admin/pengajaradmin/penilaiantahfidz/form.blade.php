@@ -31,8 +31,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="kelas" class="form-label">Kelas</label>
-                        <select name="kelas_id" id="kelas_id" class="form-select" onchange="getSiswa()" required>
-                            <option value="" disabled selected>Kelas</option>
+                        <select name="kelas_id" id="kelas_id" class="form-select" onchange="inputClass()" required>
+                            <option value="" disabled selected>--- Pilih Kelas ---</option>
                             @foreach ($kelasTahfidz as $kelas)
                                 <option value="{{ $kelas->id }}">{{ $kelas->kelas }}</option>
                             @endforeach
@@ -41,16 +41,13 @@
                     <div class="mb-3">
                         <label for="nama_siswa" class="form-label">Siswa</label>
                         <select name="siswa_id" id="siswa_id" class="form-select" required>
-                            <option value="" disabled selected>Siswa</option>
+                            <option value="" disabled selected>--- Pilih Nama Siswa ---</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="nama_mata_pelajaran" class="form-label">Mata Pelajaran</label>
                         <select name="mata_pelajaran_id" id="mata_pelajaran_id" class="form-select" required>
-                            <option value="" disabled selected>-------Mata Pelajaran-------</option>
-                            @foreach ($mapelTahfidz as $mapel)
-                                <option value="{{ $mapel->id }}">{{ $mapel->nama_mata_pelajaran }}</option>
-                            @endforeach
+                            <option value="" disabled selected>--- Pilih Mata Pelajaran ---</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -92,13 +89,18 @@
 
 @push('script')
     <script>
+        function inputClass(){
+            getSiswa();
+            getMapel();
+        }
+
         function getSiswa() {
             var kelasId = document.getElementById('kelas_id').value;
             var pengajarId = document.getElementById('pengajar_id').value;
             var tahunajarId = document.getElementById('tahun_ajaran_id').value;
             var siswaSelect = document.getElementById('siswa_id');
 
-            siswaSelect.innerHTML = '<option value="" disabled selected>Siswa</option>';
+            siswaSelect.innerHTML = '<option value="" disabled selected>--- Pilih Nama Siswa ---</option>';
 
             @foreach ($siswa as $siswa)
                 if ({{ $siswa->kelas_id }} == kelasId) {
@@ -108,6 +110,35 @@
                     siswaSelect.appendChild(option);
                 }
             @endforeach
+        }
+
+        function getMapel() {
+            var kelasId = document.getElementById('kelas_id').value;
+            var pengajarId = document.getElementById('pengajar_id').value;
+            var tahunajarId = document.getElementById('tahun_ajaran_id').value;
+            var mapelSelect = document.getElementById('mata_pelajaran_id');
+
+            mapelSelect.innerHTML = '<option value="" disabled selected>--- Pilih Mata Pelajaran ---</option>';
+
+            fetch(`{{ route('fetchMapelTahfidz', ['kelasId' => ':kelasId', 'tahunajarId' => ':tahunajarId', 'pengajarId' => ':pengajarId']) }}`.replace(':kelasId', kelasId).replace(':tahunajarId', tahunajarId).replace(':pengajarId', pengajarId))
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('HTTP error ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Populate select options with fetched data
+                    data.forEach(mapels => {
+                        var option = document.createElement('option');
+                        option.value = mapels.id;
+                        option.text = mapels.nama_mata_pelajaran;
+                        mapelSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
         }
     </script>
 @endpush

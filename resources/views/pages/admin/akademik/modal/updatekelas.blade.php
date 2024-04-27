@@ -12,7 +12,7 @@
                     <div class="mb-3">
                         <label for="nama_kelas" class="form-label">Kelas</label>
                         <select name="kelas_id" id="kelas_id" class="form-select" required>
-                            <option value="" disabled selected>Kelas</option>
+                            <option value="" disabled selected>--- Pilih Kelas Siswa ---</option>
                             @foreach ($kelas as $kelas)
                                 <option value="{{ $kelas->id }}" {{ $row->kelas_id == $kelas->id ? 'selected' : '' }}>{{ $kelas->kelas }}</option>
                             @endforeach

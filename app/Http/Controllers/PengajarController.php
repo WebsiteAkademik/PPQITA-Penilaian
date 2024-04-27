@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class PengajarController extends Controller
 {
@@ -80,6 +81,28 @@ class PengajarController extends Controller
             'pengajar' => $pengajar,
             'tahunAjaranAktif' => $tahunAjaranAktif
         ]);
+    }
+
+    public function fetchMapelTahfidz($kelasId, $tahunAjaranId, $pengajarId) {
+        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')->first();
+
+        $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($kelasId, $tahunAjaranId, $pengajarId) {
+            $query->where('tahun_ajaran_id', $tahunAjaranId)
+                ->where('pengajar_id', $pengajarId)
+                ->where('kelas_id', $kelasId);
+        })->get();
+    
+        $mapels = $detail->map(function ($item, $key) use ($subTahfidz) {
+            $mapel = MataPelajaran::where('id', $item->mata_pelajaran_id)
+                ->where('sub_kategori_pelajaran_id', $subTahfidz->id)
+                ->first();
+            if($mapel) {
+                return MataPelajaran::find($item->mata_pelajaran_id);
+            }
+            
+        });
+    
+        return response()->json($mapels);
     }
 
     public function penilaiantahfidzPost(Request $request){
@@ -258,6 +281,21 @@ class PengajarController extends Controller
             'pengajar' => $pengajar,
             'tahunAjaranAktif' => $tahunAjaranAktif
         ]);
+    }
+
+    public function fetchMapelUmum($kelasId, $tahunAjaranId, $pengajarId) {
+        // Fetch mapel data based on $kelasId and $tahunAjaranId
+        $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($kelasId, $tahunAjaranId, $pengajarId) {
+            $query->where('tahun_ajaran_id', $tahunAjaranId)
+                ->where('pengajar_id', $pengajarId)
+                ->where('kelas_id', $kelasId);
+        })->get();
+    
+        $mapels = $detail->map(function ($item) {
+            return MataPelajaran::find($item->mata_pelajaran_id);
+        });
+    
+        return response()->json($mapels);
     }
 
     public function penilaianpelajaranPost(Request $request){

@@ -22,7 +22,7 @@
                     <div class="mb-3">
                         <label for="nama_mata_pelajaran" class="form-label">Mata Pelajaran</label>
                         <select name="mata_pelajaran_id" id="mata_pelajaran_id" class="form-select" required>
-                            <option value="" disabled selected>Mata Pelajaran</option>
+                            <option value="" disabled selected>--- Pilih Mata Pelajaran ---</option>
                             @foreach ($mapel as $mapel)
                                 <option value="{{ $mapel->id }}">{{ $mapel->nama_mata_pelajaran }}</option>
                             @endforeach

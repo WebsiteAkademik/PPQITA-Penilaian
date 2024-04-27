@@ -37,7 +37,7 @@
                     <div class="mb-3">
                         <label for="nama_kategori" class="form-label">Kategori Pelajaran</label>
                         <select name="kategori_pelajaran_id" id="kategori_pelajaran_id_edit" class="form-select" onchange="getSubKategoriEdit()" required>
-                            <option value="" disabled selected>Kategori</option>
+                            <option value="" disabled selected>--- Pilih Kategori Pelajaran ---</option>
                             @foreach ($kategori as $kategori)
                                 <option value="{{ $kategori->id }}" {{ $mapel->kategori_pelajaran_id == $kategori->id ? 'selected' : '' }}>{{ $kategori->nama_kategori }}</option>
                             @endforeach
@@ -46,7 +46,7 @@
                     <div class="mb-3">
                         <label for="nama_sub_kategori" class="form-label">Sub Kategori Pelajaran</label>
                         <select name="sub_kategori_pelajaran_id" id="sub_kategori_pelajaran_id_edit" class="form-select" required>
-                            <option value="" disabled selected>Sub Kategori</option>
+                            <option value="" disabled selected>--- Pilih Sub Kategori Pelajaran ---</option>
                             @foreach ($subkategori as $subkat)
                                 @if($mapel->sub_kategori_pelajaran_id == $subkat->id)
                                     <option value="{{ $subkat->id }}" selected>{{ $subkat->nama_sub_kategori }}</option>

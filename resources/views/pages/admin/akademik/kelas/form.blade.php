@@ -22,7 +22,7 @@
                     <div class="mb-3">
                         <label for="nama_pengajar" class="form-label">Wali Kelas</label>
                         <select name="pengajar_id" id="pengajar_id" class="form-select" required>
-                            <option value="" disabled selected>Pengajar</option>
+                            <option value="" disabled selected>--- Pilih Nama Wali Kelas ---</option>
                             @foreach ($pengajar as $pengajar)
                                 <option value="{{ $pengajar->id }}">{{ $pengajar->nama_pengajar }}</option>
                             @endforeach
