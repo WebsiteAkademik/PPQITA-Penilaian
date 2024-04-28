@@ -86,7 +86,7 @@
                         <table class="table table-bordered text-nowrap mb-0 align-middle" id="table-kategori">
                             <thead class="text-dark fs-4">
                                 <tr style="background-color: #2E8CB5">
-                                    <th style="width: 100px;" class="border-bottom-0 text-center">
+                                    <th style="width: 10%;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">No.</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
@@ -108,7 +108,7 @@
                                     </td>
                                     <td class="border-bottom-0 align-items-center text-center">
                                         <div class="row col-6 d-flex justify-content-center" style="width: 100px; margin: 0 auto">
-                                            <a href="{{ route('raporuts.cetak', $row->id) }}" target="_blank" class="btn btn-success m-3" id="cetakRapor">Cetak Rapor</a>
+                                            <a href="{{ route('raporuts.cetak', $row->id) }}" target="_blank" class="btn btn-success m-3" id="cetakRapor">Cetak</a>
                                         </div>
                                     </td> 
                                 </tr>
