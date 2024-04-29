@@ -23,7 +23,7 @@ class LoginController extends Controller
             } elseif(Auth::user()->role == "pengajar") {
                 return redirect('dashboardpengajar');
             } elseif(Auth::user()->role == "user"){
-                return redirect('dashboarduser');
+                return redirect('dashboardsiswa');
             }
         }
         return redirect('login')->with('loginError', 'Email/NISN atau Password tidak tepat');

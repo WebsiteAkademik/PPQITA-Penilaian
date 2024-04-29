@@ -1,6 +1,6 @@
 <?php
-use App\Models\Pendaftaran;
-$pendaftaran = Pendaftaran::where('user_id', auth()->user()->id)->first();
+use App\Models\Siswa;
+$siswa = Siswa::where('user_id', auth()->user()->id)->first();
 ?>
 
 <!doctype html>
@@ -29,7 +29,7 @@ $pendaftaran = Pendaftaran::where('user_id', auth()->user()->id)->first();
             <!-- Sidebar scroll-->
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between mt-2">
-                    <a href="{{ route('dashboarduser') }}" class="text-nowrap logo-img">
+                    <a href="{{ route('dashboardsiswa') }}" class="text-nowrap logo-img">
                         <img src="{{ asset('assets/galeri/logo_ppqita.png') }}" width="25%" alt="logo img" />
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -40,8 +40,8 @@ $pendaftaran = Pendaftaran::where('user_id', auth()->user()->id)->first();
                 <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
                     <ul id="sidebarnav">
                         <li class="sidebar-item mt-4">
-                            <a class="sidebar-link {{ Request::is('/dashboarduser') ? 'active' : '' }}"
-                                href="{{ route('dashboarduser') }}" aria-expanded="false">
+                            <a class="sidebar-link {{ Request::is('/dashboardsiswa') ? 'active' : '' }}"
+                                href="{{ route('dashboardsiswa') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-solid fa-house"></i>
                                 </span>
@@ -49,8 +49,8 @@ $pendaftaran = Pendaftaran::where('user_id', auth()->user()->id)->first();
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link {{ Request::is(route('pendaftar.profile')) ? 'active' : '' }}"
-                                href="{{ route('pendaftar.profile') }}" aria-expanded="false">
+                            <a class="sidebar-link @if (Request::is('/nilai')) active @endif "
+                                href="{{ route('nilaisiswa') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-solid fa-chart-bar"></i>
                                 </span>
@@ -58,18 +58,23 @@ $pendaftaran = Pendaftaran::where('user_id', auth()->user()->id)->first();
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link @if (Request::is('/jadwaltestuser')) active @endif"
-                                href="{{ route('jadwaltestuser') }}" aria-expanded="false">
+                            <a class="sidebar-link @if (Request::is('/jadwalujian')) active @endif"
+                                href="{{ route('jadwalujiansiswa') }}" aria-expanded="false">
+                                <span>
+                                    <i class="fa-solid fa-book"></i>
+                                </span>
+                                <span class="hide-menu">Jadwal Ujian</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link @if (Request::is('/profile')) active @endif"
+                                href="{{ route('profilesiswa') }}" aria-expanded="false">
                                 <span>
                                     <i class="fa-regular fa-user"></i>
                                 </span>
-                                <span class="hide-menu">Profile</span>
+                                <span class="hide-menu">Profil</span>
                             </a>
                         </li>
-                        <!-- <li class="sidebar-item d-grid" style="position: absolute;bottom: 60px;right: 0;left: 0;">
-                            <button type="button" onclick="window.location.href='{{ route('pendaftar.profile') }}';"
-                                class="btn btn-outline-primary mx-3 mt-2">Profile</button>
-                        </li> -->
                         <li class="sidebar-item d-grid" style="position: absolute;bottom: 20px;right: 0;left: 0;">
                             <button type="button" onclick="logout();"
                                 class="btn btn-outline-danger mx-3 mt-2">Logout</button>
@@ -99,7 +104,7 @@ $pendaftaran = Pendaftaran::where('user_id', auth()->user()->id)->first();
                             <li class="nav-item dropdown">
                                 <div class="d-flex align-items-center">
                                     <p class="text-white fs-4 mt-2" style="font-weight: 500">Hi,
-                                        {{ ucwords(strtolower($pendaftaran->nama_calon_siswa)) }}</p>
+                                        {{ ucwords(strtolower($siswa->nama_siswa)) }}</p>
                                     <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <img src="{{ asset('admin/src/assets/images/profile/user-1.jpg') }}"

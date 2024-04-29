@@ -13,7 +13,7 @@
                 </div><br/>
                 <h5 class="card-title fs-6 fw-semibold mb-4">Form Input Jadwal Ujian</h5>
                 <!-- Formulir input jadwal ujian -->
-                <form method="post" action="{{ route('jadwalujian.formPOST') }}" onsubmit="return validateKode()">
+                <form method="post" action="{{ route('jadwalujian.formPOST') }}">
                     @csrf
                     <div class="mb-3">
                         <label for="tanggal_ujian" class="form-label">Tanggal Ujian</label>

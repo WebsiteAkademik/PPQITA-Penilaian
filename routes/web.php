@@ -4,6 +4,11 @@ use App\Models\Pendaftar;
 use App\Models\Pengajar;
 use App\Models\Pendaftaran;
 use App\Models\TahunAjaran;
+use App\Models\Siswa;
+use App\Models\JadwalUjian;
+use App\Models\Kelas;
+use App\Models\PenilaianPelajaran;
+use App\Models\PenilaianTahfidz;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
@@ -237,30 +242,32 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
      });
 
 //role -> user
-Route::middleware('auth', 'cekrole:user')->prefix('dashboarduser')->group(function () {
+Route::middleware('auth', 'cekrole:user')->prefix('dashboardsiswa')->group(function () {
     Route::get('/', function () {
-        $pendaftarCount = Pendaftaran::count();
+        $siswa = Siswa::where('user_id','=',auth()->user()->id )->first();
+        $kelas = Kelas::where('id', $siswa->kelas_id)->first();
+        $jadwalujian = JadwalUjian::where('kelas_id', $siswa->kelas_id)
+                    ->where('tanggal_ujian', '>=', now()->toDateString())
+                    ->where('tanggal_ujian', '<=', now()->addDays(7)->toDateString())
+                    ->get()
+                    ->sortBy('tanggal_ujian');
+        $penilaianumum = PenilaianPelajaran::where('siswa_id', $siswa->id)->latest()->limit(5)->get();
+        $penilaiantahfidz = PenilaianTahfidz::where('siswa_id', $siswa->id)->latest()->limit(5)->get();
+    
+        return view('pages.menuuser.dashboarduser', [ 'siswa' => $siswa, 'kelas' => $kelas, 'jadwalujian' => $jadwalujian, 'penilaianumum' => $penilaianumum, 'penilaiantahfidz' => $penilaiantahfidz ]);
+    })->name('dashboardsiswa');
 
-        //$pendaftars = Pendaftar::latest()->limit(5)->get();
-        //auth()->user()->name
-        $pendaftars = Pendaftaran::where('user_id','=',auth()->user()->id )->get();
-        $data = [
-            'pendaftars' => $pendaftars,
-            'pendaftarCount' => $pendaftarCount
-        ];
-        return view('pages.menuuser.dashboarduser', $data);
-    })->name('dashboarduser');
-
-    Route::get('/profile', [PendaftaranOnlineController::class, 'profileGET'])->name('pendaftar.profile');
-    Route::post('/profile', [PendaftaranOnlineController::class, 'profilePOST'])->name('pendaftar.profileUpdate');
-    // menu user
-    Route::get('/pendaftar', [PendaftaranController::class, 'indexuser'])->name('pendaftar.indexuser');
-    // Pendaftar
-    Route::get('/pendaftar/{no_nisn}', [PendaftaranController::class, 'detailbynisn'])->name('pendaftar.detailuser');
-    // Jadwal Test User
-    Route::get('/jadwaltest', [JadwalTestController::class, 'indexuser'])->name('jadwaltestuser');
-    // Kalender Ujian
+    // Jadwal Ujian Siswa
+    Route::get('/jadwalujian', [PengajarController::class, 'viewJadwal'])->name('jadwalujiansiswa');
+    
+    // Kalender Ujian Siswa
     Route::get("/events", [PengajarController::class, 'getEvents'])->name('getEvents');
+    
     // Cek Profile Siswa
+    Route::get('/profile', [PengajarController::class, 'viewProfile'])->name('profilesiswa');
+    
     // History Nilai
+    Route::get('/nilai', [PengajarController::class, 'viewNilai'])->name('nilaisiswa');
+    Route::get('/cetak-rapor_uts/{id}', [AkademikController::class, 'cetak_raporuts'])->name('raporutssiswa.cetak');
+    Route::get('/cetak-rapor_uas/{id}', [AkademikController::class, 'cetak_raporuas'])->name('raporuassiswa.cetak');
 });

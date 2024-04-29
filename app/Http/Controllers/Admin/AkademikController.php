@@ -1099,6 +1099,7 @@ class AkademikController extends Controller
         return redirect()->route('detail.index', $setup->id)->with('success', 'Detail Setup Mata Pelajaran berhasil dihapus!');
     }
 
+    //siswa
     public function listsiswa(){
         $siswa = Siswa::all();
         $kelas = Kelas::all();
@@ -1936,5 +1937,9 @@ class AkademikController extends Controller
     }
 
     //Siswa//**
-    //
+    //Profil
+
+    //Jadwal Ujian
+
+
 }

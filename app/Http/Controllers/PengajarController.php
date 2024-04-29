@@ -437,6 +437,7 @@ class PengajarController extends Controller
         return redirect()->route('penilaianpelajaran.index')->with('success', 'Nilai pelajaran berhasil dihapus!');
     }
 
+    //Siswa//*
     public function getEvents(Request $request){
         $start = $request->input("start", (new DateTime())->modify("-1 month")->format(DateTime::ATOM));
         $end = $request->input("end", (new DateTime())->modify("+1 month")->format(DateTime::ATOM));
@@ -444,7 +445,14 @@ class PengajarController extends Controller
         $d_start = strtotime($start);
         $d_end = strtotime($end);
 
-        $jadwal_ujian = JadwalUjian::whereDate('tanggal_ujian', '>=', date('Y-m-d', $d_start))->whereDate('tanggal_ujian', '<=', date('Y-m-d', $d_end))->get();
+        $user = Auth::user();
+
+        $siswa = Siswa::where('user_id', $user->id)->first();
+
+        $jadwal_ujian = JadwalUjian::whereDate('tanggal_ujian', '>=', date('Y-m-d', $d_start))
+                        ->whereDate('tanggal_ujian', '<=', date('Y-m-d', $d_end))
+                        ->where('kelas_id', $siswa->kelas_id)
+                        ->get();
         $ret = array();
 
         /*
@@ -494,4 +502,177 @@ class PengajarController extends Controller
 
         return response()->json($ret);
     }
- }
+
+    public function viewNilai(){
+        $user = Auth::user();
+        $siswa = Siswa::where('user_id', $user->id)->first();
+        $tahunajar = TahunAjaran::where('status', 'aktif')->first();
+        $kelas = Kelas::where('id', $siswa->kelas_id)->first();
+
+        $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
+            $query->where('tahun_ajaran_id', $tahunajar->id)
+            ->where('kelas_id', $kelas->id);
+        })->get();
+
+        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')->first();
+        $subDinniyah = SubKategoriPelajaran::where('nama_sub_kategori', 'Dinniyah')->first();
+
+        $mapelumum = collect();
+        $mapeltahfidz = collect();
+        $mapeldinniyah = collect();
+
+        foreach ($detail as $detail) {
+            $mapelTahfidz = MataPelajaran::where('id', $detail->mata_pelajaran_id)
+                ->where('sub_kategori_pelajaran_id', $subTahfidz->id)
+                ->first();
+            $mapelDinniyah = MataPelajaran::where('id', $detail->mata_pelajaran_id)
+                ->where('sub_kategori_pelajaran_id', $subDinniyah->id)
+                ->first();
+            if(!$mapelTahfidz && !$mapelDinniyah){
+                $mapelumum->push(MataPelajaran::where('id', $detail->mata_pelajaran_id)->first());
+            }
+            if ($mapelDinniyah) {
+                $mapeldinniyah->push(MataPelajaran::where('id', $detail->mata_pelajaran_id)->first());
+            }
+            if ($mapelTahfidz) {
+                $mapeltahfidz->push(MataPelajaran::where('id', $detail->mata_pelajaran_id)->first());
+            }
+        }
+
+        $penilaianumum = [];
+        $nilaiumum_kelas = [];
+
+        foreach ($mapelumum as $mapel) {
+            $nilaiumum_kelas[$mapel->id] = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->avg('nilai');
+        }
+
+        foreach ($mapelumum as $mapel) {
+            $penilaian = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+                ->where('siswa_id', $siswa->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->get();
+            
+            // Hitung rata-rata nilai jika ada penilaian
+            $nilai_rata_rata = number_format($penilaian->avg('nilai'), 2);
+
+            $keterangan = $penilaian->isEmpty() ? '' : $penilaian->first()->keterangan;
+        
+            // Tentukan deskripsi berdasarkan kondisi nilai
+            if ($nilai_rata_rata >= $mapel->kkm && $nilai_rata_rata > ($nilaiumum_kelas[$mapel->id] ?? 0)) {
+                $keterangan = 'Terlampaui';
+            }
+
+            // Tambahkan data penilaian ke array penilaian umum
+            $penilaianumum[] = [
+                'mapel' => $mapel,
+                'nilai' => $nilai_rata_rata,
+                'keterangan' => $keterangan,
+            ];
+        }
+
+        $penilaiandinniyah = [];
+        $nilaidinniyah_kelas = [];
+
+        foreach ($mapeldinniyah as $mapel) {
+            $nilaidinniyah_kelas[$mapel->id] = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->avg('nilai');
+        }
+
+        foreach ($mapeldinniyah as $mapel) {
+            $penilaian = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+                ->where('siswa_id', $siswa->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->get();
+            
+            // Hitung rata-rata nilai jika ada penilaian
+            $nilai_rata_rata = number_format($penilaian->avg('nilai'), 2);
+
+            $keterangan = $penilaian->isEmpty() ? '' : $penilaian->first()->keterangan;
+        
+            // Tentukan deskripsi berdasarkan kondisi nilai
+            if ($nilai_rata_rata >= $mapel->kkm && $nilai_rata_rata > ($nilaidinniyah_kelas[$mapel->id] ?? 0)) {
+                $keterangan = 'Terlampaui';
+            }
+
+            // Tambahkan data penilaian ke array penilaian umum
+            $penilaiandinniyah[] = [
+                'mapel' => $mapel,
+                'nilai' => $nilai_rata_rata,
+                'keterangan' => $keterangan,
+            ];
+        }
+
+        $penilaiantahfidz = [];
+        $nilaitahfidz_kelas = [];
+
+        foreach ($mapeltahfidz as $mapel) {
+            $nilaitahfidz_kelas[$mapel->id] = PenilaianTahfidz::where('mata_pelajaran_id', $mapel->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->avg('nilai');
+        }
+
+        foreach ($mapeltahfidz as $mapel) {
+            $penilaian = PenilaianTahfidz::where('mata_pelajaran_id', $mapel->id)
+                ->where('siswa_id', $siswa->id)
+                ->where('kelas_id', $siswa->kelas_id)
+                ->get();
+            
+            // Hitung rata-rata nilai jika ada penilaian
+            $nilai_rata_rata = number_format($penilaian->avg('nilai'), 2);
+
+            $keterangan = $penilaian->isEmpty() ? '' : $penilaian->first()->keterangan;
+        
+            // Tentukan deskripsi berdasarkan kondisi nilai
+            if ($nilai_rata_rata >= $mapel->kkm && $nilai_rata_rata > ($nilaitahfidz_kelas[$mapel->id] ?? 0)) {
+                $keterangan = 'Terlampaui';
+            }
+
+            // Tambahkan data penilaian ke array penilaian umum
+            $penilaiantahfidz[] = [
+                'mapel' => $mapel,
+                'nilai' => $nilai_rata_rata,
+                'keterangan' => $keterangan,
+            ];
+        }
+
+        // Menggabungkan semua penilaian menjadi satu array
+        $semuaPenilaian = array_merge($penilaianumum, $penilaiantahfidz, $penilaiandinniyah);
+
+        $nilaitotal_umum = 0;
+        $count_nilaitotal_umum = 0;
+
+        foreach ($semuaPenilaian as $penilaian) {
+            $nilaitotal_umum += $penilaian['nilai'];
+            $count_nilaitotal_umum++;
+        }
+
+        if ($count_nilaitotal_umum > 0) {
+            $nilai_rata_rata_total = number_format($nilaitotal_umum / $count_nilaitotal_umum, 2);
+        } else {
+            $nilai_rata_rata_total = 0; // Ini opsional, sesuai kebutuhan aplikasi Anda
+        }
+
+        return view('pages.menuuser.nilai', ['siswa' => $siswa, 'kelas' => $kelas, 'tahunajar' => $tahunajar, 'nilaitotal_umum' => $nilaitotal_umum, 'nilai_rata_rata_total' => $nilai_rata_rata_total, 'nilaiumum_kelas' => $nilaiumum_kelas, 'nilaitahfidz_kelas' => $nilaitahfidz_kelas, 'nilaidinniyah_kelas' => $nilaidinniyah_kelas, 'penilaiantahfidz' => $penilaiantahfidz, 'penilaiandinniyah' => $penilaiandinniyah, 'penilaianumum' => $penilaianumum]);
+    }
+
+    public function viewJadwal(){
+        $user = Auth::user();
+        $siswa = Siswa::where('user_id', $user->id)->first();
+        $jadwalujian = JadwalUjian::where('kelas_id', $siswa->kelas_id)
+                    ->where('tanggal_ujian', '>=', now()->toDateString())
+                    ->get()
+                    ->sortBy('tanggal_ujian');
+        
+        return view('pages.menuuser.jadwalujian', ['jadwalujian' => $jadwalujian]);
+    }
+
+    public function viewProfile(){
+        $user = Auth::user();
+        $siswa = Siswa::where('user_id', $user->id)->first();
+
+        return view('pages.menuuser.profile', ['siswa' => $siswa]);
+    }
+}
