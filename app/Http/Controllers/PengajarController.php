@@ -324,6 +324,7 @@ class PengajarController extends Controller
         try {
             $data['tahun_ajaran_id'] = $tahunAjaranAktif->id;
             $data['pengajar_id'] = $pengajar->id;
+            $data['semester'] = $tahunAjaranAktif->semester;
             $kelas = $request->kelas_id;
             $siswa = $request->siswa_id;
             $mapel = $request->mata_pelajaran_id;
@@ -332,6 +333,7 @@ class PengajarController extends Controller
             // Mengecek apakah sudah terdapat nilai ujian yang sama pada siswa tersebut
             $ujianAda = PenilaianPelajaran::where('siswa_id', $siswa)
                 ->where('tahun_ajaran_id', $tahunAjaranAktif->id)
+                ->where('semester', $data['semester'])
                 ->where('mata_pelajaran_id', $mapel)
                 ->where('jenis_ujian', $jenisUjian)
                 ->exists();

@@ -305,6 +305,8 @@ use App\Models\TahunAjaran;
     <script src="{{ asset('admin/src/assets/libs/simplebar/dist/simplebar.js') }}"></script>
     <script src="{{ asset('admin/src/assets/js/dashboard.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @stack('script')
+    @include('sweetalert::alert')
     <script>
         function logout() {
             $.ajax({
@@ -328,8 +330,7 @@ use App\Models\TahunAjaran;
             });
         }
     </script>
-    @stack('script')
-    @include('sweetalert::alert')
+    
 </body>
 
 </html>

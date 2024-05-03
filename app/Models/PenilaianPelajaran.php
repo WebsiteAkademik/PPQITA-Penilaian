@@ -9,7 +9,7 @@ class PenilaianPelajaran extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tanggal_penilaian', 'siswa_id', 'kelas_id', 'mata_pelajaran_id', 'nilai', 'keterangan', 'pengajar_id', 'tahun_ajaran_id', 'jenis_ujian'];
+    protected $fillable = ['tanggal_penilaian', 'siswa_id', 'kelas_id', 'mata_pelajaran_id', 'nilai', 'keterangan', 'pengajar_id', 'tahun_ajaran_id', 'jenis_ujian', 'semester'];
 
     public function tahunAjaran()
     {

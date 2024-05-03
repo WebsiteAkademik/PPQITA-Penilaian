@@ -19,6 +19,7 @@
         "apexcharts": "^3.49.0",
         "fullcalendar": "^6.1.11",
         "fullcalendar-scheduler": "^6.1.11",
-        "react-apexcharts": "^1.4.1"
+        "react-apexcharts": "^1.4.1",
+        "sweetalert2": "^11.6.13"
     }
 }

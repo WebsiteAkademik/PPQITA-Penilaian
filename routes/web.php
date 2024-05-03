@@ -43,15 +43,6 @@ Route::get('/', function (){
 
 Route::post('/postlogin', [LoginController::class, 'postlogin'])->name('postlogin');
 
-// Route::middleware('guest')->group(function () {
-//     Route::get('/loginuser', [AuthController::class, 'loginViewUser'])->name('login-user');
-//     Route::get('/admin-login', [AuthController::class, 'loginView'])->name('loginView');
-//     Route::post('/admin-login', [AuthController::class, 'login'])->name('login');
-//     Route::post('/loginuser', [AuthController::class, 'loginUser'])->name('loginuser');
-
-// });
-
-
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 // Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 

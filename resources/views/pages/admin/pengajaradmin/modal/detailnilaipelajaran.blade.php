@@ -36,6 +36,9 @@
                                 <td>{{ $row->keterangan }}</td>
                             </tr>
                             <tr>
+                                <th>Semester :</th>
+                                <td>{{ $row->semester }}</td>
+                            <tr>
                                 <th>Tahun Ajaran:</th>
                                 <td>{{ $row->tahunID()->tahun_ajaran }}</td>
                             </tr>

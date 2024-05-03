@@ -64,7 +64,6 @@ class AkademikController extends Controller
         }
 
         $semesterada = TahunAjaran::where('tahun_ajaran', $request->tahun_ajaran)
-                    ->where('semester', $request->semester)
                     ->exists();
         
         if($semesterada){
@@ -111,7 +110,7 @@ class AkademikController extends Controller
             ->exists();
 
         if($semesterada){
-            Alert::error('Gagal! (E008)', 'Tahun Ajaran dengan semester ini sudah ada!');
+            Alert::error('Gagal! (E008)', 'Tahun Ajaran ini sudah ada!');
             return redirect()->back()->withInput();
         }
 
@@ -1935,11 +1934,5 @@ class AkademikController extends Controller
         $rapor = PDF::loadView  ('pages.admin.akademik.rapor.cetakraporuts', ['siswa' => $siswa, 'kelas' => $kelas, 'tahunajar' => $tahunajar, 'nilaitotal_umum' => $nilaitotal_umum, 'nilai_rata_rata_total' => $nilai_rata_rata_total, 'nilaiumum_kelas' => $nilaiumum_kelas, 'nilaitahfidz_kelas' => $nilaitahfidz_kelas, 'nilaidinniyah_kelas' => $nilaidinniyah_kelas, 'penilaiantahfidz' => $penilaiantahfidz, 'penilaiandinniyah' => $penilaiandinniyah, 'penilaianumum' => $penilaianumum])->setPaper('A4', 'portrait');
         return $rapor->stream('rapor-uts_{{ $siswa->no_nisn }}.pdf');
     }
-
-    //Siswa//**
-    //Profil
-
-    //Jadwal Ujian
-
 
 }
