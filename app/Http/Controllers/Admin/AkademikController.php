@@ -1252,7 +1252,6 @@ class AkademikController extends Controller
         $tahunajar = TahunAjaran::where('status', 'aktif')->first();
         $kelas = Kelas::findOrFail($id);
 
-        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->where('kelas_id', $kelas->id)->get();
         $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
             $query->where('tahun_ajaran_id', $tahunajar->id)
             ->where('kelas_id', $kelas->id);
@@ -1281,6 +1280,8 @@ class AkademikController extends Controller
             foreach ($mapel as $mapelItem) {
                 // Penilaian pelajaran umum, bukan tahfidz atau dinniyah
                 $nilai = PenilaianPelajaran::where('siswa_id', $s->id)
+                    ->where('tahun_ajaran_id', $tahunajar->id)
+                    ->where('semester', $tahunajar->semester)
                     ->where('mata_pelajaran_id', $mapelItem->id)
                     ->avg('nilai');
 
@@ -1303,7 +1304,6 @@ class AkademikController extends Controller
         $kelas = Kelas::findOrFail($id);
         $tahunajar = TahunAjaran::where('status', 'aktif')->first();
 
-        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->where('kelas_id', $kelas->id)->get();
         $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
             $query->where('tahun_ajaran_id', $tahunajar->id)
             ->where('kelas_id', $kelas->id);
@@ -1332,6 +1332,8 @@ class AkademikController extends Controller
             foreach ($mapel as $mapelItem) {
                 // Penilaian pelajaran umum, bukan tahfidz atau dinniyah
                 $nilai = PenilaianPelajaran::where('siswa_id', $s->id)
+                    ->where('tahun_ajaran_id', $tahunajar->id)
+                    ->where('semester', $tahunajar->semester)
                     ->where('mata_pelajaran_id', $mapelItem->id)
                     ->avg('nilai');
 
@@ -1367,7 +1369,6 @@ class AkademikController extends Controller
         $kelas = Kelas::findOrFail($id);
         $tahunajar = TahunAjaran::where('status', 'aktif')->first();
 
-        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->where('kelas_id', $kelas->id)->get();
         $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
             $query->where('tahun_ajaran_id', $tahunajar->id)
             ->where('kelas_id', $kelas->id);
@@ -1396,6 +1397,8 @@ class AkademikController extends Controller
             foreach ($mapel as $mapelItem) {
                 // Penilaian pelajaran umum, bukan tahfidz atau dinniyah
                 $nilai = PenilaianPelajaran::where('siswa_id', $s->id)
+                    ->where('tahun_ajaran_id', $tahunajar->id)
+                    ->where('semester', $tahunajar->semester)
                     ->where('mata_pelajaran_id', $mapelItem->id)
                     ->avg('nilai');
 
@@ -1425,7 +1428,6 @@ class AkademikController extends Controller
         $tahunajar = TahunAjaran::where('status', 'aktif')->first();
         $kelas = Kelas::findOrFail($id);
 
-        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->where('kelas_id', $kelas->id)->get();
         $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
             $query->where('tahun_ajaran_id', $tahunajar->id)
             ->where('kelas_id', $kelas->id);
@@ -1454,6 +1456,7 @@ class AkademikController extends Controller
             foreach ($mapel as $mapelItem) {
                 // Penilaian pelajaran umum, bukan tahfidz atau dinniyah
                 $nilai = PenilaianTahfidz::where('siswa_id', $s->id)
+                    ->where('tahun_ajaran_id', $tahunajar->id)
                     ->where('mata_pelajaran_id', $mapelItem->id)
                     ->avg('nilai');
 
@@ -1476,7 +1479,6 @@ class AkademikController extends Controller
         $kelas = Kelas::findOrFail($id);
         $tahunajar = TahunAjaran::where('status', 'aktif')->first();
 
-        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->where('kelas_id', $kelas->id)->get();
         $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
             $query->where('tahun_ajaran_id', $tahunajar->id)
             ->where('kelas_id', $kelas->id);
@@ -1505,6 +1507,7 @@ class AkademikController extends Controller
             foreach ($mapel as $mapelItem) {
                 // Penilaian pelajaran umum, bukan tahfidz atau dinniyah
                 $nilai = PenilaianTahfidz::where('siswa_id', $s->id)
+                    ->where('tahun_ajaran_id', $tahunajar->id)
                     ->where('mata_pelajaran_id', $mapelItem->id)
                     ->avg('nilai');
 
@@ -1540,7 +1543,6 @@ class AkademikController extends Controller
         $kelas = Kelas::findOrFail($id);
         $tahunajar = TahunAjaran::where('status', 'aktif')->first();
 
-        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->where('kelas_id', $kelas->id)->get();
         $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
             $query->where('tahun_ajaran_id', $tahunajar->id)
             ->where('kelas_id', $kelas->id);
@@ -1647,7 +1649,7 @@ class AkademikController extends Controller
                 ->where('kelas_id', $siswa->kelas_id)
                 ->where('tahun_ajaran_id', $tahunajar->id)
                 ->where('semester', $tahunajar->semester)
-                ->where('jenis_ujian', 'uas') // Pengecekan jenis_ujian 'uas' ditambahkan
+                ->where('jenis_ujian', 'UAS') // Pengecekan jenis_ujian 'uas' ditambahkan
                 ->exists() ? PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
                     ->where('kelas_id', $siswa->kelas_id)
                     ->avg('nilai') : 0; // Jika tidak ada penilaian 'uas', nilai menjadi 0
@@ -1705,7 +1707,7 @@ class AkademikController extends Controller
                 ->where('kelas_id', $siswa->kelas_id)
                 ->where('tahun_ajaran_id', $tahunajar->id)
                 ->where('semester', $tahunajar->semester)
-                ->where('jenis_ujian', 'uas') // Pengecekan jenis_ujian 'uas' ditambahkan
+                ->where('jenis_ujian', 'UAS') // Pengecekan jenis_ujian 'uas' ditambahkan
                 ->exists() ? PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
                     ->where('kelas_id', $siswa->kelas_id)
                     ->avg('nilai') : 0; // Jika tidak ada penilaian 'uas', nilai menjadi 0
@@ -1829,7 +1831,6 @@ class AkademikController extends Controller
         $tahunajar = TahunAjaran::where('status', 'aktif')->first();
         $kelas = Kelas::where('id', $siswa->kelas_id)->first();
 
-        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->where('kelas_id', $kelas->id)->get();
         $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
             $query->where('tahun_ajaran_id', $tahunajar->id)
             ->where('kelas_id', $kelas->id);
@@ -1866,6 +1867,8 @@ class AkademikController extends Controller
         foreach ($mapelumum as $mapel) {
             $nilaiumum_kelas[$mapel->id] = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
                 ->where('kelas_id', $siswa->kelas_id)
+                ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
                 ->where('jenis_ujian', 'UTS')
                 ->avg('nilai');
         }
@@ -1874,6 +1877,8 @@ class AkademikController extends Controller
             $penilaian = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
                 ->where('siswa_id', $siswa->id)
                 ->where('kelas_id', $siswa->kelas_id)
+                ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
                 ->where('jenis_ujian', 'UTS')
                 ->get();
             
@@ -1901,6 +1906,8 @@ class AkademikController extends Controller
         foreach ($mapeldinniyah as $mapel) {
             $nilaidinniyah_kelas[$mapel->id] = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
                 ->where('kelas_id', $siswa->kelas_id)
+                ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
                 ->where('jenis_ujian', 'UTS')
                 ->avg('nilai');
         }
@@ -1909,6 +1916,8 @@ class AkademikController extends Controller
             $penilaian = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
                 ->where('siswa_id', $siswa->id)
                 ->where('kelas_id', $siswa->kelas_id)
+                ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
                 ->where('jenis_ujian', 'UTS')
                 ->get();
             
@@ -1936,6 +1945,7 @@ class AkademikController extends Controller
         foreach ($mapeltahfidz as $mapel) {
             $nilaitahfidz_kelas[$mapel->id] = PenilaianTahfidz::where('mata_pelajaran_id', $mapel->id)
                 ->where('kelas_id', $siswa->kelas_id)
+                ->where('tahun_ajaran_id', $tahunajar->id)
                 ->avg('nilai');
         }
 
@@ -1943,6 +1953,7 @@ class AkademikController extends Controller
             $penilaian = PenilaianTahfidz::where('mata_pelajaran_id', $mapel->id)
                 ->where('siswa_id', $siswa->id)
                 ->where('kelas_id', $siswa->kelas_id)
+                ->where('tahun_ajaran_id', $tahunajar->id)
                 ->get();
             
             // Hitung rata-rata nilai jika ada penilaian
