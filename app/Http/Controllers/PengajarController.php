@@ -233,6 +233,7 @@ class PengajarController extends Controller
         
         $penilaianpelajaran = PenilaianPelajaran::where('pengajar_id', $pengajar->id)
             ->where('tahun_ajaran_id', $tahunAjaranAktif->id)
+            ->where('semester', $tahunAjaranAktif->semester)
             ->get();
         
         return view('pages.admin.pengajaradmin.penilaianpelajaran.index', [
@@ -547,6 +548,8 @@ class PengajarController extends Controller
         foreach ($mapelumum as $mapel) {
             $nilaiumum_kelas[$mapel->id] = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
                 ->where('kelas_id', $siswa->kelas_id)
+                ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
                 ->avg('nilai');
         }
 
@@ -554,6 +557,8 @@ class PengajarController extends Controller
             $penilaian = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
                 ->where('siswa_id', $siswa->id)
                 ->where('kelas_id', $siswa->kelas_id)
+                ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
                 ->get();
             
             // Hitung rata-rata nilai jika ada penilaian
@@ -580,6 +585,8 @@ class PengajarController extends Controller
         foreach ($mapeldinniyah as $mapel) {
             $nilaidinniyah_kelas[$mapel->id] = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
                 ->where('kelas_id', $siswa->kelas_id)
+                ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
                 ->avg('nilai');
         }
 
@@ -587,6 +594,8 @@ class PengajarController extends Controller
             $penilaian = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
                 ->where('siswa_id', $siswa->id)
                 ->where('kelas_id', $siswa->kelas_id)
+                ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
                 ->get();
             
             // Hitung rata-rata nilai jika ada penilaian
@@ -613,6 +622,7 @@ class PengajarController extends Controller
         foreach ($mapeltahfidz as $mapel) {
             $nilaitahfidz_kelas[$mapel->id] = PenilaianTahfidz::where('mata_pelajaran_id', $mapel->id)
                 ->where('kelas_id', $siswa->kelas_id)
+                ->where('tahun_ajaran_id', $tahunajar->id)
                 ->avg('nilai');
         }
 
@@ -620,6 +630,7 @@ class PengajarController extends Controller
             $penilaian = PenilaianTahfidz::where('mata_pelajaran_id', $mapel->id)
                 ->where('siswa_id', $siswa->id)
                 ->where('kelas_id', $siswa->kelas_id)
+                ->where('tahun_ajaran_id', $tahunajar->id)
                 ->get();
             
             // Hitung rata-rata nilai jika ada penilaian

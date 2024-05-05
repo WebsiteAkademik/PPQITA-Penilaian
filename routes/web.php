@@ -102,8 +102,6 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
         return view('pages.admin.dashboard', $data);
     })->name('dashboard');
 
-    // menu user
-    
     //Akademik
     //Tahun Ajaran
     Route::get('/data_tahun-ajar', [AkademikController::class, 'listtahunajar'])->name('tahunajar.index');
@@ -236,14 +234,15 @@ Route::middleware('auth', 'cekrole:admin')->prefix('dashboard')->group(function 
 Route::middleware('auth', 'cekrole:user')->prefix('dashboardsiswa')->group(function () {
     Route::get('/', function () {
         $siswa = Siswa::where('user_id','=',auth()->user()->id )->first();
+        $tahunajar = TahunAjaran::where('status', 'aktif')->first();
         $kelas = Kelas::where('id', $siswa->kelas_id)->first();
         $jadwalujian = JadwalUjian::where('kelas_id', $siswa->kelas_id)
                     ->where('tanggal_ujian', '>=', now()->toDateString())
                     ->where('tanggal_ujian', '<=', now()->addDays(7)->toDateString())
                     ->get()
                     ->sortBy('tanggal_ujian');
-        $penilaianumum = PenilaianPelajaran::where('siswa_id', $siswa->id)->latest()->limit(5)->get();
-        $penilaiantahfidz = PenilaianTahfidz::where('siswa_id', $siswa->id)->latest()->limit(5)->get();
+        $penilaianumum = PenilaianPelajaran::where('siswa_id', $siswa->id)->where('tahun_ajaran_id', $tahunajar->id)->where('semester', $tahunajar->semester)->latest()->limit(5)->get();
+        $penilaiantahfidz = PenilaianTahfidz::where('siswa_id', $siswa->id)->where('tahun_ajaran_id', $tahunajar->id)->latest()->limit(5)->get();
     
         return view('pages.menuuser.dashboarduser', [ 'siswa' => $siswa, 'kelas' => $kelas, 'jadwalujian' => $jadwalujian, 'penilaianumum' => $penilaianumum, 'penilaiantahfidz' => $penilaiantahfidz ]);
     })->name('dashboardsiswa');

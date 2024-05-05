@@ -1609,7 +1609,6 @@ class AkademikController extends Controller
         $tahunajar = TahunAjaran::where('status', 'aktif')->first();
         $kelas = Kelas::where('id', $siswa->kelas_id)->first();
 
-        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->where('kelas_id', $kelas->id)->get();
         $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($tahunajar, $kelas) {
             $query->where('tahun_ajaran_id', $tahunajar->id)
             ->where('kelas_id', $kelas->id);
@@ -1646,31 +1645,56 @@ class AkademikController extends Controller
         foreach ($mapelumum as $mapel) {
             $nilaiumum_kelas[$mapel->id] = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
                 ->where('kelas_id', $siswa->kelas_id)
-                ->avg('nilai');
+                ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
+                ->where('jenis_ujian', 'uas') // Pengecekan jenis_ujian 'uas' ditambahkan
+                ->exists() ? PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+                    ->where('kelas_id', $siswa->kelas_id)
+                    ->avg('nilai') : 0; // Jika tidak ada penilaian 'uas', nilai menjadi 0
         }
 
         foreach ($mapelumum as $mapel) {
-            $penilaian = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+            // Memeriksa apakah ada penilaian dengan jenis ujian UAS
+            $penilaianUAS = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
                 ->where('siswa_id', $siswa->id)
                 ->where('kelas_id', $siswa->kelas_id)
-                ->get();
-            
-            // Hitung rata-rata nilai jika ada penilaian
-            $nilai_rata_rata = number_format($penilaian->avg('nilai'), 2);
+                ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
+                ->where('jenis_ujian', 'UAS')
+                ->exists();
 
-            $keterangan = $penilaian->isEmpty() ? '' : $penilaian->first()->keterangan;
-        
-            // Tentukan deskripsi berdasarkan kondisi nilai
-            if ($nilai_rata_rata >= $mapel->kkm && $nilai_rata_rata > ($nilaiumum_kelas[$mapel->id] ?? 0)) {
-                $keterangan = 'Terlampaui';
+            if ($penilaianUAS) {
+                $penilaian = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+                    ->where('siswa_id', $siswa->id)
+                    ->where('kelas_id', $siswa->kelas_id)
+                    ->where('tahun_ajaran_id', $tahunajar->id)
+                    ->where('semester', $tahunajar->semester)
+                    ->get();
+
+                // Hitung rata-rata nilai jika ada penilaian
+                $nilai_rata_rata = number_format($penilaian->avg('nilai'), 2);
+
+                $keterangan = $penilaian->isEmpty() ? '' : $penilaian->first()->keterangan;
+
+                // Tentukan deskripsi berdasarkan kondisi nilai
+                if ($nilai_rata_rata >= $mapel->kkm && $nilai_rata_rata > ($nilaiumum_kelas[$mapel->id] ?? 0)) {
+                    $keterangan = 'Terlampaui';
+                }
+
+                // Tambahkan data penilaian ke array penilaian umum
+                $penilaianumum[] = [
+                    'mapel' => $mapel,
+                    'nilai' => $nilai_rata_rata,
+                    'keterangan' => $keterangan,
+                ];
+            } else {
+                // Jika tidak ada penilaian UAS, set nilai menjadi 0
+                $penilaianumum[] = [
+                    'mapel' => $mapel,
+                    'nilai' => 0, // Nilai diatur menjadi 0 karena tidak ada penilaian UAS
+                    'keterangan' => '',
+                ];
             }
-
-            // Tambahkan data penilaian ke array penilaian umum
-            $penilaianumum[] = [
-                'mapel' => $mapel,
-                'nilai' => $nilai_rata_rata,
-                'keterangan' => $keterangan,
-            ];
         }
 
         $penilaiandinniyah = [];
@@ -1679,31 +1703,54 @@ class AkademikController extends Controller
         foreach ($mapeldinniyah as $mapel) {
             $nilaidinniyah_kelas[$mapel->id] = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
                 ->where('kelas_id', $siswa->kelas_id)
-                ->avg('nilai');
+                ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
+                ->where('jenis_ujian', 'uas') // Pengecekan jenis_ujian 'uas' ditambahkan
+                ->exists() ? PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+                    ->where('kelas_id', $siswa->kelas_id)
+                    ->avg('nilai') : 0; // Jika tidak ada penilaian 'uas', nilai menjadi 0
         }
 
         foreach ($mapeldinniyah as $mapel) {
-            $penilaian = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+            // Memeriksa apakah ada penilaian dengan jenis ujian UAS
+            $penilaianUAS = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
                 ->where('siswa_id', $siswa->id)
                 ->where('kelas_id', $siswa->kelas_id)
-                ->get();
-            
-            // Hitung rata-rata nilai jika ada penilaian
-            $nilai_rata_rata = number_format($penilaian->avg('nilai'), 2);
+                ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
+                ->where('jenis_ujian', 'UAS')
+                ->exists();
 
-            $keterangan = $penilaian->isEmpty() ? '' : $penilaian->first()->keterangan;
-        
-            // Tentukan deskripsi berdasarkan kondisi nilai
-            if ($nilai_rata_rata >= $mapel->kkm && $nilai_rata_rata > ($nilaidinniyah_kelas[$mapel->id] ?? 0)) {
-                $keterangan = 'Terlampaui';
+            if ($penilaianUAS) {
+                $penilaian = PenilaianPelajaran::where('mata_pelajaran_id', $mapel->id)
+                    ->where('siswa_id', $siswa->id)
+                    ->where('kelas_id', $siswa->kelas_id)
+                    ->get();
+
+                // Hitung rata-rata nilai jika ada penilaian
+                $nilai_rata_rata = number_format($penilaian->avg('nilai'), 2);
+
+                $keterangan = $penilaian->isEmpty() ? '' : $penilaian->first()->keterangan;
+
+                // Tentukan deskripsi berdasarkan kondisi nilai
+                if ($nilai_rata_rata >= $mapel->kkm && $nilai_rata_rata > ($nilaidinniyah_kelas[$mapel->id] ?? 0)) {
+                    $keterangan = 'Terlampaui';
+                }
+
+                // Tambahkan data penilaian ke array penilaian dinniyah
+                $penilaiandinniyah[] = [
+                    'mapel' => $mapel,
+                    'nilai' => $nilai_rata_rata,
+                    'keterangan' => $keterangan,
+                ];
+            } else {
+                // Jika tidak ada penilaian UAS, set nilai menjadi 0
+                $penilaiandinniyah[] = [
+                    'mapel' => $mapel,
+                    'nilai' => 0, // Nilai diatur menjadi 0 karena tidak ada penilaian UAS
+                    'keterangan' => '',
+                ];
             }
-
-            // Tambahkan data penilaian ke array penilaian umum
-            $penilaiandinniyah[] = [
-                'mapel' => $mapel,
-                'nilai' => $nilai_rata_rata,
-                'keterangan' => $keterangan,
-            ];
         }
 
         $penilaiantahfidz = [];
@@ -1712,6 +1759,7 @@ class AkademikController extends Controller
         foreach ($mapeltahfidz as $mapel) {
             $nilaitahfidz_kelas[$mapel->id] = PenilaianTahfidz::where('mata_pelajaran_id', $mapel->id)
                 ->where('kelas_id', $siswa->kelas_id)
+                ->where('tahun_ajaran_id', $tahunajar->id)
                 ->avg('nilai');
         }
 
@@ -1719,6 +1767,7 @@ class AkademikController extends Controller
             $penilaian = PenilaianTahfidz::where('mata_pelajaran_id', $mapel->id)
                 ->where('siswa_id', $siswa->id)
                 ->where('kelas_id', $siswa->kelas_id)
+                ->where('tahun_ajaran_id', $tahunajar->id)
                 ->get();
             
             // Hitung rata-rata nilai jika ada penilaian
@@ -1757,7 +1806,7 @@ class AkademikController extends Controller
         }
 
         $rapor = PDF::loadView  ('pages.admin.akademik.rapor.cetakraporuas', ['siswa' => $siswa, 'kelas' => $kelas, 'tahunajar' => $tahunajar, 'nilaitotal_umum' => $nilaitotal_umum, 'nilai_rata_rata_total' => $nilai_rata_rata_total, 'nilaiumum_kelas' => $nilaiumum_kelas, 'nilaitahfidz_kelas' => $nilaitahfidz_kelas, 'nilaidinniyah_kelas' => $nilaidinniyah_kelas, 'penilaiantahfidz' => $penilaiantahfidz, 'penilaiandinniyah' => $penilaiandinniyah, 'penilaianumum' => $penilaianumum])->setPaper('A4', 'portrait');
-        return $rapor->stream('rapor_{{ $siswa->no_nisn }}.pdf');
+        return $rapor->stream('rapor_'. $siswa->no_nisn .'.pdf');
     }
 
     public function listrekapraporuts(){
@@ -1932,7 +1981,7 @@ class AkademikController extends Controller
         }
 
         $rapor = PDF::loadView  ('pages.admin.akademik.rapor.cetakraporuts', ['siswa' => $siswa, 'kelas' => $kelas, 'tahunajar' => $tahunajar, 'nilaitotal_umum' => $nilaitotal_umum, 'nilai_rata_rata_total' => $nilai_rata_rata_total, 'nilaiumum_kelas' => $nilaiumum_kelas, 'nilaitahfidz_kelas' => $nilaitahfidz_kelas, 'nilaidinniyah_kelas' => $nilaidinniyah_kelas, 'penilaiantahfidz' => $penilaiantahfidz, 'penilaiandinniyah' => $penilaiandinniyah, 'penilaianumum' => $penilaianumum])->setPaper('A4', 'portrait');
-        return $rapor->stream('rapor-uts_{{ $siswa->no_nisn }}.pdf');
+        return $rapor->stream('rapor-uts_'. $siswa->no_nisn .'.pdf');
     }
 
 }
