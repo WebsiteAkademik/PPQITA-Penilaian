@@ -56,7 +56,7 @@
         resourceAreaHeaderContent: 'Jadwal Ujian',
         // resources: 'https://fullcalendar.io/api/demo-feeds/resources.json?with-nesting&with-colors',
         // events: 'https://fullcalendar.io/api/demo-feeds/events.json?single-day&for-resource-timeline'
-        events: "{{ route('getEvents') }}",
+        events: "{{ route('getEventsguru') }}",
         eventContent: function(arg) {
             // Check if the event has a description
             if (arg.event.extendedProps.description) {

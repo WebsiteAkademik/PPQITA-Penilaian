@@ -440,6 +440,88 @@ class PengajarController extends Controller
         return redirect()->route('penilaianpelajaran.index')->with('success', 'Nilai pelajaran berhasil dihapus!');
     }
 
+    public function getEventsguru(Request $request){
+        $start = $request->input("start", (new DateTime())->modify("-1 month")->format(DateTime::ATOM));
+        $end = $request->input("end", (new DateTime())->modify("+1 month")->format(DateTime::ATOM));
+
+        $d_start = strtotime($start);
+        $d_end = strtotime($end);
+
+        $user = Auth::user();
+        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
+        $pengajar = Pengajar::where('user_id', $user->id)->first();
+        $setup = SetupMataPelajaran::where('pengajar_id', $pengajar->id)
+            ->where('tahun_ajaran_id', $tahunAjaranAktif->id)
+            ->get();
+    
+        $jadwal_ujian = collect();
+        foreach($setup as $setupItem){
+            $detail = DetailSetupMataPelajaran::where('setup_mata_pelajaran_id', $setupItem->id)->first();
+        
+            if($detail) {
+                $jadwal = JadwalUjian::whereDate('tanggal_ujian', '>=', date('Y-m-d', $d_start))
+                    ->whereDate('tanggal_ujian', '<=', date('Y-m-d', $d_end))
+                    ->where('kelas_id', $setupItem->kelas_id)
+                    ->where('mata_pelajaran_id', $detail->mata_pelajaran_id)
+                    ->first();
+    
+                // Pastikan $jadwal bukan null sebelum ditambahkan ke koleksi
+                if ($jadwal) {
+                    $jadwal_ujian->push($jadwal);
+                }
+            }
+        }
+        
+        $ret = array();
+
+        /*
+         * [
+         *     {
+         *         "resourceId": "d",
+         *         "title": "event 1",
+         *         "start": "2024-03-02",
+         *         "end": "2024-03-04"
+         *     }
+         * ]
+        */
+        foreach($jadwal_ujian as $jadwal){
+            $d_s = DateTime::createFromFormat("Y-m-d H:i:s", $jadwal->tanggal_ujian . " " . $jadwal->jam_ujian);
+            $d_e = DateTime::createFromFormat("Y-m-d H:i:s", $jadwal->tanggal_ujian . " " . $jadwal->jam_ujian);
+
+            $s = $d_s->format(DateTime::ATOM);
+            $e = $d_e->format(DateTime::ATOM);
+
+            // Tentukan warna background berdasarkan jenis ujian
+            $backgroundColor = '';
+            switch ($jadwal->jenis_ujian) {
+                case 'Penilaian Harian':
+                    $backgroundColor = 'blue';
+                    break;
+                case 'UTS':
+                    $backgroundColor = 'green';
+                    break;
+                case 'UAS':
+                    $backgroundColor = 'red';
+                    break;
+                default:
+                    $backgroundColor = ''; // Atur warna default jika jenis ujian tidak cocok dengan kriteria di atas
+            }
+
+            $j = array(
+                "resourceId" => $jadwal->id,
+                "title" => "",
+                "description" => "(Mulai: " . substr($jadwal->jam_ujian, 0, 5) . ")\n" . $jadwal->jenis_ujian . "\n" . $jadwal->mataPelajaran()->nama_mata_pelajaran . "\n" . $jadwal->kelas()->kelas,
+                "start" => $s,
+                "end" => $e,
+                "backgroundColor" => $backgroundColor,
+            );
+
+            $ret[] = $j;
+        }
+
+        return response()->json($ret);
+    }
+
     //Siswa//*
     public function getEvents(Request $request){
         $start = $request->input("start", (new DateTime())->modify("-1 month")->format(DateTime::ATOM));

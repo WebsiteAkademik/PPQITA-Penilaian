@@ -75,7 +75,7 @@ Route::middleware('auth', 'cekrole:pengajar')->prefix('dashboardpengajar')->grou
     Route::put('/data_penilaianpelajaran/edit/{id}', [PengajarController::class, 'updatepenilaianpelajaran'])->name('penilaianpelajaran.update');
     Route::delete('/data_penilaianpelajaran/{id}/delete', [PengajarController::class, 'deletepenilaianpelajaran'])->name('penilaianpelajaran.delete');
 
-    Route::get("/events", [PengajarController::class, 'getEvents'])->name('getEvents');
+    Route::get("/events", [PengajarController::class, 'getEventsguru'])->name('getEventsguru');
 });
 
 //role -> admin
