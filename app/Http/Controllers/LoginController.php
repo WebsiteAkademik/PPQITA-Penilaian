@@ -26,6 +26,6 @@ class LoginController extends Controller
                 return redirect('dashboardsiswa');
             }
         }
-        return redirect()->back()->with('loginError', 'Email/NISN atau Password tidak tepat');
+        return redirect()->back()->with('loginError', 'Email/Username/NISN atau Password tidak tepat');
     }
 }

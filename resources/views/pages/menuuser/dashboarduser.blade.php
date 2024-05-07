@@ -55,21 +55,21 @@
                     <div class="table-responsive">
                         <table class="table text-nowrap mb-0 align-middle">
                             <thead class="text-dark fs-4">
-                                <tr>
+                                <tr style="background-color: #2E8CB5">
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">No</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">No</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Tanggal Ujian</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Tanggal Ujian</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Jam Ujian</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Jam Ujian</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Mata Pelajaran</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Mata Pelajaran</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Jenis Ujian</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Jenis Ujian</h6>
                                     </th>
                                 </tr>
                             </thead>
@@ -110,21 +110,21 @@
                     <div class="table-responsive">
                         <table class="table text-nowrap mb-0 align-middle">
                             <thead class="text-dark fs-4">
-                                <tr>
+                                <tr style="background-color: #2E8CB5">
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">No.</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">No.</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Mata Pelajaran</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Mata Pelajaran</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Jenis Ujian</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Jenis Ujian</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Nilai</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Nilai</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Keterangan</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Keterangan</h6>
                                     </th>
                                 </tr>
                             </thead>
@@ -155,24 +155,24 @@
                     <div class="table-responsive">
                         <table class="table text-nowrap mb-0 align-middle">
                             <thead class="text-dark fs-4">
-                                <tr>
+                                <tr style="background-color: #2E8CB5">
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">No.</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">No.</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Mata Pelajaran</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Mata Pelajaran</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Surat Awal</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Surat Awal</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Surat Akhir</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Surat Akhir</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Nilai</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Nilai</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Keterangan</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Keterangan</h6>
                                     </th>
                                 </tr>
                             </thead>

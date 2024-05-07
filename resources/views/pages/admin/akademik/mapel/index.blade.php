@@ -57,10 +57,10 @@
                                         <h6 class="fw-semibold mb-0 text-white">Nama Mapel</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Kategori</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Sub Kategori</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
-                                        <h6 class="fw-semibold mb-0 text-white">Sub Kategori</h6>
+                                        <h6 class="fw-semibold mb-0 text-white">Kategori</h6>
                                     </th>
                                     <th style="width: 100px;" class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0 text-white">Action</h6>

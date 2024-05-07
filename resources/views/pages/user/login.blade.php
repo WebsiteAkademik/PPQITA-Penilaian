@@ -14,7 +14,7 @@
             <form action="{{ route('postlogin') }}" method="POST">
                 @csrf
                 <img class="mb-4" src="{{ asset('assets/galeri/logo_ppqita.png') }}" alt="" style="width: 25%">
-                <h1>LOGIN</h1>
+                <h1 style="text-align: center;">LOGIN</h1>
                 @if (session()->has('loginError'))
                     <div class="alert alert-danger alert-dismissible fade show mb-2" role="alert">
                         {{ session('loginError') }}
@@ -25,7 +25,7 @@
                 <div class="form-floating">
                     <input type="text" name="email" class="form-control" id="floatingInput"
                         placeholder="name@example.com|XXXXXXXXXXXXXXXXX">
-                    <label for="floatingInput">Email/NISN</label>
+                    <label for="floatingInput">Email/Username/NISN</label>
                 </div>
                 <div class="form-floating mt-2">
                     <input type="password" name="password" class="form-control" id="floatingPassword"
@@ -41,8 +41,8 @@
                 <button class="w-100 btn btn-lg mb-3 text-white" style="background-color: #005280;"
                     type="submit">Login</button>
                 <br><br>
-                <h6>Belum mendaftar sebagai calon santri?</h6>
-                <h6><a href="#">Daftar Sekarang</a></h6>
+                <!-- <h6>Belum mendaftar sebagai calon santri?</h6>
+                <h6><a href="#">Daftar Sekarang</a></h6> -->
             </form>
         </main>
     </div>
