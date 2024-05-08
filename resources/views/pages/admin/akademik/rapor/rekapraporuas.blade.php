@@ -63,7 +63,7 @@
                                     </td>
                                     <td class="border-bottom-0 align-items-center text-center">
                                         <div class="row col-6 d-flex justify-content-center" style="width: 100px; margin: 0 auto">
-                                            <a href="{{ route('rekapraporuas.index', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <a href="{{ route('rekapraporuas.index', $row->id) }}" class="text-black text-center d-flex align-items-center justify-content-center" style="width: 40px;height: 40px;"><i class="fa-solid fa-eye"></i></a>
                                         </div>
                                     </td> 
                                 </tr>
