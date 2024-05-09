@@ -34,6 +34,7 @@ class PengajarController extends Controller
         
         $penilaiantahfidz = PenilaianTahfidz::where('pengajar_id', $pengajar->id)
             ->where('tahun_ajaran_id', $tahunAjaranAktif->id)
+            ->where('semester', $tahunAjaranAktif->semester)
             ->get();
         
         return view('pages.admin.pengajaradmin.penilaiantahfidz.index', [
@@ -135,6 +136,7 @@ class PengajarController extends Controller
         try {
             $data['tahun_ajaran_id'] = $tahunAjaranAktif->id;
             $data['pengajar_id'] = $pengajar->id;
+            $data['semester'] = $tahunAjaranAktif->semester;
             $kelas = $request->kelas_id;
             $siswa = $request->siswa_id;
             $mapel = MataPelajaran::where('id', $request->mata_pelajaran_id)->first();
@@ -705,6 +707,7 @@ class PengajarController extends Controller
             $nilaitahfidz_kelas[$mapel->id] = PenilaianTahfidz::where('mata_pelajaran_id', $mapel->id)
                 ->where('kelas_id', $siswa->kelas_id)
                 ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
                 ->avg('nilai');
         }
 
@@ -713,6 +716,7 @@ class PengajarController extends Controller
                 ->where('siswa_id', $siswa->id)
                 ->where('kelas_id', $siswa->kelas_id)
                 ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
                 ->get();
             
             // Hitung rata-rata nilai jika ada penilaian

@@ -73,7 +73,7 @@
                                     <td class="border-bottom-0">{{ $rekap['siswa']->nama_siswa }}</td>
                                     @foreach ($rekap['nilai'] as $nilai)
                                     <td style="text-align: center;" class="border-bottom-0">{{ $nilai['nilai'] }}</td>
-                                    @endforeach
+                                    
                                     <td style="text-align: center;" class="border-bottom-0">{{-- Rata-rata --}}
                                         @php
                                             $totalNilai = 0;
@@ -83,6 +83,7 @@
                                             $rataRata = count($rekap['nilai']) > 0 ? $totalNilai / count($rekap['nilai']) : 0;
                                         @endphp
                                         {{ number_format($rataRata, 2) }}
+                                    @endforeach
                                     </td>
                                 </tr>
                                 @endforeach

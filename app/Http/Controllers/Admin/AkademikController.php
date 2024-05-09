@@ -114,10 +114,14 @@ class AkademikController extends Controller
             return redirect()->back()->withInput();
         }
 
-        // Periksa apakah status diubah menjadi 'aktif'
-        if ($validatedData['status'] === 'aktif') {
+        // Periksa apakah status diubah menjadi 'aktif' dan apakah tahun ajaran sebelumnya adalah aktif
+        if ($validatedData['status'] === 'aktif' && $tahunajar->status !== 'aktif') {
             // Mengubah status tahun ajaran lainnya menjadi 'tidak aktif'
             TahunAjaran::where('id', '!=', $id)->update(['status' => 'tidak aktif']);
+        } elseif ($validatedData['status'] === 'tidak aktif' && $tahunajar->status === 'aktif') {
+            // Jika status yang diupdate adalah 'tidak aktif' dan status tahun ajaran sebelumnya adalah 'aktif', maka kembalikan status ke 'aktif'
+            $validatedData['status'] = 'aktif';
+            Alert::error('Gagal! (E009)', 'Tahun Ajaran dengan status aktif tidak dapat dinonaktifkan!');
         }
 
         // Update data tahun ajaran
@@ -1457,6 +1461,7 @@ class AkademikController extends Controller
                 // Penilaian pelajaran umum, bukan tahfidz atau dinniyah
                 $nilai = PenilaianTahfidz::where('siswa_id', $s->id)
                     ->where('tahun_ajaran_id', $tahunajar->id)
+                    ->where('semester', $tahunajar->semester)
                     ->where('mata_pelajaran_id', $mapelItem->id)
                     ->avg('nilai');
 
@@ -1508,6 +1513,7 @@ class AkademikController extends Controller
                 // Penilaian pelajaran umum, bukan tahfidz atau dinniyah
                 $nilai = PenilaianTahfidz::where('siswa_id', $s->id)
                     ->where('tahun_ajaran_id', $tahunajar->id)
+                    ->where('semester', $tahunajar->semester)
                     ->where('mata_pelajaran_id', $mapelItem->id)
                     ->avg('nilai');
 
@@ -1572,6 +1578,8 @@ class AkademikController extends Controller
                 // Penilaian pelajaran umum, bukan tahfidz atau dinniyah
                 $nilai = PenilaianTahfidz::where('siswa_id', $s->id)
                     ->where('mata_pelajaran_id', $mapelItem->id)
+                    ->where('tahun_ajaran_id', $tahunajar->id)
+                    ->where('semester', $tahunajar->semester)
                     ->avg('nilai');
 
                 $nilaiSiswa[] = [
@@ -1762,6 +1770,7 @@ class AkademikController extends Controller
             $nilaitahfidz_kelas[$mapel->id] = PenilaianTahfidz::where('mata_pelajaran_id', $mapel->id)
                 ->where('kelas_id', $siswa->kelas_id)
                 ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
                 ->avg('nilai');
         }
 
@@ -1770,6 +1779,7 @@ class AkademikController extends Controller
                 ->where('siswa_id', $siswa->id)
                 ->where('kelas_id', $siswa->kelas_id)
                 ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
                 ->get();
             
             // Hitung rata-rata nilai jika ada penilaian
@@ -1946,6 +1956,7 @@ class AkademikController extends Controller
             $nilaitahfidz_kelas[$mapel->id] = PenilaianTahfidz::where('mata_pelajaran_id', $mapel->id)
                 ->where('kelas_id', $siswa->kelas_id)
                 ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
                 ->avg('nilai');
         }
 
@@ -1954,6 +1965,7 @@ class AkademikController extends Controller
                 ->where('siswa_id', $siswa->id)
                 ->where('kelas_id', $siswa->kelas_id)
                 ->where('tahun_ajaran_id', $tahunajar->id)
+                ->where('semester', $tahunajar->semester)
                 ->get();
             
             // Hitung rata-rata nilai jika ada penilaian

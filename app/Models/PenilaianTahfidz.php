@@ -9,7 +9,7 @@ class PenilaianTahfidz extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tanggal_penilaian', 'siswa_id', 'kelas_id', 'mata_pelajaran_id', 'jenis_penilaian', 'surat_awal', 'surat_akhir', 'ayat_awal', 'ayat_akhir', 'nilai', 'keterangan', 'pengajar_id', 'tahun_ajaran_id'];
+    protected $fillable = ['tanggal_penilaian', 'siswa_id', 'kelas_id', 'mata_pelajaran_id', 'jenis_penilaian', 'surat_awal', 'surat_akhir', 'ayat_awal', 'ayat_akhir', 'nilai', 'keterangan', 'pengajar_id', 'tahun_ajaran_id', 'semester'];
 
     public function tahunAjaran()
     {
