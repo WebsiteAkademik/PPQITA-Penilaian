@@ -53,7 +53,7 @@ class AkademikController extends Controller
         $globalValidator = Validator::make($request->all(), $globalValidatorData);
 
         if ($globalValidator->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada tahun ajaran yang sama!');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withErrors($globalValidator)->withInput();
         }
 
@@ -177,7 +177,7 @@ class AkademikController extends Controller
         $globalValidator = Validator::make($request->all(), $globalValidatorData);
 
         if ($globalValidator->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada kode kategori yang sama!');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withErrors($globalValidator)->withInput();
         }
 
@@ -228,7 +228,7 @@ class AkademikController extends Controller
         ]);
         
         if ($validatedData->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada kode kategori yang sama atau nama kategori yang sama!');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withErrors($validatedData)->withInput();
         }
     
@@ -295,7 +295,7 @@ class AkademikController extends Controller
         $globalValidator = Validator::make($request->all(), $globalValidatorData);
 
         if ($globalValidator->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada kode yang sama!');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withErrors($globalValidator)->withInput();
         }
 
@@ -354,7 +354,7 @@ class AkademikController extends Controller
         ]);
     
         if ($validatedData->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada kode sub kategori yang sama atau nama sub kategori pada kategori pelajaran yang sama!');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withErrors($validatedData)->withInput();
         }
     
@@ -424,7 +424,7 @@ class AkademikController extends Controller
         $globalValidator = Validator::make($request->all(), $globalValidatorData);
 
         if ($globalValidator->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan validasi data dengan database sudah benar!');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withErrors($globalValidator)->withInput();
         }
 
@@ -486,15 +486,15 @@ class AkademikController extends Controller
         ]);
     
         if ($validatedData->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada kode sub kategori yang sama atau nama sub kategori pada kategori pelajaran yang sama!');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withErrors($validatedData)->withInput();
         }
     
         $mapel = MataPelajaran::findOrFail($id);
     
         $mapel->fill([
-            'kode_sub_kategori' => $request->kode_sub_kategori,
-            'nama_sub_kategori' => $request->nama_sub_kategori,
+            'kode_mata_pelajaran' => $request->kode_mata_pelajaran,
+            'nama_mata_pelajaran' => $request->nama_mata_pelajaran,
             'kkm' => $request->kkm,
             'kategori_pelajaran_id' => $request->kategori_pelajaran_id,
             'sub_kategori_pelajaran_id' => $request->sub_kategori_pelajaran_id,
@@ -542,7 +542,7 @@ class AkademikController extends Controller
         $globalValidator = Validator::make($request->all(), $globalValidatorData);
 
         if ($globalValidator->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada data yang sama!');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withErrors($globalValidator)->withInput();
         }
 
@@ -601,7 +601,7 @@ class AkademikController extends Controller
             $kelas->update($validatedData);
             return redirect()->route('kelas.index')->with('success', 'Kelas berhasil diperbaharui!');
         } catch (\Exception $e) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan validasi data benar!');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withInput();
         }
     }
@@ -654,7 +654,7 @@ class AkademikController extends Controller
         $globalValidator = Validator::make($request->all(), $globalValidatorData);
 
         if ($globalValidator->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada data yang sama!');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withErrors($globalValidator)->withInput();
         }
 
@@ -750,7 +750,7 @@ class AkademikController extends Controller
         $globalValidator = Validator::make($request->all(), $globalValidatorData);
 
         if ($globalValidator->fails()) {
-            Alert::error('Gagal! (E001)', 'Terdapat username yang sama dalam database, ganti username lain!');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withErrors($globalValidator)->withInput();
         }
 
@@ -808,7 +808,7 @@ class AkademikController extends Controller
         ]);
     
         if ($validatedData->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada kode sub kategori yang sama atau nama sub kategori pada kategori pelajaran yang sama!');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withErrors($validatedData)->withInput();
         }
     
@@ -871,7 +871,7 @@ class AkademikController extends Controller
         $globalValidator = Validator::make($request->all(), $globalValidatorData);
 
         if ($globalValidator->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada data yang sama!');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withErrors($globalValidator)->withInput();
         }
 
@@ -934,7 +934,7 @@ class AkademikController extends Controller
         ]);
     
         if ($validatedData->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada kode sub kategori yang sama atau nama sub kategori pada kategori pelajaran yang sama!');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withErrors($validatedData)->withInput();
         }
 
@@ -1006,7 +1006,7 @@ class AkademikController extends Controller
         $globalValidator = Validator::make($request->all(), $globalValidatorData);
 
         if ($globalValidator->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada data yang sama!');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withErrors($globalValidator)->withInput();
         }
 
@@ -1066,7 +1066,7 @@ class AkademikController extends Controller
         ]);
     
         if ($validatedData->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek kembali data untuk memastikan tidak ada kode sub kategori yang sama atau nama sub kategori pada kategori pelajaran yang sama!');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withErrors($validatedData)->withInput();
         }
         
@@ -1165,7 +1165,7 @@ class AkademikController extends Controller
         $bothValidator = Validator::make($request->all(), $bothValidatorData);
 
         if ($globalValidator->fails()) {
-            Alert::error('Gagal! (E001)', 'Cek pada form profile apakah ada kesalahan yang terjadi');
+            Alert::error('Gagal! (E001)', 'Terdapat kolom yang belum diisi / terdapat data yang sama atau tidak sesuai pada database');
             return redirect()->back()->withErrors($globalValidator)->withInput();
         }
 
@@ -1274,6 +1274,11 @@ class AkademikController extends Controller
             }
         }
 
+        // Jika $mapel kosong
+        if($mapel->isEmpty()) {
+            $mapel->push(new MataPelajaran());
+        }
+
         // Ambil siswa sesuai kelas dan nilai sesuai dengan mata pelajaran yang ada
         $siswa = Siswa::where('kelas_id', $kelas->id)->get();
         $rekapNilai = [];
@@ -1324,6 +1329,10 @@ class AkademikController extends Controller
             if(!$mapelTahfidz){
                 $mapel->push(MataPelajaran::where('id', $d->mata_pelajaran_id)->first());
             }
+        }
+
+        if($mapel->isEmpty()) {
+            $mapel->push(new MataPelajaran());
         }
 
         // Ambil siswa sesuai kelas dan nilai sesuai dengan mata pelajaran yang ada
@@ -1391,6 +1400,10 @@ class AkademikController extends Controller
             }
         }
 
+        if($mapel->isEmpty()) {
+            $mapel->push(new MataPelajaran());
+        }
+
         // Ambil siswa sesuai kelas dan nilai sesuai dengan mata pelajaran yang ada
         $siswa = Siswa::where('kelas_id', $kelas->id)->get();
         $rekapNilai = [];
@@ -1450,6 +1463,10 @@ class AkademikController extends Controller
             }
         }
 
+        if($mapel->isEmpty()) {
+            $mapel->push(new MataPelajaran());
+        }
+
         // Ambil siswa sesuai kelas dan nilai sesuai dengan mata pelajaran yang ada
         $siswa = Siswa::where('kelas_id', $kelas->id)->get();
         $rekapNilai = [];
@@ -1500,6 +1517,10 @@ class AkademikController extends Controller
             if($mapelTahfidz){
                 $mapel->push(MataPelajaran::where('id', $d->mata_pelajaran_id)->first());
             }
+        }
+
+        if($mapel->isEmpty()) {
+            $mapel->push(new MataPelajaran());
         }
 
         // Ambil siswa sesuai kelas dan nilai sesuai dengan mata pelajaran yang ada
@@ -1565,6 +1586,10 @@ class AkademikController extends Controller
             if($mapelTahfidz){
                 $mapel->push(MataPelajaran::where('id', $d->mata_pelajaran_id)->first());
             }
+        }
+
+        if($mapel->isEmpty()) {
+            $mapel->push(new MataPelajaran());
         }
 
         // Ambil siswa sesuai kelas dan nilai sesuai dengan mata pelajaran yang ada

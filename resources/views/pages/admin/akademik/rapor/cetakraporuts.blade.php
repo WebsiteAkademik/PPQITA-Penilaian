@@ -176,14 +176,6 @@
                     </td>
                 </tr>
                 @endforeach
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
             </tbody>
             <tbody>
                 <tr>

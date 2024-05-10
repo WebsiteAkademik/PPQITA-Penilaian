@@ -24,7 +24,7 @@
                         <td>{{ $jadwalujian->tanggal_ujian }}</td>
                         <td>{{ $jadwalujian->jam_ujian }}</td>
                         <td>{{ $jadwalujian->mataPelajaran()->nama_mata_pelajaran }}</td>
-                        <td>{{ $jadwalTest->jenis_ujian }}</td>
+                        <td>{{ $jadwalujian->jenis_ujian }}</td>
                     </tr>
                 @endforeach
             </tbody>
