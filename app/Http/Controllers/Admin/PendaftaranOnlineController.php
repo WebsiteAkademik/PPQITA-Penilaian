@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Pendaftaran;
 use App\Models\User;
 use App\Models\JadwalTest;
+use App\Models\Siswa;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -383,6 +384,37 @@ class PendaftaranOnlineController extends Controller {
                 return redirect()->back()->withInput();
             }
             $pendaftaran->updateStatusDiterima();
+
+            $siswa = new Siswa();
+            $siswa->no_nisn = $pendaftaran->no_nisn;
+            $siswa->nama_siswa = $pendaftaran->nama_calon_siswa;
+            $siswa->tempat_lahir = $pendaftaran->tempat_lahir;
+            $siswa->tanggal_lahir = $pendaftaran->tanggal_lahir;
+            $siswa->jenis_kelamin = $pendaftaran->jenis_kelamin;
+            $siswa->no_kartu_keluarga = $pendaftaran->no_kartu_keluarga;
+            $siswa->no_induk_keluarga = $pendaftaran->no_induk_keluarga;
+            $siswa->agama = $pendaftaran->agama;
+            $siswa->tinggi_badan = $pendaftaran->tinggi_badan;
+            $siswa->berat_badan = $pendaftaran->berat_badan;
+            $siswa->no_wa_anak = $pendaftaran->no_wa_anak;
+            $siswa->penyakit_kronis = $pendaftaran->penyakit_kronis;
+            $siswa->alamat_rumah = $pendaftaran->alamat_rumah;
+            $siswa->dukuh = $pendaftaran->dukuh;
+            $siswa->kelurahan = $pendaftaran->kelurahan;
+            $siswa->kecamatan = $pendaftaran->kecamatan;
+            $siswa->kabupaten = $pendaftaran->kabupaten;
+            $siswa->kodepos = $pendaftaran->kodepos;
+            $siswa->asal_sekolah = $pendaftaran->asal_sekolah;
+            $siswa->ayah_hidup = $pendaftaran->ayah_hidup;
+            $siswa->nama_ayah = $pendaftaran->nama_ayah;
+            $siswa->pekerjaan_ayah = $pendaftaran->pekerjaan_ayah;
+            $siswa->ibu_hidup = $pendaftaran->ibu_hidup;
+            $siswa->nama_ibu = $pendaftaran->nama_ibu;
+            $siswa->pekerjaan_ibu = $pendaftaran->pekerjaan_ibu;
+            $siswa->no_telepon_ortu = $pendaftaran->no_telepon_ortu;
+            $siswa->user_id = $pendaftaran->user_id;
+
+            $siswa->save();
         }
 
         Alert::success('Berhasil', 'Calon siswa dinyatakan berhasil diterima!');

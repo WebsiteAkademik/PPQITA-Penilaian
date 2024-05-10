@@ -845,7 +845,8 @@ class AkademikController extends Controller
 
     //Setup Mata Pelajaran
     public function listsetup(){
-        $setup = SetupMataPelajaran::all();
+        $tahunajar = TahunAjaran::where('status', 'aktif')->first();
+        $setup = SetupMataPelajaran::where('tahun_ajaran_id', $tahunajar->id)->get();
         
         return view('pages.admin.akademik.setupmapel.index', ['setup' => $setup]);
     }
@@ -860,7 +861,7 @@ class AkademikController extends Controller
 
     public function setupPost(Request $request){
         // Mendapatkan tahun ajaran aktif
-        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->firstOrFail();
+        $tahunAjaranAktif = TahunAjaran::where('status', 'aktif')->first();
 
         $globalValidatorData = [
             'tanggal_setup' => 'required',

@@ -73,9 +73,15 @@
                                     <td class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0">{{ $row->nama_siswa }}</h6>
                                     </td>
+                                    @if($row->kelas_id === null)
+                                    <td class="border-bottom-0 text-center">
+                                        <h6 class="fw-semibold mb-0">-</h6>
+                                    </td>
+                                    @else
                                     <td class="border-bottom-0 text-center">
                                         <h6 class="fw-semibold mb-0">{{ $row->kelasID()->kelas }}</h6>
                                     </td>
+                                    @endif
                                     <td class="border-bottom-0 align-items-center text-center">
                                         <div class="row" style="width: 100px; margin: 0 auto">
                                             <div class="col-6 d-flex justify-content-center">
