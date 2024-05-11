@@ -295,7 +295,7 @@
                 <tr>
                     <td style="text-align: center;">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</td>
                     <td style="width: 10%;"></td>
-                    <td style="text-align: center;">Siapa ya</td>
+                    <td style="text-align: center;">Dhanny Ardiansyah</td>
                     <td style="width: 10%;"></td>
                     <td style="text-align: center;">{{ $kelas->pengajarID()->nama_pengajar}}</td>
                 </tr>

@@ -28,7 +28,7 @@
                         <label for="no_wa_pengajar" class="form-label">Nomor WA</label>
                         <input required type="text" class="form-control" name="no_wa_pengajar" id="no_wa_pengajar" value="{{ $pengajar->no_wa_pengajar }}" placeholder="">
                     </div>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="nama_mata_pelajaran" class="form-label">Mapel yang Diampu</label>
                         <select name="mata_pelajaran_id" id="mata_pelajaran_id" class="form-select" required>
                             <option value="" disabled selected>Mata Pelajaran</option>
@@ -36,7 +36,7 @@
                                 <option value="{{ $mapel->id }}" {{ $pengajar->mata_pelajaran_id == $mapel->id ? 'selected' : '' }}>{{ $mapel->nama_mata_pelajaran }}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> -->
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
             </div>
