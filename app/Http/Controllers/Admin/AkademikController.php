@@ -59,16 +59,16 @@ class AkademikController extends Controller
 
         $data = $request->all();
 
-        if ($data['status'] === 'aktif') {
-            TahunAjaran::where('status', 'aktif')->update(['status' => 'tidak aktif']);
-        }
-
-        $semesterada = TahunAjaran::where('tahun_ajaran', $request->tahun_ajaran)
+        $tahunada = TahunAjaran::where('tahun_ajaran', $request->tahun_ajaran)
                     ->exists();
         
-        if($semesterada){
+        if($tahunada){
             Alert::error('Gagal! (E008)', 'Tahun Ajaran dengan semester ini sudah ada!');
             return redirect()->back()->withInput();
+        }
+
+        if ($data['status'] === 'aktif') {
+            TahunAjaran::where('status', 'aktif')->update(['status' => 'tidak aktif']);
         }
         
         $tahunajar = NULL;
