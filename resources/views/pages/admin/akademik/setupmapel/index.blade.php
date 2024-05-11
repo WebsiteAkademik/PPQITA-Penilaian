@@ -19,7 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
-            new DataTable('#table-kategori', {
+            new DataTable('#table-setup', {
                 "oLanguage": {
                     "sLengthMenu": "Tampilkan _MENU_ data per halaman",
                     "sZeroRecords": "Data tidak ditemukan",

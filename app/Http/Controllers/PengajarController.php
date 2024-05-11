@@ -77,7 +77,9 @@ class PengajarController extends Controller
     }
 
     public function fetchMapelTahfidz($kelasId, $tahunAjaranId, $pengajarId) {
-        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')->first();
+        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')
+            ->where('tahun_ajaran_id', $tahunAjaranId)
+            ->first();
 
         $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($kelasId, $tahunAjaranId, $pengajarId) {
             $query->where('tahun_ajaran_id', $tahunAjaranId)
@@ -279,7 +281,9 @@ class PengajarController extends Controller
     }
 
     public function fetchMapelUmum($kelasId, $tahunAjaranId, $pengajarId) {
-        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')->first();
+        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')
+            ->where('tahun_ajaran_id', $tahunAjaranId)
+            ->first();
 
         $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($kelasId, $tahunAjaranId, $pengajarId) {
             $query->where('tahun_ajaran_id', $tahunAjaranId)
