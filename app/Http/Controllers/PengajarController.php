@@ -63,15 +63,7 @@ class PengajarController extends Controller
             ->where('pengajar_id', $pengajar->id);
         })->get();
 
-        $mapelTahfidz = collect();
-        foreach ($detail as $detailItem) {
-            $mapel = MataPelajaran::where('id', $detailItem->mata_pelajaran_id)
-                ->where('sub_kategori_pelajaran_id', $subTahfidz->id)
-                ->first();
-            if ($mapel) {
-                $mapelTahfidz->push($mapel);
-            }
-        }
+        $mapelTahfidz = MataPelajaran::all();
         
         $siswa = Siswa::all();
 
@@ -287,15 +279,22 @@ class PengajarController extends Controller
     }
 
     public function fetchMapelUmum($kelasId, $tahunAjaranId, $pengajarId) {
-        // Fetch mapel data based on $kelasId and $tahunAjaranId
+        $subTahfidz = SubKategoriPelajaran::where('nama_sub_kategori', 'Tahfidz')->first();
+
         $detail = DetailSetupMataPelajaran::whereHas('SetupMataPelajaran', function($query) use ($kelasId, $tahunAjaranId, $pengajarId) {
             $query->where('tahun_ajaran_id', $tahunAjaranId)
                 ->where('pengajar_id', $pengajarId)
                 ->where('kelas_id', $kelasId);
         })->get();
     
-        $mapels = $detail->map(function ($item) {
-            return MataPelajaran::find($item->mata_pelajaran_id);
+        $mapels = $detail->map(function ($item, $key) use ($subTahfidz) {
+            $mapel = MataPelajaran::where('id', $item->mata_pelajaran_id)
+                ->where('sub_kategori_pelajaran_id', $subTahfidz->id)
+                ->first();
+            if(!$mapel) {
+                return MataPelajaran::find($item->mata_pelajaran_id);
+            }
+            
         });
     
         return response()->json($mapels);
